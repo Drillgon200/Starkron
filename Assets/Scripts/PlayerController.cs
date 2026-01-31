@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour {
 	InputAction moveAction;
 	InputAction lookAction;
 	InputAction jumpAction;
+	InputAction switchModeAction;
 
 	float lookYaw;
 	float lookPitch;
 
 	bool onGround;
+	bool mechMode;
 	float hoverFuelLeft;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour {
 		moveAction = InputSystem.actions.FindAction("Move");
 		lookAction = InputSystem.actions.FindAction("Look");
 		jumpAction = InputSystem.actions.FindAction("Jump");
+		switchModeAction = InputSystem.actions.FindAction("SwitchMode");
+		switchModeAction.performed += (InputAction.CallbackContext ctx) => { if (ctx.performed) mechMode = !mechMode; };
 
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
@@ -58,36 +62,53 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		float hoverSpeed = 10.0F;
-		float moveSpeedGround = 50.0F;
-		float moveSpeedAir = 10.0F;
-		float dragGround = 0.99F;
-		float dragAir = 0.1F;
-		float jumpSpeed = 4.0F;
-		float hoverFuelMax = 3.0F;
-
 		float dt = Time.fixedDeltaTime;
-		Vector3 velocity = new Vector3();
-		{ // Movement input
-			Vector2 moveAmount = moveAction.ReadValue<Vector2>();
-			Vector3 forward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad), 0.0F, Mathf.Cos(-lookYaw * Mathf.Deg2Rad));
-			Vector3 right = Vector3.Cross(Vector3.up, forward);
-			float moveSpeed = onGround ? moveSpeedGround : moveSpeedAir;
-			velocity += right * moveAmount.x * moveSpeed * dt;
-			velocity += forward * moveAmount.y * moveSpeed * dt;
-			if (jumpAction.IsPressed() && hoverFuelLeft > 0.0F) {
-				velocity.y += hoverSpeed * dt;
-				hoverFuelLeft -= dt;
+		if (mechMode) {
+			float hoverSpeed = 10.0F;
+			float moveSpeedGround = 50.0F;
+			float moveSpeedAir = 10.0F;
+			float dragGround = 0.99F;
+			float dragAir = 0.1F;
+			float jumpSpeed = 2.0F;
+			float hoverFuelMax = 3.0F;
+
+			Vector3 velocity = new Vector3();
+			{ // Movement input
+				Vector2 moveAmount = moveAction.ReadValue<Vector2>();
+				Vector3 forward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad), 0.0F, Mathf.Cos(-lookYaw * Mathf.Deg2Rad));
+				Vector3 right = Vector3.Cross(Vector3.up, forward);
+				float moveSpeed = onGround ? moveSpeedGround : moveSpeedAir;
+				velocity += right * moveAmount.x * moveSpeed * dt;
+				velocity += forward * moveAmount.y * moveSpeed * dt;
+				if (jumpAction.IsPressed() && hoverFuelLeft > 0.0F) {
+					velocity.y += hoverSpeed * dt;
+					hoverFuelLeft -= dt;
+				}
+				if (onGround && jumpAction.IsPressed()) {
+					velocity.y += jumpSpeed;
+					hoverFuelLeft = hoverFuelMax;
+				}
 			}
-			if (onGround && jumpAction.IsPressed()) {
-				velocity.y += jumpSpeed;
-				hoverFuelLeft = hoverFuelMax;
+			float drag = onGround ? dragGround : dragAir;
+			Vector3 velocityXZ = new Vector3(rigidBody.linearVelocity.x, 0.0F, rigidBody.linearVelocity.z);
+			Vector3 dragAdjustment = velocityXZ * Mathf.Exp(dt * Mathf.Log(1.0F - drag)) - velocityXZ;
+			rigidBody.useGravity = true;
+			rigidBody.AddForce(velocity + dragAdjustment, ForceMode.VelocityChange);
+			rigidBody.AddForce(Mathf.Abs(rigidBody.linearVelocity.x) < 0.1F ? -rigidBody.linearVelocity.x : 0.0F, 0.0F, Mathf.Abs(rigidBody.linearVelocity.z) < 0.1F ? -rigidBody.linearVelocity.z : 0.0F, ForceMode.VelocityChange);
+		} else { // fly mode
+			float flySpeed = 80.0F;
+			float flyDrag = 0.5F;
+			
+			Vector3 velocity = new Vector3();
+			{ // Movement input
+				Vector2 moveAmount = moveAction.ReadValue<Vector2>();
+				velocity += lookCam.transform.forward * flySpeed * dt;
+				//velocity += lookCam.transform.forward * moveAmount.y * flySpeed * dt;
+				//velocity += lookCam.transform.right * moveAmount.x * flySpeed * dt;
 			}
+			Vector3 dragAdjustment = rigidBody.linearVelocity * Mathf.Exp(dt * Mathf.Log(1.0F - flyDrag)) - rigidBody.linearVelocity;
+			rigidBody.AddForce(velocity + dragAdjustment, ForceMode.VelocityChange);
+			rigidBody.useGravity = false;
 		}
-		float drag = onGround ? dragGround : dragAir;
-		Vector3 velocityXZ = new Vector3(rigidBody.linearVelocity.x, 0.0F, rigidBody.linearVelocity.z);
-		Vector3 dragAdjustment = velocityXZ * Mathf.Exp(dt * Mathf.Log(1.0F - drag)) - velocityXZ;
-		rigidBody.AddForce(velocity + dragAdjustment, ForceMode.VelocityChange);
-		rigidBody.AddForce(Mathf.Abs(rigidBody.linearVelocity.x) < 0.1F ? -rigidBody.linearVelocity.x : 0.0F, 0.0F, Mathf.Abs(rigidBody.linearVelocity.z) < 0.1F ? -rigidBody.linearVelocity.z : 0.0F, ForceMode.VelocityChange);
 	}
 }
