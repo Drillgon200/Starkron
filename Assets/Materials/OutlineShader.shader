@@ -46,7 +46,8 @@ Shader "Custom/OutlineShader"
             {
                 float3 worldPos = TransformObjectToWorld(IN.positionOS.xyz);
                 float3 worldNorm = TransformObjectToWorldDir(IN.normal);
-                worldPos += worldNorm * 0.02;
+                float3 viewPos = TransformWorldToView(worldPos);
+                worldPos += worldNorm * 0.0025 * -viewPos.z;
                 Varyings OUT;
                 OUT.positionHCS = TransformWorldToHClip(worldPos);
                 OUT.uv = TRANSFORM_TEX(IN.uv, _BaseMap);
