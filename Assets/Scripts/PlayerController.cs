@@ -140,9 +140,6 @@ public class PlayerController : MonoBehaviour {
 		float dt = Time.fixedDeltaTime;
 		RaycastHit lookHit;
 		cameraRayHit = Physics.Raycast(new Ray(lookCam.transform.position, lookCam.transform.forward), out lookHit, float.PositiveInfinity, ~LayerMask.GetMask("Ignore Raycast"));
-		if (cameraRayHit) {
-			print(lookHit.collider);
-		}
 		cameraRayHitPos = lookHit.point;
 		if (mechMode) {
 			Vector3 velocity = new Vector3();
