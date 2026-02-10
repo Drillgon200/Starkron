@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour {
 	InputAction sprintAction;
 	InputAction swordAction;
 
+	InputAction planeMissileAction;
+
 	float lookYaw;
 	float lookPitch;
 	bool cameraRayHit;
@@ -63,6 +65,16 @@ public class PlayerController : MonoBehaviour {
 	public float swordDamage = 50.0F;
 	public float swordCooldown = 1.0F;
 	float swordCooldownTimer;
+
+	public GameObject lockOnMissilePrefab;
+	public float planeMissileTrackingHoldTimeCutoff = 0.25F;
+	public float planeMissileLockOnRadius = 500.0F;
+	public float planeMissileLockOnAngle = 10.0F;
+	public float planeMissileSpeed = 2.0F;
+	public float planeMissileFireCooldown = 0.5F;
+	float planeMissileCooldownTimer;
+	float planeMissileHoldTime;
+	public GameObject planeMissileLockOnTarget = null;
 
 
 	Vector3 planeTiltRotation;
@@ -123,6 +135,21 @@ public class PlayerController : MonoBehaviour {
 					}
 				}
 				swordCooldownTimer = swordCooldown;
+			}
+		};
+
+		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
+		planeMissileAction.canceled += (InputAction.CallbackContext ctx) => {
+			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F) {
+				Vector3 startVelocity = lookCam.transform.forward * 100.0F;
+				GameObject missile = Instantiate(lockOnMissilePrefab, transform.position + transform.forward * 1.5F, Quaternion.LookRotation(startVelocity));
+				MissileControllerPlane missileController = missile.GetComponent<MissileControllerPlane>();
+				missileController.velocity = startVelocity;
+				missileController.speed = planeMissileSpeed;
+				missileController.target = planeMissileLockOnTarget;
+				missileController.damageAmount = rocketDamage;
+
+				planeMissileCooldownTimer = planeMissileFireCooldown;
 			}
 		};
 
@@ -270,9 +297,7 @@ public class PlayerController : MonoBehaviour {
 					machineGunFireTimer -= secondsPerBullet;
 					if (bulletRayHit) {
 						IDamageable damageable = bulletHit.transform.gameObject.GetComponent<IDamageable>();
-						if (damageable != null) {
-							damageable.TakeDamage(machineGunBulletDamage, fireTo);
-						}
+						damageable?.TakeDamage(machineGunBulletDamage, fireTo);
 					}
 				}
 			} else {
@@ -290,7 +315,28 @@ public class PlayerController : MonoBehaviour {
 				//velocity += lookCam.transform.forward * moveAmount.y * flySpeed * dt;
 				//velocity += lookCam.transform.right * moveAmount.x * flySpeed * dt;
 			}
-			Vector3 dragAdjustment = rigidBody.linearVelocity * Mathf.Exp(dt * Mathf.Log(1.0F - flyDrag)) - rigidBody.linearVelocity;
+
+			if (planeMissileAction.IsPressed()) {
+				planeMissileHoldTime += dt;
+				if (planeMissileHoldTime > planeMissileTrackingHoldTimeCutoff && planeMissileLockOnTarget == null) {
+					float cosLockOnAngle = Mathf.Cos(planeMissileLockOnAngle * Mathf.Deg2Rad);
+					float bestDistance = float.PositiveInfinity;
+					foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(planeMissileLockOnRadius, planeMissileLockOnRadius, planeMissileLockOnRadius))) {
+						if (collider.GetComponent<IFlyingEnemy>() != null && Vector3.Dot(Vector3.Normalize(collider.transform.position - lookCam.transform.position), lookCam.transform.forward) > cosLockOnAngle) {
+							float distanceToTarget = Vector3.Distance(transform.position, collider.transform.position);
+							if (distanceToTarget < bestDistance) {
+								planeMissileLockOnTarget = collider.gameObject;
+								bestDistance = distanceToTarget;
+							}
+						}
+					}
+				}
+			} else {
+				planeMissileLockOnTarget = null;
+				planeMissileHoldTime = 0.0F;
+			}
+
+				Vector3 dragAdjustment = rigidBody.linearVelocity * Mathf.Exp(dt * Mathf.Log(1.0F - flyDrag)) - rigidBody.linearVelocity;
 			rigidBody.AddForce(velocity + dragAdjustment, ForceMode.VelocityChange);
 			rigidBody.useGravity = false;
 			planeTiltRotationVelocity -= planeTiltRotation * planeTiltSpringStiffness * dt;
@@ -324,5 +370,6 @@ public class PlayerController : MonoBehaviour {
 		rocketCooldownTimer -= dt;
 		swordCooldownTimer -= dt;
 		transformCooldown -= dt;
+		planeMissileCooldownTimer -= dt;
 	}
 }

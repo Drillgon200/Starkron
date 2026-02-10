@@ -582,7 +582,7 @@ MonoBehaviour:
   uiSquare: {fileID: 2800000, guid: bfa27649e2f599946aa430b3b09134f6, type: 3}
   minimapTexture: {fileID: 2800000, guid: 2e0680f16b0e6904baa3f31f164d2316, type: 3}
   player: {fileID: 2125482872}
-  minimapWorldRadius: 20
+  minimapWorldRadius: 100
 --- !u!4 &376539842
 Transform:
   m_ObjectHideFlags: 0
@@ -1203,6 +1203,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de51b7460980c22468542405072431b3, type: 3}
+--- !u!1001 &1767894545
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6861523213935380048, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_Name
+      value: FlyingEnemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 17.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.799653
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
 --- !u!1 &1823730996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,6 +1386,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1842701408
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6861523213935380048, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_Name
+      value: FlyingEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.23121192
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 16.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.799653
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
 --- !u!1 &1881203780
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,6 +1682,13 @@ MonoBehaviour:
   swordHitbox: {fileID: 296323176}
   swordDamage: 50
   swordCooldown: 1
+  lockOnMissilePrefab: {fileID: 9129368257085401133, guid: f4ddf1d520e737d4095154795f20c9a1, type: 3}
+  planeMissileTrackingHoldTimeCutoff: 0.25
+  planeMissileLockOnRadius: 500
+  planeMissileLockOnAngle: 10
+  planeMissileSpeed: 2
+  planeMissileFireCooldown: 0.5
+  planeMissileLockOnTarget: {fileID: 0}
   planeTiltSpringStiffness: 50
   planeTiltSpringDamping: 0.99
   transformTime: 3
@@ -1842,3 +1963,5 @@ SceneRoots:
   - {fileID: 376539842}
   - {fileID: 1881203784}
   - {fileID: 1767157069}
+  - {fileID: 1842701408}
+  - {fileID: 1767894545}

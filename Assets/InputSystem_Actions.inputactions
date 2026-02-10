@@ -77,6 +77,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ActivatePlaneMissile",
+                    "type": "Button",
+                    "id": "6f9b7943-f0f2-4119-9176-8c4e06fa0dbf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -330,6 +339,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Sword",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6fcfb8e8-4a11-45e5-86c4-daee4a82d82f",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ActivatePlaneMissile",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
