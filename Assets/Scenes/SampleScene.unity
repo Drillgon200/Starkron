@@ -1192,7 +1192,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2b8635f1c6c4d1c43b128bb8afe9156e, type: 2}
     - target: {fileID: 919132149155446097, guid: de51b7460980c22468542405072431b3, type: 3}
       propertyPath: m_Name
-      value: Test 111
+      value: building
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: de51b7460980c22468542405072431b3, type: 3}
       propertyPath: m_Layer
@@ -1471,6 +1471,7 @@ GameObject:
   - component: {fileID: 2125482872}
   - component: {fileID: 2125482873}
   - component: {fileID: 2125482875}
+  - component: {fileID: 2125482876}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1508,7 +1509,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2125482867}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -2432090755550338912, guid: e29682d361a63a24f8ff12b765a4016d, type: 3}
 --- !u!4 &2125482871
 Transform:
   m_ObjectHideFlags: 0
@@ -1541,6 +1542,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   lookCam: {fileID: 330585545}
   rigidBody: {fileID: 2125482874}
+  shadow: {fileID: 225462701}
+  mechMesh: {fileID: -2432090755550338912, guid: e29682d361a63a24f8ff12b765a4016d, type: 3}
+  planeMesh: {fileID: -2432090755550338912, guid: 1afeb9d21b7789643894a7c1b4a7d7b9, type: 3}
   hoverSpeed: 10
   moveSpeedGround: 50
   moveSpeedAir: 10
@@ -1550,7 +1554,7 @@ MonoBehaviour:
   dragAir: 0.1
   jumpSpeed: 3
   hoverFuelMax: 3
-  flySpeed: 80
+  flySpeed: 30
   flyDrag: 0.5
   rocketPrefab: {fileID: 9129368257085401133, guid: d1dc2b681d319e843aa33b4b1b6c31dc, type: 3}
   rocketFireRate: 4
@@ -1564,6 +1568,9 @@ MonoBehaviour:
   swordHitbox: {fileID: 296323176}
   swordDamage: 50
   swordCooldown: 1
+  planeTiltSpringStiffness: 50
+  planeTiltSpringDamping: 0.99
+  transformTime: 3
 --- !u!114 &2125482873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1670,6 +1677,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &2125482876
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125482867}
+  m_Material: {fileID: 13400000, guid: b578e83f418ef9e4ab7bf16dd599be5f, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: 1afeb9d21b7789643894a7c1b4a7d7b9, type: 3}
 --- !u!1 &2126540107
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,10 +1,15 @@
+using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour {
 	public Camera lookCam;
 	public Rigidbody rigidBody;
+	public GameObject shadow;
+	public Mesh mechMesh;
+	public Mesh planeMesh;
 
 	InputAction moveAction;
 	InputAction lookAction;
@@ -22,7 +27,6 @@ public class PlayerController : MonoBehaviour {
 
 
 	bool onGround;
-	bool mechMode = true;
 	float hoverFuelLeft;
 
 	public float hoverSpeed = 10.0F;
@@ -60,6 +64,23 @@ public class PlayerController : MonoBehaviour {
 	public float swordCooldown = 1.0F;
 	float swordCooldownTimer;
 
+
+	Vector3 planeTiltRotation;
+	Vector3 planeTiltRotationVelocity;
+	public float planeTiltSpringStiffness = 0.5F;
+	public float planeTiltSpringDamping = 0.9F;
+
+
+	enum TransformState {
+		MECH,
+		PLANE,
+		MECH_TO_PLANE,
+		PLANE_TO_MECH
+	};
+	TransformState transformState = TransformState.MECH;
+	public float transformTime = 3.0F;
+	float transformCooldown;
+
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
 		PlayerInput playerInput = GetComponent<PlayerInput>();
@@ -67,7 +88,21 @@ public class PlayerController : MonoBehaviour {
 		lookAction = InputSystem.actions.FindAction("Look");
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		switchModeAction = InputSystem.actions.FindAction("SwitchMode");
-		switchModeAction.performed += (InputAction.CallbackContext ctx) => { if (ctx.performed) mechMode = !mechMode; };
+		switchModeAction.performed += (InputAction.CallbackContext ctx) => {
+			switch (transformState) {
+			case TransformState.MECH: {
+				transformState = TransformState.MECH_TO_PLANE;
+				if (onGround) {
+					rigidBody.AddForce(Vector3.up * 10.0F, ForceMode.VelocityChange);
+				}
+			} break;
+			case TransformState.PLANE: {
+				transformState = TransformState.PLANE_TO_MECH;
+			} break;
+			}
+			transformCooldown = transformTime;
+			
+		};
 		rocketAction = InputSystem.actions.FindAction("FireRockets");
 		rocketAction.performed += (InputAction.CallbackContext ctx) => {
 			if (ctx.performed && cameraRayHit && rocketCooldownTimer <= 0.0F) {
@@ -110,15 +145,44 @@ public class PlayerController : MonoBehaviour {
 		onGround = false;
 	}
 
+	float SmoothCutoff(float x, float max) {
+		// A quick function I made in Desmos that smoothly tapers off x to an asymptote defined by max.
+		// It's mostly linear in the first half of the function, then curves off towards max as x goes to infinity
+		float halfwayTarget = x * 2.0F / max;
+		float remapped = max - max / (halfwayTarget * halfwayTarget + 1.0F);
+		return remapped * Mathf.Sign(x);
+	}
+
 	// Update is called once per frame
 	void Update() {
 		float dt = Time.deltaTime;
 		{ // Look update
-			float sensitivity = 50.0F;
+			float sensitivity = 10.0F / 100.0F;
 			Vector2 lookAmount = lookAction.ReadValue<Vector2>();
-			lookYaw += lookAmount.x * sensitivity * dt;
-			lookPitch = Mathf.Clamp(lookPitch - lookAmount.y * sensitivity * dt, -60.0F, 60.0F);
-			transform.eulerAngles = new Vector3(0.0F, lookYaw, 0.0F);
+			switch (transformState) {
+			case TransformState.MECH:
+			case TransformState.MECH_TO_PLANE:
+			case TransformState.PLANE_TO_MECH: {
+				lookYaw += lookAmount.x * sensitivity;
+				lookPitch = Mathf.Clamp(lookPitch - lookAmount.y * sensitivity, -60.0F, 60.0F);
+				transform.eulerAngles = new Vector3(0.0F, lookYaw, 0.0F);
+			} break;
+			case TransformState.PLANE: {
+				float maxPlaneTurnSpeed = 400.0F * dt;
+				float yawLookChange = SmoothCutoff(lookAmount.x * sensitivity, maxPlaneTurnSpeed);
+				float pitchLookChange = -SmoothCutoff(lookAmount.y * sensitivity, maxPlaneTurnSpeed);
+				lookYaw += yawLookChange;
+				lookPitch = Mathf.Clamp(lookPitch + pitchLookChange, -60.0F, 60.0F);
+				transform.eulerAngles = new Vector3(lookPitch, lookYaw, 0.0F);
+
+				planeTiltRotationVelocity *= Mathf.Exp(dt * Mathf.Log(1.0F - planeTiltSpringDamping));
+				planeTiltRotation += planeTiltRotationVelocity * dt;
+				transform.rotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
+				planeTiltRotationVelocity.z -= yawLookChange * 0.05F;
+				planeTiltRotationVelocity.y += yawLookChange * 0.015F;
+				planeTiltRotationVelocity.x += pitchLookChange * 0.025F;
+			} break;
+			}
 			lookCam.transform.eulerAngles = new Vector3(lookPitch, lookYaw, 0.0F);
 			Vector3 cameraStartPos = transform.position + new Vector3(0.0F, 2.0F, 0.0F);
 			float cameraDistance = 10.0F;
@@ -141,7 +205,8 @@ public class PlayerController : MonoBehaviour {
 		RaycastHit lookHit;
 		cameraRayHit = Physics.Raycast(new Ray(lookCam.transform.position, lookCam.transform.forward), out lookHit, float.PositiveInfinity, ~LayerMask.GetMask("Ignore Raycast"));
 		cameraRayHitPos = lookHit.point;
-		if (mechMode) {
+		switch (transformState) {
+		case TransformState.MECH: {
 			Vector3 velocity = new Vector3();
 			bool sprinting = onGround && sprintAction.IsPressed();
 			{ // Movement input
@@ -216,7 +281,8 @@ public class PlayerController : MonoBehaviour {
 				machineGunFireRate = 0.0F;
 				machineGunFireTimer = 0.0F;
 			}
-		} else { // fly mode
+		} break;
+		case TransformState.PLANE: {
 			Vector3 velocity = new Vector3();
 			{ // Movement input
 				Vector2 moveAmount = moveAction.ReadValue<Vector2>();
@@ -227,8 +293,36 @@ public class PlayerController : MonoBehaviour {
 			Vector3 dragAdjustment = rigidBody.linearVelocity * Mathf.Exp(dt * Mathf.Log(1.0F - flyDrag)) - rigidBody.linearVelocity;
 			rigidBody.AddForce(velocity + dragAdjustment, ForceMode.VelocityChange);
 			rigidBody.useGravity = false;
+			planeTiltRotationVelocity -= planeTiltRotation * planeTiltSpringStiffness * dt;
+		} break;
+		case TransformState.MECH_TO_PLANE: {
+			if (rigidBody.linearVelocity.y < 0.0F) {
+				rigidBody.AddForce(Vector3.up * -rigidBody.linearVelocity.y * 0.9F, ForceMode.VelocityChange);
+			}
+			if (transformCooldown <= 0.0F) {
+				transformState = TransformState.PLANE;
+				rigidBody.useGravity = false;
+				GetComponent<MeshFilter>().mesh = planeMesh;
+				GetComponent<CapsuleCollider>().enabled = false;
+				GetComponent<MeshCollider>().enabled = true;
+				planeTiltRotation = Vector3.zero;
+				planeTiltRotationVelocity = Vector3.zero;
+				shadow.GetComponent<DecalProjector>().enabled = false;
+			}
+		} break;
+		case TransformState.PLANE_TO_MECH: {
+			if (transformCooldown <= 0.0F) {
+				transformState = TransformState.MECH;
+				rigidBody.useGravity = true;
+				GetComponent<MeshFilter>().mesh = mechMesh;
+				GetComponent<CapsuleCollider>().enabled = true;
+				GetComponent<MeshCollider>().enabled = false;
+				shadow.GetComponent<DecalProjector>().enabled = true;
+			}
+		} break;
 		}
 		rocketCooldownTimer -= dt;
 		swordCooldownTimer -= dt;
+		transformCooldown -= dt;
 	}
 }

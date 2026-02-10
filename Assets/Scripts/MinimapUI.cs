@@ -23,7 +23,6 @@ public class MinimapUI : MonoBehaviour {
 					Vector3 right = player.transform.right;
 					Vector3 forward = player.transform.forward;
 					minimapProjection = new Vector2(Vector2.Dot(minimapProjection, new Vector2(right.x, right.z)), -Vector2.Dot(minimapProjection, new Vector2(forward.x, forward.z)));
-					print(minimapProjection);
 					minimapProjection = (minimapProjection / minimapWorldRadius * 0.5F + new Vector2(0.5F, 0.5F)) * minimapSize;
 					Graphics.DrawTexture(new Rect(Screen.width - minimapOFfset - minimapSize + minimapProjection.x - squareSize * 0.5F, minimapOFfset + minimapProjection.y - squareSize * 0.5F, squareSize, squareSize), uiSquare);
 				}
