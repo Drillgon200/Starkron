@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour {
 	public Camera lookCam;
 	public Rigidbody rigidBody;
 	public GameObject shadow;
+	public GameObject playerModelObject;
+	public MeshFilter renderMeshFilter;
+	public Collider mechCollider;
+	public Collider planeCollider;
 	public Mesh mechMesh;
 	public Mesh planeMesh;
 
@@ -22,6 +26,8 @@ public class PlayerController : MonoBehaviour {
 
 	InputAction planeMissileAction;
 
+	public float cameraDistance = 10.0F;
+	public float cameraRise = 2.0F;
 	float lookYaw;
 	float lookPitch;
 	bool cameraRayHit;
@@ -79,6 +85,7 @@ public class PlayerController : MonoBehaviour {
 
 	Vector3 planeTiltRotation;
 	Vector3 planeTiltRotationVelocity;
+	float planeBoostTurnRotation;
 	public float planeTiltSpringStiffness = 0.5F;
 	public float planeTiltSpringDamping = 0.9F;
 
@@ -95,7 +102,6 @@ public class PlayerController : MonoBehaviour {
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
-		PlayerInput playerInput = GetComponent<PlayerInput>();
 		moveAction = InputSystem.actions.FindAction("Move");
 		lookAction = InputSystem.actions.FindAction("Look");
 		jumpAction = InputSystem.actions.FindAction("Jump");
@@ -202,22 +208,26 @@ public class PlayerController : MonoBehaviour {
 				lookPitch = Mathf.Clamp(lookPitch + pitchLookChange, -60.0F, 60.0F);
 				transform.eulerAngles = new Vector3(lookPitch, lookYaw, 0.0F);
 
+				float boostRotationTarget = yawLookChange / maxPlaneTurnSpeed;
+				float boostTurnRotationRate = 0.5F;
+				planeBoostTurnRotation = (planeBoostTurnRotation - boostRotationTarget) * Mathf.Exp(dt * Mathf.Log(1.0F - boostTurnRotationRate)) + boostRotationTarget;
+				playerModelObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 				planeTiltRotationVelocity *= Mathf.Exp(dt * Mathf.Log(1.0F - planeTiltSpringDamping));
 				planeTiltRotation += planeTiltRotationVelocity * dt;
-				transform.rotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
+				playerModelObject.transform.rotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
 				planeTiltRotationVelocity.z -= yawLookChange * 0.05F;
 				planeTiltRotationVelocity.y += yawLookChange * 0.015F;
 				planeTiltRotationVelocity.x += pitchLookChange * 0.025F;
 			} break;
 			}
 			lookCam.transform.eulerAngles = new Vector3(lookPitch, lookYaw, 0.0F);
-			Vector3 cameraStartPos = transform.position + new Vector3(0.0F, 2.0F, 0.0F);
-			float cameraDistance = 10.0F;
+			Vector3 cameraStartPos = transform.position + new Vector3(0.0F, cameraRise, 0.0F);
 			RaycastHit camBackHit;
-			if (Physics.Raycast(cameraStartPos, -lookCam.transform.forward, out camBackHit, cameraDistance + 2.0F)) {
-				cameraDistance = Mathf.Min(cameraDistance, Vector3.Distance(cameraStartPos, camBackHit.point) - 0.4F);
+			float modifiedCameraDistance = cameraDistance;
+			if (Physics.Raycast(cameraStartPos, -lookCam.transform.forward, out camBackHit, modifiedCameraDistance + cameraRise)) {
+				modifiedCameraDistance = Mathf.Min(modifiedCameraDistance, Vector3.Distance(cameraStartPos, camBackHit.point) - 0.4F);
 			}
-			lookCam.transform.position = cameraStartPos - lookCam.transform.forward * cameraDistance;
+			lookCam.transform.position = cameraStartPos - lookCam.transform.forward * modifiedCameraDistance;
 		}
 	}
 
@@ -348,9 +358,9 @@ public class PlayerController : MonoBehaviour {
 			if (transformCooldown <= 0.0F) {
 				transformState = TransformState.PLANE;
 				rigidBody.useGravity = false;
-				GetComponent<MeshFilter>().mesh = planeMesh;
-				GetComponent<CapsuleCollider>().enabled = false;
-				GetComponent<MeshCollider>().enabled = true;
+				renderMeshFilter.mesh = planeMesh;
+				planeCollider.enabled = true;
+				mechCollider.enabled = false;
 				planeTiltRotation = Vector3.zero;
 				planeTiltRotationVelocity = Vector3.zero;
 				shadow.GetComponent<DecalProjector>().enabled = false;
@@ -360,9 +370,9 @@ public class PlayerController : MonoBehaviour {
 			if (transformCooldown <= 0.0F) {
 				transformState = TransformState.MECH;
 				rigidBody.useGravity = true;
-				GetComponent<MeshFilter>().mesh = mechMesh;
-				GetComponent<CapsuleCollider>().enabled = true;
-				GetComponent<MeshCollider>().enabled = false;
+				renderMeshFilter.mesh = mechMesh;
+				planeCollider.enabled = false;
+				mechCollider.enabled = true;
 				shadow.GetComponent<DecalProjector>().enabled = true;
 			}
 		} break;
