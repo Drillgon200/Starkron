@@ -1779,6 +1779,8 @@ MonoBehaviour:
   jumpSpeed: 3
   hoverFuelMax: 3
   flySpeed: 30
+  boostSpeed: 180
+  planeManeuverSpeed: 10
   flyDrag: 0.5
   rocketPrefab: {fileID: 9129368257085401133, guid: d1dc2b681d319e843aa33b4b1b6c31dc, type: 3}
   rocketFireRate: 4

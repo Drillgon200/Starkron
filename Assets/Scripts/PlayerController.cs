@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 	public Mesh mechMesh;
 	public Mesh planeMesh;
 
+	// Mech actions
 	InputAction moveAction;
 	InputAction lookAction;
 	InputAction jumpAction;
@@ -24,7 +25,11 @@ public class PlayerController : MonoBehaviour {
 	InputAction sprintAction;
 	InputAction swordAction;
 
+	// Plane actions
 	InputAction planeMissileAction;
+	InputAction boostAction;
+	InputAction airbrakeAction;
+	InputAction firePlaneGunAction;
 
 	public float cameraDistance = 10.0F;
 	public float cameraRise = 2.0F;
@@ -48,6 +53,8 @@ public class PlayerController : MonoBehaviour {
 	public float hoverFuelMax = 3.0F;
 
 	public float flySpeed = 80.0F;
+	public float boostSpeed = 180.0F;
+	public float planeManeuverSpeed = 10.0F;
 	public float flyDrag = 0.5F;
 
 	public GameObject rocketPrefab;
@@ -88,6 +95,7 @@ public class PlayerController : MonoBehaviour {
 	float planeBoostTurnRotation;
 	public float planeTiltSpringStiffness = 0.5F;
 	public float planeTiltSpringDamping = 0.9F;
+	float boostTimer;
 
 
 	enum TransformState {
@@ -158,6 +166,9 @@ public class PlayerController : MonoBehaviour {
 				planeMissileCooldownTimer = planeMissileFireCooldown;
 			}
 		};
+		boostAction = InputSystem.actions.FindAction("Boost");
+		airbrakeAction = InputSystem.actions.FindAction("Airbrake");
+		firePlaneGunAction = InputSystem.actions.FindAction("FirePlaneGun");
 
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
@@ -201,17 +212,22 @@ public class PlayerController : MonoBehaviour {
 				transform.eulerAngles = new Vector3(0.0F, lookYaw, 0.0F);
 			} break;
 			case TransformState.PLANE: {
-				float maxPlaneTurnSpeed = 400.0F * dt;
+				bool boost = boostAction.IsPressed();
+
+				float maxPlaneTurnSpeed = boost ? 100.0F * dt : 400.0F * dt;
 				float yawLookChange = SmoothCutoff(lookAmount.x * sensitivity, maxPlaneTurnSpeed);
 				float pitchLookChange = -SmoothCutoff(lookAmount.y * sensitivity, maxPlaneTurnSpeed);
 				lookYaw += yawLookChange;
 				lookPitch = Mathf.Clamp(lookPitch + pitchLookChange, -60.0F, 60.0F);
 				transform.eulerAngles = new Vector3(lookPitch, lookYaw, 0.0F);
 
-				float boostRotationTarget = yawLookChange / maxPlaneTurnSpeed;
-				float boostTurnRotationRate = 0.5F;
+				float boostRotationTarget = boost ? yawLookChange / maxPlaneTurnSpeed : 0.0F;
+				float boostTurnRotationRate = 0.95F;
 				planeBoostTurnRotation = (planeBoostTurnRotation - boostRotationTarget) * Mathf.Exp(dt * Mathf.Log(1.0F - boostTurnRotationRate)) + boostRotationTarget;
 				playerModelObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+				playerModelObject.transform.Translate(0.0F, cameraRise, 0.0F, Space.Self);
+				playerModelObject.transform.Rotate(0.0F, 0.0F, -planeBoostTurnRotation * 90.0F, Space.Self);
+				playerModelObject.transform.Translate(0.0F, -cameraRise, 0.0F, Space.Self);
 				planeTiltRotationVelocity *= Mathf.Exp(dt * Mathf.Log(1.0F - planeTiltSpringDamping));
 				planeTiltRotation += planeTiltRotationVelocity * dt;
 				playerModelObject.transform.rotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
@@ -320,10 +336,18 @@ public class PlayerController : MonoBehaviour {
 		case TransformState.PLANE: {
 			Vector3 velocity = new Vector3();
 			{ // Movement input
-				Vector2 moveAmount = moveAction.ReadValue<Vector2>();
-				velocity += lookCam.transform.forward * flySpeed * dt;
-				//velocity += lookCam.transform.forward * moveAmount.y * flySpeed * dt;
-				//velocity += lookCam.transform.right * moveAmount.x * flySpeed * dt;
+				bool boost = boostAction.IsPressed();
+				bool brake = airbrakeAction.IsPressed();
+				if (!brake) {
+					velocity += lookCam.transform.forward * (boost ? boostSpeed : flySpeed) * dt;
+				}
+				if (!boost) {
+					Vector2 moveAmount = moveAction.ReadValue<Vector2>();
+					velocity += lookCam.transform.forward * moveAmount.y * planeManeuverSpeed * dt;
+					velocity += lookCam.transform.right * moveAmount.x * planeManeuverSpeed * dt;
+					planeTiltRotationVelocity.x += moveAmount.y * 0.25F;
+					planeTiltRotationVelocity.z -= moveAmount.x * 0.25F;
+				}
 			}
 
 			if (planeMissileAction.IsPressed()) {
