@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class MinimapUI : MonoBehaviour {
 	public Texture uiSquare;
+	public Texture lockOnIndicator;
 	public Texture minimapTexture;
 	public PlayerController player;
 	public float minimapWorldRadius = 20.0F;
@@ -10,6 +11,14 @@ public class MinimapUI : MonoBehaviour {
 			return;
 		}
 		float scale = Mathf.Min(Screen.width / 1920.0F, Screen.height / 1080.0F);
+		if (player.planeMissileLockOnTarget != null) {
+			Vector3 pos = player.lookCam.WorldToScreenPoint(player.planeMissileLockOnTarget.transform.position, Camera.MonoOrStereoscopicEye.Mono);
+			if (pos.z > 0.0F) {
+				float lockOnSize = 50.0F * scale;
+				Graphics.DrawTexture(new Rect(pos.x - lockOnSize * 0.5F, Screen.height - pos.y - lockOnSize * 0.5F, lockOnSize, lockOnSize), lockOnIndicator);
+			}
+			
+		}
 		float minimapOFfset = 300.0F * scale;
 		float minimapSize = 300.0F * scale;
 		float squareSize = 10.0F * scale;

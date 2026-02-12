@@ -717,6 +717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinimapUI
   uiSquare: {fileID: 2800000, guid: bfa27649e2f599946aa430b3b09134f6, type: 3}
+  lockOnIndicator: {fileID: 2800000, guid: 204758b59d494b74ba5f0f08309bfcbf, type: 3}
   minimapTexture: {fileID: 2800000, guid: 2e0680f16b0e6904baa3f31f164d2316, type: 3}
   player: {fileID: 2125482872}
   minimapWorldRadius: 100
