@@ -25,7 +25,7 @@ public class MenuV1 : MonoBehaviour
 
     public void ExitPrompt()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (exitOverlayGraphic.activeSelf == false && mainMenuScene.activeSelf == false)
             {
