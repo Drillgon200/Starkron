@@ -89,6 +89,12 @@ public class PlayerController : MonoBehaviour {
 	float planeMissileHoldTime;
 	public GameObject planeMissileLockOnTarget = null;
 
+	public GameObject planeBulletPrefab;
+	int planeBulletFireCount;
+	public float planeGunFireRate = 5.0F;
+	public float planeBulletDamage = 50.0F;
+	float planeBulletCooldownTimer;
+
 
 	Vector3 planeTiltRotation;
 	Vector3 planeTiltRotationVelocity;
@@ -127,7 +133,7 @@ public class PlayerController : MonoBehaviour {
 			} break;
 			}
 			transformCooldown = transformTime;
-			
+
 		};
 		rocketAction = InputSystem.actions.FindAction("FireRockets");
 		rocketAction.performed += (InputAction.CallbackContext ctx) => {
@@ -350,6 +356,15 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 
+			if (firePlaneGunAction.IsPressed() && planeBulletCooldownTimer < 0.0F) {
+				planeBulletFireCount++;
+				GameObject bullet = Instantiate(planeBulletPrefab, transform.localToWorldMatrix * new Vector4((planeBulletFireCount & 1) == 0 ? 1.0F : -1.0F, 0.0F, -1.0F, 1.0F), Quaternion.identity);
+				BulletController bulletController = bullet.GetComponent<BulletController>();
+				bulletController.velocity = transform.forward * 400.0F;
+				bulletController.damageAmount = planeBulletDamage;
+				planeBulletCooldownTimer = 1.0F / planeGunFireRate;
+			}
+
 			if (planeMissileAction.IsPressed()) {
 				planeMissileHoldTime += dt;
 				if (planeMissileHoldTime > planeMissileTrackingHoldTimeCutoff && planeMissileLockOnTarget == null) {
@@ -370,7 +385,7 @@ public class PlayerController : MonoBehaviour {
 				planeMissileHoldTime = 0.0F;
 			}
 
-				Vector3 dragAdjustment = rigidBody.linearVelocity * Mathf.Exp(dt * Mathf.Log(1.0F - flyDrag)) - rigidBody.linearVelocity;
+			Vector3 dragAdjustment = rigidBody.linearVelocity * Mathf.Exp(dt * Mathf.Log(1.0F - flyDrag)) - rigidBody.linearVelocity;
 			rigidBody.AddForce(velocity + dragAdjustment, ForceMode.VelocityChange);
 			rigidBody.useGravity = false;
 			planeTiltRotationVelocity -= planeTiltRotation * planeTiltSpringStiffness * dt;
@@ -405,5 +420,6 @@ public class PlayerController : MonoBehaviour {
 		swordCooldownTimer -= dt;
 		transformCooldown -= dt;
 		planeMissileCooldownTimer -= dt;
+		planeBulletCooldownTimer -= dt;
 	}
 }

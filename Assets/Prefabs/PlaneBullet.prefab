@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4766123433579441907
+--- !u!1 &3240276206408717931
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5210369801232760588}
-  - component: {fileID: 1466906904106197646}
-  - component: {fileID: 2750194026493923771}
+  - component: {fileID: 6876965989876645317}
+  - component: {fileID: 8526310800376548331}
+  - component: {fileID: 755254565835595523}
   m_Layer: 0
-  m_Name: MachineGunBullet
+  m_Name: PlaneBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5210369801232760588
+--- !u!4 &6876965989876645317
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4766123433579441907}
+  m_GameObject: {fileID: 3240276206408717931}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.03832, y: 1.07404, z: -7.54713}
+  m_LocalPosition: {x: 1.14131, y: 0.87895, z: -9.08318}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!120 &1466906904106197646
+--- !u!120 &8526310800376548331
 LineRenderer:
   serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4766123433579441907}
+  m_GameObject: {fileID: 3240276206408717931}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
@@ -84,7 +84,7 @@ LineRenderer:
   m_MaskInteraction: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 5}
+  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -92,8 +92,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.011386871
-        value: 0.1146431
+        time: 0.018913269
+        value: 0.19791603
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -143,16 +143,18 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &2750194026493923771
+--- !u!114 &755254565835595523
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4766123433579441907}
+  m_GameObject: {fileID: 3240276206408717931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b3f5c30612e2b547ad5a30ce34ddcf2, type: 3}
+  m_Script: {fileID: 11500000, guid: 585150d81cc487b4aaaab24e3f6a0347, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MachineGunBulletController
-  lifetime: 0.15
+  m_EditorClassIdentifier: Assembly-CSharp::BulletController
+  velocity: {x: 0, y: 0, z: 0}
+  damageAmount: 0
+  maxAge: 5

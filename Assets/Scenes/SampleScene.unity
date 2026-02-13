@@ -1801,6 +1801,9 @@ MonoBehaviour:
   planeMissileSpeed: 2
   planeMissileFireCooldown: 0.5
   planeMissileLockOnTarget: {fileID: 0}
+  planeBulletPrefab: {fileID: 3240276206408717931, guid: 80fa42406a69ea748b2e364f2c4e36c7, type: 3}
+  planeGunFireRate: 10
+  planeBulletDamage: 50
   planeTiltSpringStiffness: 50
   planeTiltSpringDamping: 0.99
   transformTime: 3
