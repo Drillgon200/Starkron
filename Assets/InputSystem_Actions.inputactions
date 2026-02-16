@@ -328,7 +328,7 @@
                 {
                     "name": "",
                     "id": "96972160-8569-49a6-97ca-c3cb5df8386a",
-                    "path": "<Keyboard>/r",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
@@ -361,7 +361,7 @@
                 {
                     "name": "",
                     "id": "9b58bedc-8d01-4dfe-a60c-5e17238b52b4",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
