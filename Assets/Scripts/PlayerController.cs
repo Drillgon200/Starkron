@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour {
 				playerModelObject.transform.Translate(0.0F, -cameraRise, 0.0F, Space.Self);
 				planeTiltRotationVelocity *= Mathf.Exp(dt * Mathf.Log(1.0F - planeTiltSpringDamping));
 				planeTiltRotation += planeTiltRotationVelocity * dt;
-				playerModelObject.transform.rotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
+				playerModelObject.transform.localRotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
 				planeTiltRotationVelocity.z -= yawLookChange * 0.05F;
 				planeTiltRotationVelocity.y += yawLookChange * 0.015F;
 				planeTiltRotationVelocity.x += pitchLookChange * 0.025F;
@@ -413,7 +413,7 @@ public class PlayerController : MonoBehaviour {
 				planeCollider.enabled = false;
 				mechCollider.enabled = true;
 				shadow.GetComponent<DecalProjector>().enabled = true;
-				playerModelObject.transform.rotation = Quaternion.identity;
+				playerModelObject.transform.localRotation = Quaternion.identity;
 			}
 		} break;
 		}
