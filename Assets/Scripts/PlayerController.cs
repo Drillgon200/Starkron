@@ -413,6 +413,7 @@ public class PlayerController : MonoBehaviour {
 				planeCollider.enabled = false;
 				mechCollider.enabled = true;
 				shadow.GetComponent<DecalProjector>().enabled = true;
+				playerModelObject.transform.rotation = Quaternion.identity;
 			}
 		} break;
 		}
