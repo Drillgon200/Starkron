@@ -19,21 +19,22 @@ public class MinimapUI : MonoBehaviour {
 			}
 			
 		}
-		float minimapOFfset = 300.0F * scale;
+		float minimapOffsetX = 300.0F * scale;
+		float minimapOffsetY = 150.0F * scale;
 		float minimapSize = 300.0F * scale;
 		float squareSize = 10.0F * scale;
-		Graphics.DrawTexture(new Rect(Screen.width - minimapOFfset - minimapSize, minimapOFfset, minimapSize, minimapSize), minimapTexture);
+		Graphics.DrawTexture(new Rect(Screen.width - minimapOffsetX - minimapSize, minimapOffsetY, minimapSize, minimapSize), minimapTexture);
 		Vector3 playerPos = player.transform.position;
 		foreach (Collider enemy in Physics.OverlapBox(playerPos, new Vector3(minimapWorldRadius, minimapWorldRadius, minimapWorldRadius))) {
 			if (enemy.GetComponent<IEnemy>() != null) {
 				Vector3 pos = enemy.gameObject.transform.position;
-				if (Vector2.Distance(new Vector2(pos.x, pos.z), new Vector2(playerPos.x, playerPos.z)) <= minimapWorldRadius) {
+				if (Vector2.Distance(new Vector2(pos.x, pos.z), new Vector2(playerPos.x, playerPos.z)) <= minimapWorldRadius * 0.95F) {
 					Vector2 minimapProjection = new Vector2(pos.x - playerPos.x, pos.z - playerPos.z);
-					Vector3 right = player.transform.right;
-					Vector3 forward = player.transform.forward;
-					minimapProjection = new Vector2(Vector2.Dot(minimapProjection, new Vector2(right.x, right.z)), -Vector2.Dot(minimapProjection, new Vector2(forward.x, forward.z)));
+					Vector2 forward = player.Get2DForward();
+					Vector2 right = new Vector2(forward.y, -forward.x);
+					minimapProjection = new Vector2(Vector2.Dot(minimapProjection, right), -Vector2.Dot(minimapProjection, forward));
 					minimapProjection = (minimapProjection / minimapWorldRadius * 0.5F + new Vector2(0.5F, 0.5F)) * minimapSize;
-					Graphics.DrawTexture(new Rect(Screen.width - minimapOFfset - minimapSize + minimapProjection.x - squareSize * 0.5F, minimapOFfset + minimapProjection.y - squareSize * 0.5F, squareSize, squareSize), uiSquare);
+					Graphics.DrawTexture(new Rect(Screen.width - minimapOffsetX - minimapSize + minimapProjection.x - squareSize * 0.5F, minimapOffsetY + minimapProjection.y - squareSize * 0.5F, squareSize, squareSize), uiSquare);
 				}
 			}
 		}

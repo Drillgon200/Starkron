@@ -32,7 +32,7 @@ public class MissileControllerPlane : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		float dt = Time.deltaTime;
+		float dt = Time.fixedDeltaTime;
 		age += dt;
 		if (age > maxAge) {
 			explode();

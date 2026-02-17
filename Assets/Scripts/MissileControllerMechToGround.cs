@@ -28,7 +28,7 @@ public class MissileControllerMechToGround : MonoBehaviour {
 		transform.position += velocity * dt;
 	}
 	void FixedUpdate() {
-		float dt = Time.deltaTime;
+		float dt = Time.fixedDeltaTime;
 		Vector3 toTarget = Vector3.Normalize(target - transform.position);
 		float turnRate = 100.0F + 600.0F * Mathf.Clamp01(age);
 		transform.rotation = Quaternion.AngleAxis(dt * turnRate, Vector3.Normalize(Vector3.Cross(transform.forward, toTarget))) * transform.rotation;

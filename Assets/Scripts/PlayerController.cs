@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour {
 	public float rocketFireRate = 4.0F;
 	public float rocketCooldown = 4.0F;
 	public int rocketSalvoCount = 4;
+	public float rocketRandomTargetRadius = 3.0F;
 	public float rocketDamage = 20.0F;
 	float rocketSpawnTimer = -1.0F;
 	float rocketCooldownTimer;
@@ -113,6 +114,10 @@ public class PlayerController : MonoBehaviour {
 	TransformState transformState = TransformState.MECH;
 	public float transformTime = 3.0F;
 	float transformCooldown;
+
+	public Vector2 Get2DForward() {
+		return new Vector2(Mathf.Sin(lookYaw * Mathf.Deg2Rad), Mathf.Cos(lookYaw * Mathf.Deg2Rad));
+	}
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
@@ -261,8 +266,13 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
+		// Somehow lookCam.transform.forward just doesn't update if the framerate gets too low so we have to construct it manually
+		// I could not find an adequate explanation of why this happens, and look input update must happen in Update so that camera look is smooth, so I'm just going to do it like this
+		Vector3 lookForward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad) * Mathf.Cos(lookPitch * Mathf.Deg2Rad), -Mathf.Sin(lookPitch * Mathf.Deg2Rad), Mathf.Cos(-lookYaw * Mathf.Deg2Rad) * Mathf.Cos(lookPitch * Mathf.Deg2Rad));
+		Vector3 forward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad), 0.0F, Mathf.Cos(-lookYaw * Mathf.Deg2Rad));
+		Vector3 right = Vector3.Cross(Vector3.up, forward);
 		RaycastHit lookHit;
-		cameraRayHit = Physics.Raycast(new Ray(lookCam.transform.position, lookCam.transform.forward), out lookHit, float.PositiveInfinity, ~LayerMask.GetMask("Ignore Raycast"));
+		cameraRayHit = Physics.Raycast(new Ray(lookCam.transform.position, lookForward), out lookHit, float.PositiveInfinity, ~LayerMask.GetMask("Ignore Raycast"));
 		cameraRayHitPos = lookHit.point;
 		switch (transformState) {
 		case TransformState.MECH: {
@@ -270,8 +280,7 @@ public class PlayerController : MonoBehaviour {
 			bool sprinting = onGround && sprintAction.IsPressed();
 			{ // Movement input
 				Vector2 moveAmount = moveAction.ReadValue<Vector2>();
-				Vector3 forward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad), 0.0F, Mathf.Cos(-lookYaw * Mathf.Deg2Rad));
-				Vector3 right = Vector3.Cross(Vector3.up, forward);
+				
 				float moveSpeed =
 					sprinting ? moveSpeedSprint :
 					onGround ? moveSpeedGround :
@@ -305,7 +314,7 @@ public class PlayerController : MonoBehaviour {
 				GameObject rocket = Instantiate(rocketPrefab, transform.position + new Vector3(0.0F, 1.5F, 0.0F), Quaternion.LookRotation(startVelocity));
 				MissileControllerMechToGround rocketController = rocket.GetComponent<MissileControllerMechToGround>();
 				rocketController.velocity = startVelocity;
-				rocketController.target = rocketTargetPos;
+				rocketController.target = rocketTargetPos + new Vector3(Random.Range(-rocketRandomTargetRadius, rocketRandomTargetRadius), 0.0F, Random.Range(-rocketRandomTargetRadius, rocketRandomTargetRadius));
 				rocketController.damageAmount = rocketDamage;
 				rocketSpawnTimer = 1.0F / rocketFireRate;
 			}
@@ -316,7 +325,7 @@ public class PlayerController : MonoBehaviour {
 				machineGunFireTimer += dt;
 				while (machineGunFireTimer >= secondsPerBullet) {
 					Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + transform.forward;
-					Vector3 fireTo = cameraRayHit ? cameraRayHitPos : lookCam.transform.position + lookCam.transform.forward * 1000.0F;
+					Vector3 fireTo = cameraRayHit ? cameraRayHitPos : lookCam.transform.position + lookForward * 1000.0F;
 					Vector3 inaccuracy = random_vec3_in_cone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
 					Vector3 fireVec = Quaternion.LookRotation(fireTo - fireFrom) * new Vector3(inaccuracy.x, inaccuracy.z, inaccuracy.y);
 					RaycastHit bulletHit;
@@ -345,12 +354,12 @@ public class PlayerController : MonoBehaviour {
 				bool boost = boostAction.IsPressed();
 				bool brake = airbrakeAction.IsPressed();
 				if (!brake) {
-					velocity += lookCam.transform.forward * (boost ? boostSpeed : flySpeed) * dt;
+					velocity += lookForward * (boost ? boostSpeed : flySpeed) * dt;
 				}
 				if (!boost) {
 					Vector2 moveAmount = moveAction.ReadValue<Vector2>();
-					velocity += lookCam.transform.forward * moveAmount.y * planeManeuverSpeed * dt;
-					velocity += lookCam.transform.right * moveAmount.x * planeManeuverSpeed * dt;
+					velocity += lookForward * moveAmount.y * planeManeuverSpeed * dt;
+					velocity += right * moveAmount.x * planeManeuverSpeed * dt;
 					planeTiltRotationVelocity.x += moveAmount.y * 0.25F;
 					planeTiltRotationVelocity.z -= moveAmount.x * 0.25F;
 				}
@@ -371,7 +380,7 @@ public class PlayerController : MonoBehaviour {
 					float cosLockOnAngle = Mathf.Cos(planeMissileLockOnAngle * Mathf.Deg2Rad);
 					float bestDistance = float.PositiveInfinity;
 					foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(planeMissileLockOnRadius, planeMissileLockOnRadius, planeMissileLockOnRadius))) {
-						if (collider.GetComponent<IFlyingEnemy>() != null && Vector3.Dot(Vector3.Normalize(collider.transform.position - lookCam.transform.position), lookCam.transform.forward) > cosLockOnAngle) {
+						if (collider.GetComponent<IFlyingEnemy>() != null && Vector3.Dot(Vector3.Normalize(collider.transform.position - lookCam.transform.position), lookForward) > cosLockOnAngle) {
 							float distanceToTarget = Vector3.Distance(transform.position, collider.transform.position);
 							if (distanceToTarget < bestDistance) {
 								planeMissileLockOnTarget = collider.gameObject;

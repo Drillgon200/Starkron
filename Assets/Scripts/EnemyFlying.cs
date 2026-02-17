@@ -19,7 +19,7 @@ public class EnemyFlying : MonoBehaviour, IFlyingEnemy, IDamageable {
 	}
 
 	void FixedUpdate() {
-		float dt = Time.deltaTime;
+		float dt = Time.fixedDeltaTime;
 		if (Vector3.Distance(targetPosition, transform.position) < 10.0F) {
 			targetPosition = originalPosition + new Vector3(Random.Range(-100.0F, -100.0F), Random.Range(-20.0F, 20.0F), Random.Range(-100.0F, 100.0F));
 		}
