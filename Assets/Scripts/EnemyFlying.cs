@@ -15,6 +15,7 @@ public class EnemyFlying : MonoBehaviour, IFlyingEnemy, IDamageable {
 	bool foundDiveBombTarget;
 	float diveBombTime;
 	float diveBombTargetFindTime;
+	float age;
 	bool exploding;
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
@@ -52,10 +53,15 @@ public class EnemyFlying : MonoBehaviour, IFlyingEnemy, IDamageable {
 	}
 	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
+		age += dt;
 		if (isDiveBombing) {
 			diveBombTime += dt;
-			velocity += (foundDiveBombTarget ? diveBombDirection : (targetPosition - transform.position).normalized) * diveSpeed * dt;
-			if (Vector3.Distance(targetPosition, transform.position) < 10.0F) {
+			if (!foundDiveBombTarget) {
+				targetPosition = PlayerController.instance.transform.position;
+				diveBombDirection = (targetPosition - transform.position).normalized;
+			}
+			velocity += diveBombDirection * diveSpeed * dt;
+			if (Vector3.Distance(targetPosition, transform.position) < 5.0F || transform.position.y < targetPosition.y) {
 				foundDiveBombTarget = true;
 				diveBombTargetFindTime = diveBombTime;
 			}
@@ -63,11 +69,8 @@ public class EnemyFlying : MonoBehaviour, IFlyingEnemy, IDamageable {
 				isDiveBombing = false;
 			}
 		} else {
-			if (Random.Range(0, 100) == 0) {
-				Vector3 playerPos = PlayerController.instance.transform.position;
-				if (transform.position.y > playerPos.y + 10.0F) {
-					targetPosition = playerPos;
-					diveBombDirection = (targetPosition - transform.position).normalized;
+			if (Random.Range(0, 100) == 0 && age > 5.0F) {
+				if (transform.position.y > PlayerController.instance.transform.position.y + 10.0F) {
 					isDiveBombing = true;
 					diveBombTime = 0.0F;
 				}
