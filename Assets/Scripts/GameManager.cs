@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour {
 	}
 	void FixedUpdate() {
 		gameTime += Time.fixedDeltaTime;
-		if (buildingCount <= 0) {
+		if (buildingCount <= 0 || PlayerController.instance.IsDead()) {
 			print("Game over, you lose");
 		} else if (bugCount <= 0 && hiveCount <= 0) {
 			print("Game over, you win");

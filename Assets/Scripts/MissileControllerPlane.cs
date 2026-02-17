@@ -9,6 +9,7 @@ public class MissileControllerPlane : MonoBehaviour {
 	public Vector3 velocity;
 	public GameObject target;
 	Vector3 lastTargetPos;
+	bool exploding;
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
 	}
@@ -18,7 +19,11 @@ public class MissileControllerPlane : MonoBehaviour {
 		transform.position += velocity * Time.deltaTime;
 	}
 
-	void explode() {
+	void Explode() {
+		if (exploding) {
+			return;
+		}
+		exploding = true;
 		foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(explosionRadius, explosionRadius, explosionRadius))) {
 			IDamageable damageable = collider.GetComponent<IDamageable>();
 			if (damageable != null) {
@@ -35,18 +40,18 @@ public class MissileControllerPlane : MonoBehaviour {
 		float dt = Time.fixedDeltaTime;
 		age += dt;
 		if (age > maxAge) {
-			explode();
+			Explode();
 			return;
 		}
 		if (target == null) {
 			// Unguided
 			if (Physics.Raycast(new Ray(transform.position, velocity * dt), dt * velocity.magnitude)) {
-				explode();
+				Explode();
 			}
 		} else {
 			Vector3 targetPos = target.transform.position;
 			if (Vector3.Distance(targetPos, transform.position) < explosionRadius * 0.5F) {
-				explode();
+				Explode();
 				return;
 			}
 			if (lastTargetPos == Vector3.zero) {

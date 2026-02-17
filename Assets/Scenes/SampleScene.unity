@@ -1393,6 +1393,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7966335914153702173, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: diveSpeed
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1575,6 +1579,10 @@ PrefabInstance:
     - target: {fileID: 7569703377193350465, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966335914153702173, guid: a452823f341b6d843be6232e5ab7a69c, type: 3}
+      propertyPath: diveSpeed
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1769,6 +1777,7 @@ MonoBehaviour:
   planeMesh: {fileID: -2432090755550338912, guid: 1afeb9d21b7789643894a7c1b4a7d7b9, type: 3}
   cameraDistance: 10
   cameraRise: 2
+  maxHealth: 100
   hoverSpeed: 10
   moveSpeedGround: 50
   moveSpeedAir: 10
@@ -1786,6 +1795,7 @@ MonoBehaviour:
   rocketFireRate: 4
   rocketCooldown: 2
   rocketSalvoCount: 4
+  rocketRandomTargetRadius: 3
   rocketDamage: 20
   machineGunBulletPrefab: {fileID: 4766123433579441907, guid: 815d26c3ead9c6847baf7a82d74cc3e9, type: 3}
   machineGunMaxFireRate: 20

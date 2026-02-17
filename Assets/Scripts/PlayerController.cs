@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour {
+	public static PlayerController instance;
 	public Camera lookCam;
 	public Rigidbody rigidBody;
 	public GameObject shadow;
@@ -41,6 +42,8 @@ public class PlayerController : MonoBehaviour {
 
 	bool onGround;
 	float hoverFuelLeft;
+	public float maxHealth = 100.0F;
+	float health;
 
 	public float hoverSpeed = 10.0F;
 	public float moveSpeedGround = 50.0F;
@@ -118,6 +121,9 @@ public class PlayerController : MonoBehaviour {
 	public Vector2 Get2DForward() {
 		return new Vector2(Mathf.Sin(lookYaw * Mathf.Deg2Rad), Mathf.Cos(lookYaw * Mathf.Deg2Rad));
 	}
+	void Awake() {
+		instance = this;
+	}
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
@@ -183,6 +189,7 @@ public class PlayerController : MonoBehaviour {
 
 		Cursor.visible = false;
 		Cursor.lockState = CursorLockMode.Locked;
+		health = maxHealth;
 	}
 
 	private void OnEnable() { }
@@ -258,7 +265,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	Vector3 random_vec3_in_cone(float coneHalfAngle) {
+	Vector3 RandomVec3InCone(float coneHalfAngle) {
 		float randPitch = Random.Range(0.0F, Mathf.Deg2Rad * coneHalfAngle);
 		float randYaw = Random.Range(0.0F, Mathf.Deg2Rad * 360.0F);
 		return new Vector3(Mathf.Cos(randYaw) * Mathf.Sin(randPitch), Mathf.Cos(randPitch), Mathf.Sin(randYaw) * Mathf.Sin(randPitch));
@@ -310,7 +317,7 @@ public class PlayerController : MonoBehaviour {
 			if (rocketsLeftToFire > 0 && rocketSpawnTimer <= 0.0F) {
 				rocketsLeftToFire--;
 				rocketCooldownTimer = rocketCooldown;
-				Vector3 startVelocity = random_vec3_in_cone(20.0F) * 15.0F;
+				Vector3 startVelocity = RandomVec3InCone(20.0F) * 15.0F;
 				GameObject rocket = Instantiate(rocketPrefab, transform.position + new Vector3(0.0F, 1.5F, 0.0F), Quaternion.LookRotation(startVelocity));
 				MissileControllerMechToGround rocketController = rocket.GetComponent<MissileControllerMechToGround>();
 				rocketController.velocity = startVelocity;
@@ -326,7 +333,7 @@ public class PlayerController : MonoBehaviour {
 				while (machineGunFireTimer >= secondsPerBullet) {
 					Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + transform.forward;
 					Vector3 fireTo = cameraRayHit ? cameraRayHitPos : lookCam.transform.position + lookForward * 1000.0F;
-					Vector3 inaccuracy = random_vec3_in_cone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
+					Vector3 inaccuracy = RandomVec3InCone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
 					Vector3 fireVec = Quaternion.LookRotation(fireTo - fireFrom) * new Vector3(inaccuracy.x, inaccuracy.z, inaccuracy.y);
 					RaycastHit bulletHit;
 					bool bulletRayHit = Physics.Raycast(new Ray(fireFrom, fireVec), out bulletHit);
@@ -431,5 +438,12 @@ public class PlayerController : MonoBehaviour {
 		transformCooldown -= dt;
 		planeMissileCooldownTimer -= dt;
 		planeBulletCooldownTimer -= dt;
+	}
+
+	public void TakeDamage(float damage) {
+		health -= damage;
+	}
+	public bool IsDead() {
+		return health <= 0.0F;
 	}
 }
