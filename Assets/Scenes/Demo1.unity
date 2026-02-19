@@ -2557,7 +2557,7 @@ MonoBehaviour:
   machineGunBulletPrefab: {fileID: 4766123433579441907, guid: 815d26c3ead9c6847baf7a82d74cc3e9, type: 3}
   machineGunMaxFireRate: 20
   machineGunFireRateWarmupRate: 5
-  machineGunBulletDamage: 5
+  machineGunBulletDamage: 10
   swordHitbox: {fileID: 492321071}
   swordDamage: 50
   swordCooldown: 1
@@ -2843,6 +2843,7 @@ MonoBehaviour:
   hiveCount: 0
   gameTime: 0
   gameOver: 0
+  bugCap: 500
 --- !u!4 &782220631
 Transform:
   m_ObjectHideFlags: 0
@@ -3177,8 +3178,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 0.1
-  spawnDelayMax: 0.2
+  spawnDelayMin: 1
+  spawnDelayMax: 2
   spawnRange: 5
   health: 200
 --- !u!1001 &941300014
@@ -3342,8 +3343,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 0.1
-  spawnDelayMax: 0.2
+  spawnDelayMin: 1
+  spawnDelayMax: 2
   spawnRange: 5
   health: 200
 --- !u!1001 &971794221
@@ -4856,8 +4857,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 0.1
-  spawnDelayMax: 0.2
+  spawnDelayMin: 1
+  spawnDelayMax: 2
   spawnRange: 5
   health: 200
 --- !u!1001 &1393513234
@@ -5110,8 +5111,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 0.1
-  spawnDelayMax: 0.2
+  spawnDelayMin: 1
+  spawnDelayMax: 2
   spawnRange: 5
   health: 200
 --- !u!1 &1523815755 stripped
@@ -6435,8 +6436,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 0.1
-  spawnDelayMax: 0.2
+  spawnDelayMin: 1
+  spawnDelayMax: 2
   spawnRange: 5
   health: 200
 --- !u!114 &1813448844
@@ -7083,8 +7084,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 0.1
-  spawnDelayMax: 0.2
+  spawnDelayMin: 1
+  spawnDelayMax: 2
   spawnRange: 5
   health: 200
 --- !u!1 &1910911964
@@ -7978,8 +7979,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 0.1
-  spawnDelayMax: 0.2
+  spawnDelayMin: 1
+  spawnDelayMax: 2
   spawnRange: 5
   health: 200
 --- !u!1 &2114956594

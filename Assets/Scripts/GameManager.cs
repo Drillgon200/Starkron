@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
 	public double gameTime;
 	public bool gameOver;
 
+	public int bugCap;
+
 	const float GRID_SIZE = 300.0F;
 	const int GRID_RESOLUTION = 300;
 
