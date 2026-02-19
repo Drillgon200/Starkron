@@ -150,9 +150,6 @@ public class PlayerController : MonoBehaviour {
 			switch (transformState) {
 			case TransformState.MECH: {
 				transformState = TransformState.MECH_TO_PLANE;
-				if (onGround) {
-					rigidBody.AddForce(Vector3.up * 10.0F, ForceMode.VelocityChange);
-				}
 			} break;
 			case TransformState.PLANE: {
 				transformState = TransformState.PLANE_TO_MECH;
