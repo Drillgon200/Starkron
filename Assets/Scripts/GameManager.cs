@@ -120,7 +120,6 @@ public class GameManager : MonoBehaviour {
 	void FixedUpdate() {
 		gameTime += Time.fixedDeltaTime;
 		if (buildingCount <= 0 || PlayerController.instance.IsDead()) {
-			print("Game over, you lose");
 			gameOver = true;
 			uiScreen.ShowLoseOverlay();
 		} else if (bugCount <= 0 && hiveCount <= 0) {

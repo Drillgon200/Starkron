@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3109601732099318943}
   - component: {fileID: 5391549695704939294}
   - component: {fileID: 6928842171629345396}
+  - component: {fileID: 9101415577736661489}
   m_Layer: 0
   m_Name: BugGround
   m_TagString: Untagged
@@ -48,10 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyGround
   rigidBody: {fileID: 6928842171629345396}
+  animator: {fileID: 2582471005961727858}
   maxHealth: 20
   turnSpeed: 400
   walkSpeed: 2
   walkDrag: 0.99
+  attackCooldown: 1
+  damageAmount: 35
 --- !u!136 &5391549695704939294
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -102,6 +106,27 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &9101415577736661489
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218874130844937251}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.68, z: 0.59}
 --- !u!1001 &4765075293068270186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -509,6 +534,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c64f4dd4fd0967a42b48f95cb63e1c84, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2582471005961727858}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c64f4dd4fd0967a42b48f95cb63e1c84, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8682112741786347970}
   m_SourcePrefab: {fileID: 100100000, guid: c64f4dd4fd0967a42b48f95cb63e1c84, type: 3}
 --- !u!4 &5019908052559494529 stripped
 Transform:
@@ -542,3 +570,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8682112741786347970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5683995086155556667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e34f645b8f6df148a160ab3e2001461, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyGroundAttackTriggerHandler
+  groundEnemy: {fileID: 3109601732099318943}
