@@ -32,14 +32,9 @@ public class EnemyFlying : MonoBehaviour, IFlyingEnemy, IDamageable {
 			return;
 		}
 		exploding = true;
-		foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(explosionRadius, explosionRadius, explosionRadius))) {
+		foreach (Collider collider in Physics.OverlapSphere(transform.position, explosionRadius)) {
 			IDamageable damageable = collider.GetComponent<IDamageable>();
-			if (damageable != null) {
-				Vector3 damagePoint = collider.ClosestPoint(transform.position);
-				if (Vector3.Distance(damagePoint, transform.position) < explosionRadius) {
-					damageable.TakeDamage(explosionDamage, damagePoint);
-				}
-			}
+			damageable?.TakeDamage(explosionDamage, collider.ClosestPoint(transform.position));
 		}
 		if (Vector3.Distance(PlayerController.instance.transform.position, transform.position) < explosionRadius) {
 			PlayerController.instance.TakeDamage(explosionDamage);
