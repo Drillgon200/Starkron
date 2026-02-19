@@ -2856,7 +2856,7 @@ MonoBehaviour:
   hiveCount: 0
   gameTime: 0
   gameOver: 0
-  bugCap: 500
+  bugCap: 100
 --- !u!4 &782220631
 Transform:
   m_ObjectHideFlags: 0
