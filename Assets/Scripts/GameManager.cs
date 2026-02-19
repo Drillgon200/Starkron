@@ -1,17 +1,16 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.Controls;
-using static UnityEditor.PlayerSettings;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
+
+	public UIScreenInterface uiScreen;
 
 	public int buildingCount;
 	public int bugCount;
 	public int hiveCount;
 	public double gameTime;
+	public bool gameOver;
 
 	const float GRID_SIZE = 300.0F;
 	const int GRID_RESOLUTION = 300;
@@ -120,8 +119,11 @@ public class GameManager : MonoBehaviour {
 		gameTime += Time.fixedDeltaTime;
 		if (buildingCount <= 0 || PlayerController.instance.IsDead()) {
 			print("Game over, you lose");
+			gameOver = true;
+			uiScreen.ShowLoseOverlay();
 		} else if (bugCount <= 0 && hiveCount <= 0) {
-			print("Game over, you win");
+			gameOver = true;
+			uiScreen.ShowWinOverlay();
 		}
 	}
 }

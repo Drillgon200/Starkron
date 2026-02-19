@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using static UnityEngine.Timeline.DirectorControlPlayable;
 
 public class PlayerController : MonoBehaviour {
 	public static PlayerController instance;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	public Collider planeCollider;
 	public Mesh mechMesh;
 	public Mesh planeMesh;
+	public UIScreenInterface uiScreen;
 
 	// Mech actions
 	InputAction moveAction;
@@ -25,6 +27,7 @@ public class PlayerController : MonoBehaviour {
 	InputAction machineGunAction;
 	InputAction sprintAction;
 	InputAction swordAction;
+	InputAction pauseAction;
 
 	// Plane actions
 	InputAction planeMissileAction;
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour {
 	public float cameraRise = 2.0F;
 	float lookYaw;
 	float lookPitch;
+	bool mouseCaptured;
 	bool cameraRayHit;
 	Vector3 cameraRayHitPos;
 
@@ -125,6 +129,17 @@ public class PlayerController : MonoBehaviour {
 		instance = this;
 	}
 
+	public void SetMouseCapture(bool cap) {
+		if (cap) {
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+		} else {
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+		}
+		mouseCaptured = cap;
+	}
+
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
 		moveAction = InputSystem.actions.FindAction("Move");
@@ -186,9 +201,10 @@ public class PlayerController : MonoBehaviour {
 		boostAction = InputSystem.actions.FindAction("Boost");
 		airbrakeAction = InputSystem.actions.FindAction("Airbrake");
 		firePlaneGunAction = InputSystem.actions.FindAction("FirePlaneGun");
+		pauseAction = InputSystem.actions.FindAction("Pause");
+		pauseAction.performed += (InputAction.CallbackContext ctx) => uiScreen.PauseToggle();
 
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
+		SetMouseCapture(true);
 		health = maxHealth;
 	}
 
@@ -221,6 +237,9 @@ public class PlayerController : MonoBehaviour {
 		{ // Look update
 			float sensitivity = 10.0F / 100.0F;
 			Vector2 lookAmount = lookAction.ReadValue<Vector2>();
+			if (!mouseCaptured) {
+				lookAmount = Vector2.zero;
+			}
 			switch (transformState) {
 			case TransformState.MECH:
 			case TransformState.MECH_TO_PLANE:
