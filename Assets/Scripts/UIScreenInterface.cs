@@ -45,11 +45,13 @@ public class UIScreenInterface : MonoBehaviour {
 	public void ReloadLevelCurrent() {
 		// get reference to current level
 		// load that reference
+		Time.timeScale = 1.0F;
 		SceneManager.LoadScene("Scenes/Demo1"); // change to correct scene level
 	}
 
 	public void ExitLevel() {
 		// returns to main menu
+		Time.timeScale = 1.0F;
 		SceneManager.LoadScene("Scenes/MainMenu");
 	}
 
