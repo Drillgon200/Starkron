@@ -25,9 +25,11 @@ public class BulletController : MonoBehaviour {
 			return;
 		}
 		RaycastHit hit;
-		if (age > 0.025F && Physics.Raycast(new Ray(transform.position, velocity * dt), out hit, dt * velocity.magnitude)) {
-			hit.collider.GetComponent<IDamageable>()?.TakeDamage(damageAmount, hit.point);
-			Destroy(gameObject);
+		if (Physics.Raycast(new Ray(transform.position, velocity * dt), out hit, dt * velocity.magnitude)) {
+			if (!hit.collider.GetComponent<PlayerCollisionController>()) {
+				hit.collider.GetComponent<IDamageable>()?.TakeDamage(damageAmount, hit.point);
+				Destroy(gameObject);
+			}
 		}
 		transform.position += dt * (velocity + Physics.gravity * dt * 0.5F);
 		velocity += Physics.gravity * dt;
