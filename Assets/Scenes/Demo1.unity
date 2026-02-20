@@ -773,7 +773,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213612335}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b578e83f418ef9e4ab7bf16dd599be5f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2700,6 +2700,7 @@ MonoBehaviour:
   rocketRandomTargetRadius: 3
   rocketDamage: 20
   machineGunBulletPrefab: {fileID: 4766123433579441907, guid: 815d26c3ead9c6847baf7a82d74cc3e9, type: 3}
+  machineGunStartFireRate: 5
   machineGunMaxFireRate: 20
   machineGunFireRateWarmupRate: 5
   machineGunBulletDamage: 10

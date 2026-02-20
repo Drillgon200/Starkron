@@ -41,10 +41,11 @@ public class UIScreenInterface : MonoBehaviour {
 	}
 
 	public void PauseToggle() {
-		//escape not working to pause game
-		Time.timeScale = pauseOverlay.activeSelf ? 1.0F : 0.0F;
-		PlayerController.instance.SetMouseCapture(pauseOverlay.activeSelf);
-		pauseOverlay.SetActive(!pauseOverlay.activeSelf);
+		if (!GameManager.instance.gameOver) {
+			Time.timeScale = pauseOverlay.activeSelf ? 1.0F : 0.0F;
+			PlayerController.instance.SetMouseCapture(pauseOverlay.activeSelf);
+			pauseOverlay.SetActive(!pauseOverlay.activeSelf);
+		}
 	}
 
 	public void ShowWinOverlay() {
