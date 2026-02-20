@@ -1,9 +1,7 @@
-using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
-using static UnityEngine.Timeline.DirectorControlPlayable;
 
 public class PlayerController : MonoBehaviour {
 	public static PlayerController instance;
@@ -76,6 +74,7 @@ public class PlayerController : MonoBehaviour {
 	Vector3 rocketTargetPos;
 
 	public GameObject machineGunBulletPrefab;
+	public float machineGunStartFireRate = 5.0F;
 	public float machineGunMaxFireRate = 25.0F;
 	public float machineGunFireRateWarmupRate = 10.0F;
 	public float machineGunBulletDamage = 5.0F;
@@ -147,6 +146,9 @@ public class PlayerController : MonoBehaviour {
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		switchModeAction = InputSystem.actions.FindAction("SwitchMode");
 		switchModeAction.performed += (InputAction.CallbackContext ctx) => {
+			if (GameManager.instance.gameOver) {
+				return;
+			}
 			switch (transformState) {
 			case TransformState.MECH: {
 				transformState = TransformState.MECH_TO_PLANE;
@@ -160,7 +162,7 @@ public class PlayerController : MonoBehaviour {
 		};
 		rocketAction = InputSystem.actions.FindAction("FireRockets");
 		rocketAction.performed += (InputAction.CallbackContext ctx) => {
-			if (ctx.performed && cameraRayHit && rocketCooldownTimer <= 0.0F) {
+			if (transformState == TransformState.MECH && cameraRayHit && rocketCooldownTimer <= 0.0F) {
 				rocketSpawnTimer = 0.0F;
 				rocketsLeftToFire = rocketSalvoCount;
 				rocketTargetPos = cameraRayHitPos;
@@ -170,7 +172,7 @@ public class PlayerController : MonoBehaviour {
 		sprintAction = InputSystem.actions.FindAction("Sprint");
 		swordAction = InputSystem.actions.FindAction("Sword");
 		swordAction.performed += (InputAction.CallbackContext ctx) => {
-			if (ctx.performed && swordCooldownTimer <= 0.0F) {
+			if (swordCooldownTimer <= 0.0F && !GameManager.instance.gameOver) {
 				foreach (Collider toDamage in Physics.OverlapBox(swordHitbox.transform.position + swordHitbox.center, swordHitbox.size * 0.5F, swordHitbox.transform.rotation)) {
 					IDamageable damageable = toDamage.GetComponent<IDamageable>();
 					if (damageable != null) {
@@ -183,7 +185,7 @@ public class PlayerController : MonoBehaviour {
 
 		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
 		planeMissileAction.canceled += (InputAction.CallbackContext ctx) => {
-			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F) {
+			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !GameManager.instance.gameOver) {
 				Vector3 startVelocity = lookCam.transform.forward * 100.0F;
 				GameObject missile = Instantiate(lockOnMissilePrefab, transform.position + transform.forward * 1.5F, Quaternion.LookRotation(startVelocity));
 				MissileControllerPlane missileController = missile.GetComponent<MissileControllerPlane>();
@@ -221,6 +223,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	float SmoothCutoff(float x, float max) {
+		if (Mathf.Abs(max) < 0.000001F) {
+			return Mathf.Min(x, max);
+		}
 		// A quick function I made in Desmos that smoothly tapers off x to an asymptote defined by max.
 		// It's mostly linear in the first half of the function, then curves off towards max as x goes to infinity
 		float halfwayTarget = x * 2.0F / max;
@@ -230,6 +235,9 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		if (GameManager.instance.gameOver) {
+			return;
+		}
 		float dt = Time.deltaTime;
 		{ // Look update
 			float sensitivity = 10.0F / 100.0F;
@@ -288,6 +296,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		if (GameManager.instance.gameOver) {
+			return;
+		}
 		float dt = Time.fixedDeltaTime;
 		// Somehow lookCam.transform.forward just doesn't update if the framerate gets too low so we have to construct it manually
 		// I could not find an adequate explanation of why this happens, and look input update must happen in Update so that camera look is smooth, so I'm just going to do it like this
@@ -345,8 +356,8 @@ public class PlayerController : MonoBehaviour {
 			if (machineGunAction.IsPressed()) {
 				machineGunFireRate = Mathf.Min(machineGunMaxFireRate, machineGunFireRate + machineGunFireRateWarmupRate * dt);
 				float secondsPerBullet = 1.0F / machineGunFireRate;
-				machineGunFireTimer += dt;
-				while (machineGunFireTimer >= secondsPerBullet) {
+				print(machineGunFireTimer + " " + secondsPerBullet);
+				if (machineGunFireTimer >= secondsPerBullet) {
 					Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + transform.forward;
 					Vector3 fireTo = cameraRayHit ? cameraRayHitPos : lookCam.transform.position + lookForward * 1000.0F;
 					Vector3 inaccuracy = RandomVec3InCone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
@@ -358,7 +369,7 @@ public class PlayerController : MonoBehaviour {
 					LineRenderer bulletRender = bulletVFX.GetComponent<LineRenderer>();
 					bulletRender.SetPosition(0, fireFrom);
 					bulletRender.SetPosition(1, fireTo);
-					machineGunFireTimer -= secondsPerBullet;
+					machineGunFireTimer = 0.0F;
 					if (bulletRayHit) {
 						IDamageable damageable = bulletHit.transform.gameObject.GetComponent<IDamageable>();
 						damageable?.TakeDamage(machineGunBulletDamage, fireTo);
@@ -367,10 +378,11 @@ public class PlayerController : MonoBehaviour {
 			} else {
 				// Not sure if we want this to slowly cooldown or require a full warm up every time
 				//machineGunFireRate = Mathf.Max(0.0F, machineGunFireRate - machineGunFireRateWarmupRate * dt);
-				machineGunFireRate = 0.0F;
-				machineGunFireTimer = 0.0F;
+				machineGunFireRate = machineGunStartFireRate;
 			}
-		} break;
+			machineGunFireTimer += dt;
+		}
+		break;
 		case TransformState.PLANE: {
 			Vector3 velocity = new Vector3();
 			{ // Movement input
