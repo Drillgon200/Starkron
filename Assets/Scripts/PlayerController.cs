@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour {
 	bool mouseCaptured;
 	bool cameraRayHit;
 	Vector3 cameraRayHitPos;
+	Vector3 lookForward;
+	Vector3 forward;
+	Vector3 right;
 
 
 	bool onGround;
@@ -186,8 +189,8 @@ public class PlayerController : MonoBehaviour {
 		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
 		planeMissileAction.canceled += (InputAction.CallbackContext ctx) => {
 			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !GameManager.instance.gameOver) {
-				Vector3 startVelocity = lookCam.transform.forward * 100.0F;
-				GameObject missile = Instantiate(lockOnMissilePrefab, transform.position + transform.forward * 1.5F, Quaternion.LookRotation(startVelocity));
+				Vector3 startVelocity = lookForward * 100.0F;
+				GameObject missile = Instantiate(lockOnMissilePrefab, transform.position + lookForward * 1.5F, Quaternion.LookRotation(startVelocity));
 				MissileControllerPlane missileController = missile.GetComponent<MissileControllerPlane>();
 				missileController.velocity = startVelocity;
 				missileController.speed = planeMissileSpeed;
@@ -279,13 +282,18 @@ public class PlayerController : MonoBehaviour {
 			} break;
 			}
 			lookCam.transform.eulerAngles = new Vector3(lookPitch, lookYaw, 0.0F);
+			// Somehow lookCam.transform.forward just doesn't update if the framerate gets too low so we have to construct it manually
+			// I could not find an adequate explanation of why this happens, and look input update must happen in Update so that camera look is smooth, so I'm just going to do it like this
+			lookForward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad) * Mathf.Cos(lookPitch * Mathf.Deg2Rad), -Mathf.Sin(lookPitch * Mathf.Deg2Rad), Mathf.Cos(-lookYaw * Mathf.Deg2Rad) * Mathf.Cos(lookPitch * Mathf.Deg2Rad));
+			forward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad), 0.0F, Mathf.Cos(-lookYaw * Mathf.Deg2Rad));
+			right = Vector3.Cross(Vector3.up, forward);
 			Vector3 cameraStartPos = transform.position + new Vector3(0.0F, cameraRise, 0.0F);
 			RaycastHit camBackHit;
 			float modifiedCameraDistance = cameraDistance;
-			if (Physics.Raycast(cameraStartPos, -lookCam.transform.forward, out camBackHit, modifiedCameraDistance + cameraRise)) {
+			if (Physics.Raycast(cameraStartPos, -lookForward, out camBackHit, modifiedCameraDistance + cameraRise)) {
 				modifiedCameraDistance = Mathf.Min(modifiedCameraDistance, Vector3.Distance(cameraStartPos, camBackHit.point) - 0.4F);
 			}
-			lookCam.transform.position = cameraStartPos - lookCam.transform.forward * modifiedCameraDistance;
+			lookCam.transform.position = cameraStartPos - lookForward * modifiedCameraDistance;
 		}
 	}
 
@@ -300,11 +308,6 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 		float dt = Time.fixedDeltaTime;
-		// Somehow lookCam.transform.forward just doesn't update if the framerate gets too low so we have to construct it manually
-		// I could not find an adequate explanation of why this happens, and look input update must happen in Update so that camera look is smooth, so I'm just going to do it like this
-		Vector3 lookForward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad) * Mathf.Cos(lookPitch * Mathf.Deg2Rad), -Mathf.Sin(lookPitch * Mathf.Deg2Rad), Mathf.Cos(-lookYaw * Mathf.Deg2Rad) * Mathf.Cos(lookPitch * Mathf.Deg2Rad));
-		Vector3 forward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad), 0.0F, Mathf.Cos(-lookYaw * Mathf.Deg2Rad));
-		Vector3 right = Vector3.Cross(Vector3.up, forward);
 		RaycastHit lookHit;
 		cameraRayHit = Physics.Raycast(new Ray(lookCam.transform.position, lookForward), out lookHit, float.PositiveInfinity, ~LayerMask.GetMask("Ignore Raycast"));
 		cameraRayHitPos = lookHit.point;
@@ -357,7 +360,7 @@ public class PlayerController : MonoBehaviour {
 				machineGunFireRate = Mathf.Min(machineGunMaxFireRate, machineGunFireRate + machineGunFireRateWarmupRate * dt);
 				float secondsPerBullet = 1.0F / machineGunFireRate;
 				if (machineGunFireTimer >= secondsPerBullet) {
-					Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + transform.forward;
+					Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + forward;
 					Vector3 fireTo = cameraRayHit ? cameraRayHitPos : lookCam.transform.position + lookForward * 1000.0F;
 					Vector3 inaccuracy = RandomVec3InCone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
 					Vector3 fireVec = Quaternion.LookRotation(fireTo - fireFrom) * new Vector3(inaccuracy.x, inaccuracy.z, inaccuracy.y);
@@ -403,7 +406,7 @@ public class PlayerController : MonoBehaviour {
 				planeBulletFireCount++;
 				GameObject bullet = Instantiate(planeBulletPrefab, transform.localToWorldMatrix * new Vector4((planeBulletFireCount & 1) == 0 ? 1.0F : -1.0F, 0.0F, -1.0F, 1.0F), Quaternion.identity);
 				BulletController bulletController = bullet.GetComponent<BulletController>();
-				bulletController.velocity = transform.forward * 400.0F;
+				bulletController.velocity = lookForward * 400.0F;
 				bulletController.damageAmount = planeBulletDamage;
 				planeBulletCooldownTimer = 1.0F / planeGunFireRate;
 			}
