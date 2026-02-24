@@ -356,7 +356,6 @@ public class PlayerController : MonoBehaviour {
 			if (machineGunAction.IsPressed()) {
 				machineGunFireRate = Mathf.Min(machineGunMaxFireRate, machineGunFireRate + machineGunFireRateWarmupRate * dt);
 				float secondsPerBullet = 1.0F / machineGunFireRate;
-				print(machineGunFireTimer + " " + secondsPerBullet);
 				if (machineGunFireTimer >= secondsPerBullet) {
 					Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + transform.forward;
 					Vector3 fireTo = cameraRayHit ? cameraRayHitPos : lookCam.transform.position + lookForward * 1000.0F;
