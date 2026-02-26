@@ -155,4 +155,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3f5c30612e2b547ad5a30ce34ddcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineGunBulletController
-  lifetime: 0.15
+  lifetime: 0.1

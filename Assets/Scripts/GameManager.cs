@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update() {
-		BurnCycles(10000000);
+		//BurnCycles(10000000);
 	}
 	void FixedUpdate() {
 		gameTime += Time.fixedDeltaTime;

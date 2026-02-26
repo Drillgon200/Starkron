@@ -365,7 +365,7 @@ public class PlayerController : MonoBehaviour {
 					Vector3 inaccuracy = RandomVec3InCone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
 					Vector3 fireVec = Quaternion.LookRotation(fireTo - fireFrom) * new Vector3(inaccuracy.x, inaccuracy.z, inaccuracy.y);
 					RaycastHit bulletHit;
-					bool bulletRayHit = Physics.Raycast(new Ray(fireFrom, fireTo - fireFrom), out bulletHit);
+					bool bulletRayHit = Physics.Raycast(new Ray(fireFrom, fireVec), out bulletHit);
 					fireTo = bulletRayHit ? bulletHit.point : fireFrom + fireVec * 1000.0F;
 					GameObject bulletVFX = Instantiate(machineGunBulletPrefab, new Vector3(0.0F, 0.0F, 0.0F), Quaternion.identity);
 					LineRenderer bulletRender = bulletVFX.GetComponent<LineRenderer>();

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class MachineGunBulletController : MonoBehaviour {
-	public float lifetime = 0.5F;
+	public float lifetime = 0.1F;
 	float age;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
