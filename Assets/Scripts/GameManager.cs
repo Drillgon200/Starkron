@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -114,8 +115,15 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
+	public int randomGlobal = 1337;
+	void BurnCycles(int amount) {
+		for (int i = 0; i < amount; i++) {
+			randomGlobal = (randomGlobal >> 2 ^ randomGlobal << 6) * 11;
+		}
+	}
 	// Update is called once per frame
 	void Update() {
+		BurnCycles(10000000);
 	}
 	void FixedUpdate() {
 		gameTime += Time.fixedDeltaTime;

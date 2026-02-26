@@ -287,6 +287,9 @@ public class PlayerController : MonoBehaviour {
 			lookForward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad) * Mathf.Cos(lookPitch * Mathf.Deg2Rad), -Mathf.Sin(lookPitch * Mathf.Deg2Rad), Mathf.Cos(-lookYaw * Mathf.Deg2Rad) * Mathf.Cos(lookPitch * Mathf.Deg2Rad));
 			forward = new Vector3(-Mathf.Sin(-lookYaw * Mathf.Deg2Rad), 0.0F, Mathf.Cos(-lookYaw * Mathf.Deg2Rad));
 			right = Vector3.Cross(Vector3.up, forward);
+			RaycastHit lookHit;
+			cameraRayHit = Physics.Raycast(new Ray(lookCam.transform.position, lookForward), out lookHit, float.PositiveInfinity, ~LayerMask.GetMask("Ignore Raycast"));
+			cameraRayHitPos = lookHit.point;
 			Vector3 cameraStartPos = transform.position + new Vector3(0.0F, cameraRise, 0.0F);
 			RaycastHit camBackHit;
 			float modifiedCameraDistance = cameraDistance;
@@ -308,9 +311,6 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 		float dt = Time.fixedDeltaTime;
-		RaycastHit lookHit;
-		cameraRayHit = Physics.Raycast(new Ray(lookCam.transform.position, lookForward), out lookHit, float.PositiveInfinity, ~LayerMask.GetMask("Ignore Raycast"));
-		cameraRayHitPos = lookHit.point;
 		switch (transformState) {
 		case TransformState.MECH: {
 			Vector3 velocity = new Vector3();
@@ -365,7 +365,7 @@ public class PlayerController : MonoBehaviour {
 					Vector3 inaccuracy = RandomVec3InCone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
 					Vector3 fireVec = Quaternion.LookRotation(fireTo - fireFrom) * new Vector3(inaccuracy.x, inaccuracy.z, inaccuracy.y);
 					RaycastHit bulletHit;
-					bool bulletRayHit = Physics.Raycast(new Ray(fireFrom, fireVec), out bulletHit);
+					bool bulletRayHit = Physics.Raycast(new Ray(fireFrom, fireTo - fireFrom), out bulletHit);
 					fireTo = bulletRayHit ? bulletHit.point : fireFrom + fireVec * 1000.0F;
 					GameObject bulletVFX = Instantiate(machineGunBulletPrefab, new Vector3(0.0F, 0.0F, 0.0F), Quaternion.identity);
 					LineRenderer bulletRender = bulletVFX.GetComponent<LineRenderer>();
