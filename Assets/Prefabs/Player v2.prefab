@@ -487,7 +487,7 @@ MonoBehaviour:
   mechMesh: {fileID: -2432090755550338912, guid: e29682d361a63a24f8ff12b765a4016d, type: 3}
   planeMesh: {fileID: -2432090755550338912, guid: 1afeb9d21b7789643894a7c1b4a7d7b9, type: 3}
   uiScreen: {fileID: 0}
-  cameraDistance: 10
+  cameraDistance: 6
   cameraRise: 1.5
   maxHealth: 100
   hoverSpeed: 15
@@ -499,7 +499,7 @@ MonoBehaviour:
   dragAir: 0.1
   jumpSpeed: 3
   hoverFuelMax: 3
-  flySpeed: 10
+  flySpeed: 15
   boostSpeed: 40
   planeManeuverSpeed: 10
   flyDrag: 0.5

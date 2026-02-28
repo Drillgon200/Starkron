@@ -2376,6 +2376,7 @@ MonoBehaviour:
   gameTime: 0
   gameOver: 0
   bugCap: 100
+  randomGlobal: 1337
 --- !u!4 &782220631
 Transform:
   m_ObjectHideFlags: 0
@@ -4624,14 +4625,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2743394094906511014, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
-      propertyPath: flySpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2743394094906511014, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
-      propertyPath: cameraDistance
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 6010289672690388855, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.55
