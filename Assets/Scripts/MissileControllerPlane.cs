@@ -29,7 +29,7 @@ public class MissileControllerPlane : MonoBehaviour {
 			if (damageable != null) {
 				Vector3 damagePoint = collider.ClosestPoint(transform.position);
 				if (Vector3.Distance(damagePoint, transform.position) < explosionRadius) {
-					damageable.TakeDamage(damageAmount, damagePoint);
+					damageable.TakeDamage(damageAmount, damagePoint, IDamageable.DamageSource.PLAYER);
 				}
 			}
 		}

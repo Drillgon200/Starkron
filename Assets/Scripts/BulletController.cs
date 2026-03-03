@@ -27,7 +27,7 @@ public class BulletController : MonoBehaviour {
 		RaycastHit hit;
 		if (Physics.Raycast(new Ray(transform.position, velocity * dt), out hit, dt * velocity.magnitude)) {
 			if (!hit.collider.GetComponent<PlayerCollisionController>()) {
-				hit.collider.GetComponent<IDamageable>()?.TakeDamage(damageAmount, hit.point);
+				hit.collider.GetComponent<IDamageable>()?.TakeDamage(damageAmount, hit.point, IDamageable.DamageSource.PLAYER);
 				Destroy(gameObject);
 			}
 		}

@@ -9,7 +9,7 @@ public class DummyDamageable : MonoBehaviour, IDamageable {
 	// Update is called once per frame
 	void Update() {}
 
-	public void TakeDamage(float amount, Vector3 pos) {
+	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
 		health -= amount;
 		if (health <= 0.0F) {
 			Destroy(gameObject);

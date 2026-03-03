@@ -197,6 +197,6 @@ MonoBehaviour:
   speed: 200
   maxAge: 10
   damageAmount: 10
-  explosionRadius: 10
+  explosionRadius: 3
   velocity: {x: 0, y: 0, z: 0}
   target: {fileID: 0}

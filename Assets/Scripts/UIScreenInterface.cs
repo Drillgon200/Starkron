@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,16 +6,45 @@ public class UIScreenInterface : MonoBehaviour {
 	public GameObject pauseOverlay;
 	public GameObject winScreen;
 	public GameObject loseScreen;
+	public GameObject messageWindowDemo1;
+	public GameObject messageWindowTwoDemo1;
+	public GameObject shopOverlay;
+	public AudioSource alert;
 
 	void Start() {
 		pauseOverlay.SetActive(false);
 		winScreen.SetActive(false);
 		loseScreen.SetActive(false);
+		messageWindowDemo1.SetActive(false);
+		messageWindowTwoDemo1.SetActive(false);
+		shopOverlay.SetActive(false);
+		//temporary pop up messages for the DEMO1
+		Invoke("InstructionsPopup", 3);
+	}
+
+	public void InstructionsPopup() {
+		alert.Play();
+		messageWindowDemo1.SetActive(true);
+		Invoke("InstructionsPopupHide", 10);
+	}
+
+	public void InstructionsPopupHide() {
+		messageWindowDemo1.SetActive(false);
+		Invoke("PressQ", 3);
+	}
+
+	public void PressQ() {
+		alert.Play();
+		messageWindowTwoDemo1.SetActive(true);
+		Invoke("PressQHide", 7);
+	}
+
+	public void PressQHide() {
+		messageWindowTwoDemo1.SetActive(false);
 	}
 
 	public void PauseToggle() {
-		// change "P' back to ESCAPE on shipping
-		if (Input.GetKeyDown(KeyCode.P) && !GameManager.instance.gameOver) {
+		if (!GameManager.instance.gameOver) {
 			Time.timeScale = pauseOverlay.activeSelf ? 1.0F : 0.0F;
 			PlayerController.instance.SetMouseCapture(pauseOverlay.activeSelf);
 			pauseOverlay.SetActive(!pauseOverlay.activeSelf);
@@ -24,6 +54,7 @@ public class UIScreenInterface : MonoBehaviour {
 	public void ShowWinOverlay() {
 		PlayerController.instance.SetMouseCapture(false);
 		winScreen.SetActive(true);
+		winScreen.transform.Find("Stats").GetComponent<TMP_Text>().text = GameManager.instance.get_stats_string();
 		// Just in case
 		loseScreen.SetActive(false);
 		pauseOverlay.SetActive(false);
@@ -32,6 +63,7 @@ public class UIScreenInterface : MonoBehaviour {
 	public void ShowLoseOverlay() {
 		PlayerController.instance.SetMouseCapture(false);
 		loseScreen.SetActive(true);
+		loseScreen.transform.Find("Stats").GetComponent<TMP_Text>().text = GameManager.instance.get_stats_string();
 		// Just in case
 		winScreen.SetActive(false);
 		pauseOverlay.SetActive(false);
@@ -46,7 +78,7 @@ public class UIScreenInterface : MonoBehaviour {
 		// get reference to current level
 		// load that reference
 		Time.timeScale = 1.0F;
-		SceneManager.LoadScene("Scenes/Demo1"); // change to correct scene level
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name); // change to correct scene level
 	}
 
 	public void ExitLevel() {

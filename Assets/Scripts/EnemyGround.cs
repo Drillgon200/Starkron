@@ -1,70 +1,98 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 	public Rigidbody rigidBody;
-	public Animator animator;
+	public Material bugMaterial;
 	public float maxHealth = 20.0F;
 	public float turnSpeed = 400.0F;
 	public float walkSpeed = 2.0F;
 	public float walkDrag = 0.99F;
 	public float attackCooldown = 1.0F;
-	float attackCooldownTimer;
+	public float attackCooldownTimer;
 	public float damageAmount = 20.0F;
 	float health;
-	int attackTriggerFrames;
-	GameObject target;
+	public int attackTriggerFrames;
+	public GameObject target;
+	public int gameManagerRegisteredIdx;
+
+	public GameObject deathParts;
+
+	enum AnimationState {
+		WALKING,
+		ATTACKING,
+		ATTACK_TRIGGERED
+	};
+	AnimationState animState = AnimationState.WALKING;
+	public float lastAnimOffset;
+	public float lastAnimLength;
+	public float lastAnimTime;
+	public float animOffset;
+	public float animLength;
+	public float animTime;
+	public float animBlendFactor;
+	public const float animWalkOffset = 0.0F;
+	public const float animWalkLength = 26.0F / 24.0F;
+	public const float animAttackOffset = 27.0F;
+	public const float animAttackTriggerTime = 4.0F / 24.0F;
+	public const float animAttackLength = 17.0F / 24.0F;
+	public const float blendTime = 0.15F;
+
 	void Start() {
+		if (GameManager.instance.bugCount >= GameManager.instance.bugCap) {
+			// Too many bugs
+			Destroy(gameObject);
+			return;
+		}
 		health = maxHealth;
 		GameManager.instance.bugCount++;
+		gameManagerRegisteredIdx = GameManager.instance.RegisterGroundBug(this);
+
+		SwitchAnimStateTo(AnimationState.WALKING, animWalkOffset, animWalkLength);
+		animBlendFactor = 1.0F;
 	}
 	void OnDestroy() {
 		GameManager.instance.bugCount--;
+		GameManager.instance.RemoveGroundBug(gameManagerRegisteredIdx);
 	}
 
-	void OnTriggerStay(Collider collider) {
-		PlayerCollisionController player = collider.gameObject.GetComponent<PlayerCollisionController>();
-		BuildingController building = collider.gameObject.GetComponent<BuildingController>();
-		if (attackTriggerFrames > 0 && (player || building)) {
-			building?.TakeDamage(damageAmount, collider.ClosestPoint(transform.position));
-			if (player) {
-				PlayerController.instance.TakeDamage(damageAmount);
+	void SwitchAnimStateTo(AnimationState state, float newOffset, float newLength) {
+		lastAnimOffset = animOffset;
+		lastAnimLength = animLength;
+		lastAnimTime = animTime;
+		animOffset = newOffset;
+		animLength = newLength;
+		animTime = 0.0F;
+		animBlendFactor = 0.0F;
+		animState = state;
+	}
+
+	void Update() {
+		float dt = Time.deltaTime;
+		animBlendFactor = Mathf.Min(1.0F, animBlendFactor + dt / blendTime);
+		lastAnimTime += dt;
+		animTime += dt;
+		switch (animState) {
+		case AnimationState.WALKING: {
+		} break;
+		case AnimationState.ATTACKING: {
+			if (animTime >= animAttackTriggerTime) {
+				attackTriggerFrames = 2;
+				animState = AnimationState.ATTACK_TRIGGERED;
+				goto case AnimationState.ATTACK_TRIGGERED;
 			}
-			attackTriggerFrames = 0;
+		} break;
+		case AnimationState.ATTACK_TRIGGERED: {
+			if (animTime >= animAttackLength - blendTime) {
+				SwitchAnimStateTo(AnimationState.WALKING, animWalkOffset, animWalkLength);
+			}
+		} break;
 		}
-		if (attackCooldownTimer <= 0.0F && (player || building)) {
-			animator.SetTrigger("Attack");
-			attackCooldownTimer = attackCooldown;
-		}
-	}
-
-	// Should be called after update loop
-	public void OnAttackAnimationEvent() {
-		attackTriggerFrames = 2;
 	}
 
 	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
-		if (attackCooldownTimer <= 0.0F) {
-			{ // Select target
-				if (Random.Range(0, 25) == 0) {
-					GameObject bestTarget = PlayerController.instance.gameObject;
-					float bestDistance = Vector3.Distance(bestTarget.transform.position, transform.position);
-					foreach (Collider collider in Physics.OverlapSphere(transform.position, 10.0F)) {
-						float newDist = Vector3.Distance(collider.transform.position, transform.position);
-						if (collider.GetComponent<BuildingController>() && newDist < bestDistance) {
-							bestTarget = collider.gameObject;
-							bestDistance = newDist;
-						}
-					}
-					if (bestDistance < 20.0F) {
-						target = bestTarget;
-					}
-				}
-				if (target && (Vector3.Distance(target.transform.position, transform.position) > 20.0F || target.transform.position.y > transform.position.y + 5.0F)) {
-					target = null;
-				}
-			}
-
+		if (animState == AnimationState.WALKING) {
 			Vector2 direction =
 				target ? Vector2.Normalize(new Vector2(target.transform.position.x - transform.position.x, target.transform.position.z - transform.position.z)) :
 				GameManager.instance.GetDirectionToCity(new Vector2(transform.position.x, transform.position.z));
@@ -77,15 +105,41 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 				rigidBody.AddForce(transform.forward * 100.0F, ForceMode.Acceleration);
 			}
 		}
+		if (target != null) {
+			bool closeEnoughTarget = (target.transform.position - transform.position).sqrMagnitude < 2.0F * 2.0F;
+			if (attackTriggerFrames > 0 && closeEnoughTarget) {
+				foreach (Collider collider in Physics.OverlapBox(transform.position + new Vector3(0.0F, 0.532F, 0.0F) + transform.forward * 1.5F, new Vector3(0.5F, 0.5F, 1.0F), transform.rotation)) {
+					PlayerCollisionController player = collider.GetComponent<PlayerCollisionController>();
+					IBugTarget bugTarget = collider.GetComponent<IBugTarget>();
+					if (bugTarget != null || player != null) {
+						bugTarget?.TakeDamage(damageAmount, collider.transform.position, IDamageable.DamageSource.BUG);
+						if (player) {
+							PlayerController.instance.TakeDamage(damageAmount);
+						}
+						attackTriggerFrames = 0;
+						break;
+					}
+				}
+			}
+			if (attackCooldownTimer <= 0.0F && closeEnoughTarget) {
+				SwitchAnimStateTo(AnimationState.ATTACKING, animAttackOffset, animAttackLength);
+				attackCooldownTimer = attackCooldown;
+			}
+		}
 		rigidBody.linearVelocity *= Mathf.Exp(dt * Mathf.Log(1.0F - walkDrag));
 		attackCooldownTimer -= dt;
 		attackTriggerFrames = Mathf.Max(attackTriggerFrames - 1, 0);
 	}
 
-
-	public void TakeDamage(float amount, Vector3 pos) {
+	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
 		health -= amount;
 		if (health <= 0.0F) {
+			if (source == IDamageable.DamageSource.PLAYER) {
+				GameManager.instance.statBugsKilledByPlayer++;
+			} else if (source == IDamageable.DamageSource.TURRET) {
+				GameManager.instance.statBugsKilledByTurrets++;
+			}
+			GameObject fragments = Instantiate(deathParts, transform.position - transform.forward * 1.0F, transform.rotation);
 			Destroy(gameObject);
 		}
 	}

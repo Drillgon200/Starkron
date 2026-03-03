@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - bugPiecesTag
+  - CrystalTag
   layers:
   - Default
   - TransparentFX

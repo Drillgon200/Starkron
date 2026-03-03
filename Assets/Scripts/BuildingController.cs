@@ -1,17 +1,17 @@
 using UnityEngine;
 
-public class BuildingController : MonoBehaviour, IDamageable {
+public class BuildingController : MonoBehaviour, IBugTarget {
+	public int gameManagerRegisteredIdx;
 	void Start() {
-		GameManager.instance.buildingCount++;
+		gameManagerRegisteredIdx = GameManager.instance.RegisterBuilding(this);
 	}
 	void OnDestroy() {
-		GameManager.instance.buildingCount--;
+		GameManager.instance.RemoveBuilding(gameManagerRegisteredIdx);
 	}
-
-	// Update is called once per frame
-	void Update() {
-	}
-	public void TakeDamage(float amount, Vector3 pos) {
+	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
+		if (source == IDamageable.DamageSource.PLAYER) {
+			GameManager.instance.statBuildingsDestroyedByPlayer++;
+		}
 		Destroy(gameObject);
 	}
 }

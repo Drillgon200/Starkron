@@ -4,12 +4,16 @@ public class MinimapUI : MonoBehaviour {
 	public Texture uiSquare;
 	public Texture lockOnIndicator;
 	public Texture minimapTexture;
+	public Texture shieldBarTexture;
+	public Material shieldBarMat;
 	public PlayerController player;
 	public float minimapWorldRadius = 20.0F;
 	void OnGUI() {
 		if (Event.current.type != EventType.Repaint) {
 			return;
 		}
+
+		// Lock-on indicator
 		float scale = Mathf.Min(Screen.width / 1920.0F, Screen.height / 1080.0F);
 		if (player.planeMissileLockOnTarget != null) {
 			Vector3 pos = player.lookCam.WorldToScreenPoint(player.planeMissileLockOnTarget.transform.position, Camera.MonoOrStereoscopicEye.Mono);
@@ -19,7 +23,9 @@ public class MinimapUI : MonoBehaviour {
 			}
 			
 		}
-		float minimapOffsetX = 300.0F * scale;
+
+		// Minimap
+		float minimapOffsetX = 200.0F * scale;
 		float minimapOffsetY = 150.0F * scale;
 		float minimapSize = 300.0F * scale;
 		float squareSize = 10.0F * scale;
@@ -38,5 +44,13 @@ public class MinimapUI : MonoBehaviour {
 				}
 			}
 		}
+
+		// Shield bar
+		float shieldSizeX = 800.0F * scale;
+		float shieldSizeY = shieldSizeX * 0.25F;
+		float shieldOffsetX = Screen.width * 0.5F - shieldSizeX * 0.5F;
+		float shieldOffsetY = -50.0F * scale;
+		shieldBarMat.SetFloat("_Health", PlayerController.instance.GetHealthNormalized());
+		Graphics.DrawTexture(new Rect(shieldOffsetX, shieldOffsetY, shieldSizeX, shieldSizeY), shieldBarTexture, shieldBarMat);
 	}
 }
