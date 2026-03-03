@@ -252,6 +252,9 @@ public class GameManager : MonoBehaviour {
 		cmdBuf.DrawProcedural(Matrix4x4.identity, groundBugOutlineMaterial, 0, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
 	}
 	void GroundBugsTarget() {
+		if (allGroundBugs.Count == 0) {
+			return;
+		}
 		currentGroundBugTargetIdx %= allGroundBugs.Count;
 		for (int i = 0; i < groundBugsToTargetAndAttackPerTick; i++) {
 			if (++currentGroundBugTargetIdx == allGroundBugs.Count) {
@@ -273,6 +276,13 @@ public class GameManager : MonoBehaviour {
 				if (bestBuildingIdx != -1) {
 					bestTarget = allBuildings[bestBuildingIdx].gameObject;
 				}
+				foreach (TurretRailgunController turret in turrets) {
+					float newDist = (turret.transform.position - bug.transform.position).sqrMagnitude;
+					if (newDist < bestDistance) {
+						bestTarget = turret.gameObject;
+						bestDistance = newDist;
+					}
+				}
 				if (bestDistance < 20.0F * 20.0F) {
 					bug.target = bestTarget;
 				}
@@ -283,6 +293,9 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 	void TurretsTarget() {
+		if (turrets.Count == 0) {
+			return;
+		}
 		currentTurretTargetIdx %= turrets.Count;
 		for (int i = 0; i < Mathf.Min(turretsToTargetPerTick, turrets.Count); i++) {
 			if (++currentTurretTargetIdx == allGroundBugs.Count) {
@@ -311,6 +324,7 @@ public class GameManager : MonoBehaviour {
 		TurretsTarget();
 		gameTime += Time.fixedDeltaTime;
 		if (allBuildings.Count <= 0 || PlayerController.instance.IsDead()) {
+			print("Lose");
 			gameOver = true;
 			uiScreen.ShowLoseOverlay();
 		} else if (bugCount <= 0 && hiveCount <= 0) {

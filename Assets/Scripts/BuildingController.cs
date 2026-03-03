@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BuildingController : MonoBehaviour, IDamageable {
+public class BuildingController : MonoBehaviour, IBugTarget {
 	public int gameManagerRegisteredIdx;
 	void Start() {
 		gameManagerRegisteredIdx = GameManager.instance.RegisterBuilding(this);

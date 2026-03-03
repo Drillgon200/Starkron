@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TurretRailgunController : MonoBehaviour, IDamageable {
+public class TurretRailgunController : MonoBehaviour, IBugTarget {
 	public GameObject barrel;
 	public Collider target;
 	public GameObject railgunProjectilePrefab;

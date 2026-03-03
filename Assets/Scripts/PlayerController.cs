@@ -234,9 +234,6 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 	}
-	void OnCollisionExit(Collision collision) {
-		onGround = false;
-	}
 
 	float SmoothCutoff(float x, float max) {
 		if (Mathf.Abs(max) < 0.000001F) {
@@ -485,6 +482,7 @@ public class PlayerController : MonoBehaviour {
 		transformCooldown -= dt;
 		planeMissileCooldownTimer -= dt;
 		planeBulletCooldownTimer -= dt;
+		onGround = false;
 	}
 
 	public void TakeDamage(float damage) {
