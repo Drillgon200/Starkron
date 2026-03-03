@@ -12,6 +12,12 @@ public class GameManager : MonoBehaviour {
 
 	public UIScreenInterface uiScreen;
 
+	public int statBugsKilledByPlayer;
+	public int statBugsKilledByTurrets;
+	public int statHivesKilledByPlayer;
+	public int statHivesKilledByTurrets;
+	public int statBuildingsDestroyedByPlayer;
+
 	public int bugCount;
 	public int hiveCount;
 	public float spawnRateMultiplier = 1.0F;
@@ -154,6 +160,15 @@ public class GameManager : MonoBehaviour {
 		for (int i = 0; i < amount; i++) {
 			randomGlobal = (randomGlobal >> 2 ^ randomGlobal << 6) * 11;
 		}
+	}
+
+	public string get_stats_string() {
+		return
+			"Bugs killed by you: " + statBugsKilledByPlayer + "\n" +
+			"Bugs killed by turrets: " + statBugsKilledByTurrets + "\n" +
+			"Hives killed by you: " + statHivesKilledByPlayer + "\n" +
+			"Hives killed by turrets: " + statHivesKilledByTurrets + "\n" +
+			"Buildings destroyed by you: " + statBuildingsDestroyedByPlayer;
 	}
 
 	public int RegisterGroundBug(EnemyGround enemy) {
@@ -324,7 +339,6 @@ public class GameManager : MonoBehaviour {
 		TurretsTarget();
 		gameTime += Time.fixedDeltaTime;
 		if (allBuildings.Count <= 0 || PlayerController.instance.IsDead()) {
-			print("Lose");
 			gameOver = true;
 			uiScreen.ShowLoseOverlay();
 		} else if (bugCount <= 0 && hiveCount <= 0) {

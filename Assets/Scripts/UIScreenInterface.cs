@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -53,6 +54,7 @@ public class UIScreenInterface : MonoBehaviour {
 	public void ShowWinOverlay() {
 		PlayerController.instance.SetMouseCapture(false);
 		winScreen.SetActive(true);
+		winScreen.transform.Find("Stats").GetComponent<TMP_Text>().text = GameManager.instance.get_stats_string();
 		// Just in case
 		loseScreen.SetActive(false);
 		pauseOverlay.SetActive(false);
@@ -61,6 +63,7 @@ public class UIScreenInterface : MonoBehaviour {
 	public void ShowLoseOverlay() {
 		PlayerController.instance.SetMouseCapture(false);
 		loseScreen.SetActive(true);
+		loseScreen.transform.Find("Stats").GetComponent<TMP_Text>().text = GameManager.instance.get_stats_string();
 		// Just in case
 		winScreen.SetActive(false);
 		pauseOverlay.SetActive(false);

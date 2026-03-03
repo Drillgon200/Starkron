@@ -112,7 +112,7 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 					PlayerCollisionController player = collider.GetComponent<PlayerCollisionController>();
 					IBugTarget bugTarget = collider.GetComponent<IBugTarget>();
 					if (bugTarget != null || player != null) {
-						bugTarget?.TakeDamage(damageAmount, collider.transform.position);
+						bugTarget?.TakeDamage(damageAmount, collider.transform.position, IDamageable.DamageSource.BUG);
 						if (player) {
 							PlayerController.instance.TakeDamage(damageAmount);
 						}
@@ -131,9 +131,14 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 		attackTriggerFrames = Mathf.Max(attackTriggerFrames - 1, 0);
 	}
 
-	public void TakeDamage(float amount, Vector3 pos) {
+	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
 		health -= amount;
 		if (health <= 0.0F) {
+			if (source == IDamageable.DamageSource.PLAYER) {
+				GameManager.instance.statBugsKilledByPlayer++;
+			} else if (source == IDamageable.DamageSource.TURRET) {
+				GameManager.instance.statBugsKilledByTurrets++;
+			}
 			GameObject fragments = Instantiate(deathParts, transform.position - transform.forward * 1.0F, transform.rotation);
 			Destroy(gameObject);
 		}

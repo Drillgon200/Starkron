@@ -26,9 +26,14 @@ public class HiveController : MonoBehaviour, IDamageable {
 			spawnDelay -= Time.fixedDeltaTime;
 		}
 	}
-	public void TakeDamage(float amount, Vector3 pos) {
+	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
 		health -= amount;
 		if (health <= 0.0F) {
+			if (source == IDamageable.DamageSource.PLAYER) {
+				GameManager.instance.statHivesKilledByPlayer++;
+			} else if (source == IDamageable.DamageSource.BUG) {
+				GameManager.instance.statHivesKilledByTurrets++;
+			}
 			Destroy(gameObject);
 		}
 	}

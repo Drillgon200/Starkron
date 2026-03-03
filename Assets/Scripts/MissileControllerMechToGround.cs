@@ -20,7 +20,7 @@ public class MissileControllerMechToGround : MonoBehaviour {
 			foreach (Collider toDamage in Physics.OverlapSphere(transform.position, blastRadius)) {
 				IDamageable damageable = toDamage.GetComponent<IDamageable>();
 				if (damageable != null) {
-					damageable.TakeDamage(damageAmount, toDamage.ClosestPoint(transform.position));
+					damageable.TakeDamage(damageAmount, toDamage.ClosestPoint(transform.position), IDamageable.DamageSource.PLAYER);
 				}
 			}
 			Destroy(gameObject);

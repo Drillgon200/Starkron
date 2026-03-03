@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class EnemyFlying : MonoBehaviour, IFlyingEnemy, IDamageable {
 	public float health = 10.0F;
@@ -34,7 +35,7 @@ public class EnemyFlying : MonoBehaviour, IFlyingEnemy, IDamageable {
 		exploding = true;
 		foreach (Collider collider in Physics.OverlapSphere(transform.position, explosionRadius)) {
 			IDamageable damageable = collider.GetComponent<IDamageable>();
-			damageable?.TakeDamage(explosionDamage, collider.ClosestPoint(transform.position));
+			damageable?.TakeDamage(explosionDamage, collider.ClosestPoint(transform.position), IDamageable.DamageSource.BUG);
 		}
 		if (Vector3.Distance(PlayerController.instance.transform.position, transform.position) < explosionRadius) {
 			PlayerController.instance.TakeDamage(explosionDamage);
@@ -78,9 +79,14 @@ public class EnemyFlying : MonoBehaviour, IFlyingEnemy, IDamageable {
 		velocity *= Mathf.Exp(dt * Mathf.Log(1.0F - drag));
 	}
 
-	public void TakeDamage(float amount, Vector3 pos) {
+	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
 		health -= amount;
 		if (health <= 0.0F) {
+			if (source == IDamageable.DamageSource.PLAYER) {
+				GameManager.instance.statBugsKilledByPlayer++;
+			} else if (source == IDamageable.DamageSource.TURRET) {
+				GameManager.instance.statBugsKilledByTurrets++;
+			}
 			Explode();
 		}
 	}

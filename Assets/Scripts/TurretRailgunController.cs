@@ -37,14 +37,14 @@ public class TurretRailgunController : MonoBehaviour, IBugTarget {
 				bulletRender.SetPosition(0, fireFrom);
 				bulletRender.SetPosition(1, fireTo);
 				if (bulletRayHit) {
-					bulletHit.transform.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage, fireTo);
+					bulletHit.transform.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage, fireTo, IDamageable.DamageSource.TURRET);
 				}
 				fireCooldown = 1.0F / fireRate;
 			}
 		}
 		fireCooldown -= dt;
 	}
-	public void TakeDamage(float amount, Vector3 pos) {
+	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
 		health -= amount;
 		if (health <= 0.0F) {
 			Destroy(gameObject);

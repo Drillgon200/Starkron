@@ -8,7 +8,10 @@ public class BuildingController : MonoBehaviour, IBugTarget {
 	void OnDestroy() {
 		GameManager.instance.RemoveBuilding(gameManagerRegisteredIdx);
 	}
-	public void TakeDamage(float amount, Vector3 pos) {
+	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
+		if (source == IDamageable.DamageSource.PLAYER) {
+			GameManager.instance.statBuildingsDestroyedByPlayer++;
+		}
 		Destroy(gameObject);
 	}
 }

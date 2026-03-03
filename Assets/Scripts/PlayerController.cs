@@ -194,7 +194,7 @@ public class PlayerController : MonoBehaviour {
 				foreach (Collider toDamage in Physics.OverlapBox(swordHitbox.transform.position + swordHitbox.center, swordHitbox.size * 0.5F, swordHitbox.transform.rotation)) {
 					IDamageable damageable = toDamage.GetComponent<IDamageable>();
 					if (damageable != null) {
-						damageable.TakeDamage(swordDamage, toDamage.ClosestPoint(transform.position));
+						damageable.TakeDamage(swordDamage, toDamage.ClosestPoint(transform.position), IDamageable.DamageSource.PLAYER);
 					}
 				}
 				swordCooldownTimer = swordCooldown;
@@ -409,7 +409,7 @@ public class PlayerController : MonoBehaviour {
 					machineGunFireTimer = 0.0F;
 					if (bulletRayHit) {
 						IDamageable damageable = bulletHit.transform.gameObject.GetComponent<IDamageable>();
-						damageable?.TakeDamage(machineGunBulletDamage, fireTo);
+						damageable?.TakeDamage(machineGunBulletDamage, fireTo, IDamageable.DamageSource.PLAYER);
 					}
 				}
 			} else {
