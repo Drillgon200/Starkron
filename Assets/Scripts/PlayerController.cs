@@ -121,6 +121,9 @@ public class PlayerController : MonoBehaviour {
 	System.Action<InputAction.CallbackContext> planeMissileCanceledAction;
 	System.Action<InputAction.CallbackContext> pausePerformedAction;
 
+	//ROSS changes
+	public int bankTotal = 0;
+	public TMP_Text bankUICounterText;
 
 	enum TransformState {
 		MECH,
@@ -221,6 +224,15 @@ public class PlayerController : MonoBehaviour {
 		SetMouseCapture(true);
 		health = maxHealth;
 	}
+
+	void OnTriggerEnter(Collider other) {
+		if (other.transform.tag == "CrystalTag") {
+			bankTotal++;
+			bankUICounterText.text = "Crystal x" + bankTotal.ToString();
+			Destroy(other.gameObject);
+		}
+	}
+
 	private void OnDestroy() {
 		pauseAction.performed -= pausePerformedAction;
 		planeMissileAction.canceled -= planeMissileCanceledAction;
