@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour {
 	public static PlayerController instance;
 	public Camera lookCam;
 	public Rigidbody rigidBody;
-	public GameObject shadow;
 	public GameObject playerModelObject;
 	public MeshFilter renderMeshFilter;
 	public Collider mechCollider;
@@ -49,6 +48,9 @@ public class PlayerController : MonoBehaviour {
 	float hoverFuelLeft;
 	public float maxHealth = 100.0F;
 	float health;
+	public float healthRechargeRate = 20.0F;
+	public float healthRechargeCooldown = 3.0F;
+	float healthRechargeCooldownTimer = 0.0F;
 
 	public float hoverSpeed = 10.0F;
 	public float moveSpeedGround = 50.0F;
@@ -146,6 +148,10 @@ public class PlayerController : MonoBehaviour {
 			Cursor.lockState = CursorLockMode.None;
 		}
 		mouseCaptured = cap;
+	}
+
+	public float GetHealthNormalized() {
+		return Mathf.Clamp01(health / maxHealth);
 	}
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -310,6 +316,11 @@ public class PlayerController : MonoBehaviour {
 			}
 			lookCam.transform.position = cameraStartPos - lookForward * modifiedCameraDistance;
 		}
+
+		if (healthRechargeCooldownTimer <= 0.0F) {
+			health = Mathf.Min(maxHealth, health + healthRechargeRate * dt);
+		}
+		healthRechargeCooldownTimer -= dt;
 	}
 
 	Vector3 RandomVec3InCone(float coneHalfAngle) {
@@ -462,7 +473,6 @@ public class PlayerController : MonoBehaviour {
 				mechCollider.enabled = false;
 				planeTiltRotation = Vector3.zero;
 				planeTiltRotationVelocity = Vector3.zero;
-				shadow.GetComponent<DecalProjector>().enabled = false;
 			}
 		} break;
 		case TransformState.PLANE_TO_MECH: {
@@ -472,7 +482,6 @@ public class PlayerController : MonoBehaviour {
 				renderMeshFilter.mesh = mechMesh;
 				planeCollider.enabled = false;
 				mechCollider.enabled = true;
-				shadow.GetComponent<DecalProjector>().enabled = true;
 				playerModelObject.transform.localRotation = Quaternion.identity;
 			}
 		} break;
@@ -487,6 +496,7 @@ public class PlayerController : MonoBehaviour {
 
 	public void TakeDamage(float damage) {
 		health -= damage;
+		healthRechargeCooldownTimer = healthRechargeCooldown;
 	}
 	public bool IsDead() {
 		return health <= 0.0F;

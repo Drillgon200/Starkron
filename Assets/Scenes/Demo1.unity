@@ -3764,7 +3764,7 @@ GameObject:
   - component: {fileID: 1034119630}
   - component: {fileID: 1034119629}
   m_Layer: 0
-  m_Name: Minimap
+  m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3785,6 +3785,8 @@ MonoBehaviour:
   uiSquare: {fileID: 2800000, guid: bfa27649e2f599946aa430b3b09134f6, type: 3}
   lockOnIndicator: {fileID: 2800000, guid: 204758b59d494b74ba5f0f08309bfcbf, type: 3}
   minimapTexture: {fileID: 2800000, guid: 2e0680f16b0e6904baa3f31f164d2316, type: 3}
+  shieldBarTexture: {fileID: 2800000, guid: 3e88225d0ada716409b794606d4c6f07, type: 3}
+  shieldBarMat: {fileID: 2100000, guid: 1b15b231e33d8db4da452d0be19cbd8d, type: 2}
   player: {fileID: 466277773}
   minimapWorldRadius: 100
 --- !u!4 &1034119630
@@ -4404,12 +4406,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6412375199489756631, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412375199489756631, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412375199489756631, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6412375199489756631, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8816942104932466047, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
       propertyPath: m_Name
       value: Player v2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6142394850750418197, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
