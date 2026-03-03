@@ -21,7 +21,7 @@ public class HiveController : MonoBehaviour, IDamageable {
 				if (Physics.OverlapBox(spawnPos, new Vector3(1.0F, 0.2F, 1.0F)).Length == 0) {
 					GameObject groundBug = Instantiate(groundBugPrefab, spawnPos, Quaternion.identity);
 				}
-				spawnDelay = Random.Range(spawnDelayMin, spawnDelayMax);
+				spawnDelay = Random.Range(spawnDelayMin, spawnDelayMax) / GameManager.instance.spawnRateMultiplier;
 			}
 			spawnDelay -= Time.fixedDeltaTime;
 		}

@@ -1,19 +1,36 @@
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 
 	public UIScreenInterface uiScreen;
 
-	public int buildingCount;
 	public int bugCount;
 	public int hiveCount;
+	public float spawnRateMultiplier = 1.0F;
 	public double gameTime;
 	public bool gameOver;
 
 	public int bugCap;
+
+	// So we can efficiently render all of them in one call as well as find targets (there will be a lot of these, we need this to be fast)
+	public Material groundBugMaterial;
+	public Material groundBugOutlineMaterial;
+	const int groundBugsToTargetAndAttackPerTick = 50;
+	int currentGroundBugTargetAttackIdx = 0;
+	List<EnemyGround> allGroundBugs = new();
+	GraphicsBuffer groundEnemyLocalToWorlds;
+	GraphicsBuffer groundEnemyAnimTimes;
+
+	// So we can efficiently target buildings
+	List<BuildingController> allBuildings = new();
+	List<Vector3> buildingPositions = new();
 
 	const float GRID_SIZE = 300.0F;
 	const int GRID_RESOLUTION = 300;
@@ -44,8 +61,18 @@ public class GameManager : MonoBehaviour {
 		instance = this;
 	}
 
+	void OnDestroy() {
+		groundEnemyLocalToWorlds?.Dispose();
+		groundEnemyLocalToWorlds = null;
+		groundEnemyAnimTimes?.Dispose();
+		groundEnemyAnimTimes = null;
+	}
+
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
+		groundEnemyLocalToWorlds = new GraphicsBuffer(GraphicsBuffer.Target.Structured, bugCap, 16 * sizeof(float));
+		groundEnemyAnimTimes = new GraphicsBuffer(GraphicsBuffer.Target.Structured, bugCap, 4 * sizeof(float));
+
 		float gridCellHalfSize = 0.5F * GRID_SIZE / GRID_RESOLUTION;
 		int[] costs = new int[GRID_RESOLUTION * GRID_RESOLUTION];
 		for (int y = 0; y < GRID_RESOLUTION; y++) {
@@ -121,13 +148,128 @@ public class GameManager : MonoBehaviour {
 			randomGlobal = (randomGlobal >> 2 ^ randomGlobal << 6) * 11;
 		}
 	}
+
+	public int RegisterGroundBug(EnemyGround enemy) {
+		int id = allGroundBugs.Count;
+		allGroundBugs.Add(enemy);
+		return id;
+	}
+
+	public void RemoveGroundBug(int id) {
+		if (id < allGroundBugs.Count) {
+			allGroundBugs[id] = allGroundBugs.Last();
+			allGroundBugs[id].gameManagerRegisteredIdx = id;
+			allGroundBugs.RemoveAt(allGroundBugs.Count - 1);
+		}
+	}
+
+	public int RegisterBuilding(BuildingController building) {
+		int id = allBuildings.Count;
+		allBuildings.Add(building);
+		buildingPositions.Add(building.transform.position);
+		return id;
+	}
+
+	public void RemoveBuilding(int id) {
+		if (id < allBuildings.Count) {
+			allBuildings[id] = allBuildings.Last();
+			allBuildings[id].gameManagerRegisteredIdx = id;
+			allBuildings.RemoveAt(allBuildings.Count - 1);
+			buildingPositions[id] = buildingPositions.Last();
+			buildingPositions.RemoveAt(buildingPositions.Count - 1);
+		}
+	}
+
 	// Update is called once per frame
 	void Update() {
 		//BurnCycles(10000000);
+		//if (Mathf.Repeat((float)gameTime, 4.0F) < 2.0F) {
+		Unity.Collections.NativeArray<float> matrices = new(allGroundBugs.Count * 16, Unity.Collections.Allocator.Temp);
+		Unity.Collections.NativeArray<float> animTimes = new(allGroundBugs.Count * 4, Unity.Collections.Allocator.Temp);
+		float animFrames = 41 - 15;
+		float animLength = animFrames / 24.0F;
+		int bugsToDraw = Mathf.Min(allGroundBugs.Count, bugCap);
+		for (int i = 0; i < bugsToDraw; i++) {
+			EnemyGround bug = allGroundBugs[i];
+			Matrix4x4 l2w = bug.transform.localToWorldMatrix;
+			matrices[i * 16 + 0] = l2w.m00;
+			matrices[i * 16 + 1] = l2w.m10;
+			matrices[i * 16 + 2] = l2w.m20;
+			matrices[i * 16 + 3] = l2w.m30;
+			matrices[i * 16 + 4] = l2w.m01;
+			matrices[i * 16 + 5] = l2w.m11;
+			matrices[i * 16 + 6] = l2w.m21;
+			matrices[i * 16 + 7] = l2w.m31;
+			matrices[i * 16 + 8] = l2w.m02;
+			matrices[i * 16 + 9] = l2w.m12;
+			matrices[i * 16 + 10] = l2w.m22;
+			matrices[i * 16 + 11] = l2w.m32;
+			matrices[i * 16 + 12] = l2w.m03;
+			matrices[i * 16 + 13] = l2w.m13;
+			matrices[i * 16 + 14] = l2w.m23;
+			matrices[i * 16 + 15] = l2w.m33;
+			animTimes[i * 4 + 0] = Mathf.Repeat(bug.lastAnimTime, bug.lastAnimLength) * 24.0F + bug.lastAnimOffset;
+			animTimes[i * 4 + 1] = Mathf.Repeat(bug.animTime, bug.animLength) * 24.0F + bug.animOffset;
+			animTimes[i * 4 + 2] = bug.animBlendFactor;
+		}
+		groundEnemyLocalToWorlds.SetData(matrices);
+		groundEnemyAnimTimes.SetData(animTimes);
+		RenderParams renderParams = new RenderParams(groundBugMaterial);
+		renderParams.worldBounds = new Bounds(Vector3.zero, new Vector3(50000.0F, 50000.0F, 50000.0F));
+		renderParams.matProps = new MaterialPropertyBlock();
+		renderParams.matProps.SetBuffer("_LocalToWorld", groundEnemyLocalToWorlds);
+		renderParams.matProps.SetBuffer("_AnimTime", groundEnemyAnimTimes);
+		renderParams.shadowCastingMode = ShadowCastingMode.On;
+		int groundBugVertexCount = 1968;
+		Graphics.RenderPrimitives(renderParams, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
+	}
+
+	public void DrawOutlines(CommandBuffer cmdBuf) {
+		cmdBuf.SetGlobalBuffer("_LocalToWorld", groundEnemyLocalToWorlds);
+		cmdBuf.SetGlobalBuffer("_AnimTime", groundEnemyAnimTimes);
+		Vector3 camPos = PlayerController.instance.lookCam.transform.position;
+		Vector3 camForward = PlayerController.instance.lookForward;
+		cmdBuf.SetGlobalVector("_CamPos", camPos);
+		cmdBuf.SetGlobalVector("_CamForward", camForward);
+		int groundBugVertexCount = 1968;
+		int bugsToDraw = Mathf.Min(allGroundBugs.Count, bugCap);
+		cmdBuf.DrawProcedural(Matrix4x4.identity, groundBugOutlineMaterial, 0, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
+	}
+	void GroundBugsTarget() {
+		currentGroundBugTargetAttackIdx %= allGroundBugs.Count;
+		for (int i = 0; i < groundBugsToTargetAndAttackPerTick; i++) {
+			if (++currentGroundBugTargetAttackIdx == allGroundBugs.Count) {
+				currentGroundBugTargetAttackIdx = 0;
+			}
+			EnemyGround bug = allGroundBugs[currentGroundBugTargetAttackIdx];
+			if (bug.attackCooldownTimer <= 0.0F) {
+				// Target
+				GameObject bestTarget = PlayerController.instance.gameObject;
+				float bestDistance = (bestTarget.transform.position - bug.transform.position).sqrMagnitude;
+				int bestBuildingIdx = -1;
+				for (int j = 0; j < buildingPositions.Count; j++) {
+					float newDist = (buildingPositions[j] - bug.transform.position).sqrMagnitude;
+					if (newDist < bestDistance) {
+						bestBuildingIdx = j;
+						bestDistance = newDist;
+					}
+				}
+				if (bestBuildingIdx != -1) {
+					bestTarget = allBuildings[bestBuildingIdx].gameObject;
+				}
+				if (bestDistance < 20.0F * 20.0F) {
+					bug.target = bestTarget;
+				}
+				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > transform.position.y + 5.0F)) {
+					bug.target = null;
+				}
+			}
+		}
 	}
 	void FixedUpdate() {
+		GroundBugsTarget();
 		gameTime += Time.fixedDeltaTime;
-		if (buildingCount <= 0 || PlayerController.instance.IsDead()) {
+		if (allBuildings.Count <= 0 || PlayerController.instance.IsDead()) {
 			gameOver = true;
 			uiScreen.ShowLoseOverlay();
 		} else if (bugCount <= 0 && hiveCount <= 0) {

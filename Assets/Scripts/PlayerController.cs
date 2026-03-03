@@ -40,9 +40,9 @@ public class PlayerController : MonoBehaviour {
 	bool mouseCaptured;
 	bool cameraRayHit;
 	Vector3 cameraRayHitPos;
-	Vector3 lookForward;
-	Vector3 forward;
-	Vector3 right;
+	public Vector3 lookForward;
+	public Vector3 forward;
+	public Vector3 right;
 
 
 	bool onGround;
@@ -113,6 +113,12 @@ public class PlayerController : MonoBehaviour {
 	public float planeTiltSpringDamping = 0.9F;
 	float boostTimer;
 
+	System.Action<InputAction.CallbackContext> switchModePerformedAction;
+	System.Action<InputAction.CallbackContext> rocketPerformedAction;
+	System.Action<InputAction.CallbackContext> swordPerformedAction;
+	System.Action<InputAction.CallbackContext> planeMissileCanceledAction;
+	System.Action<InputAction.CallbackContext> pausePerformedAction;
+
 
 	enum TransformState {
 		MECH,
@@ -148,7 +154,7 @@ public class PlayerController : MonoBehaviour {
 		lookAction = InputSystem.actions.FindAction("Look");
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		switchModeAction = InputSystem.actions.FindAction("SwitchMode");
-		switchModeAction.performed += (InputAction.CallbackContext ctx) => {
+		switchModeAction.performed += (switchModePerformedAction = (InputAction.CallbackContext ctx) => {
 			if (GameManager.instance.gameOver) {
 				return;
 			}
@@ -162,19 +168,19 @@ public class PlayerController : MonoBehaviour {
 			}
 			transformCooldown = transformTime;
 
-		};
+		});
 		rocketAction = InputSystem.actions.FindAction("FireRockets");
-		rocketAction.performed += (InputAction.CallbackContext ctx) => {
+		rocketAction.performed += (rocketPerformedAction = (InputAction.CallbackContext ctx) => {
 			if (transformState == TransformState.MECH && cameraRayHit && rocketCooldownTimer <= 0.0F) {
 				rocketSpawnTimer = 0.0F;
 				rocketsLeftToFire = rocketSalvoCount;
 				rocketTargetPos = cameraRayHitPos;
 			}
-		};
+		});
 		machineGunAction = InputSystem.actions.FindAction("FireMachineGun");
 		sprintAction = InputSystem.actions.FindAction("Sprint");
 		swordAction = InputSystem.actions.FindAction("Sword");
-		swordAction.performed += (InputAction.CallbackContext ctx) => {
+		swordAction.performed += (swordPerformedAction = (InputAction.CallbackContext ctx) => {
 			if (swordCooldownTimer <= 0.0F && !GameManager.instance.gameOver) {
 				foreach (Collider toDamage in Physics.OverlapBox(swordHitbox.transform.position + swordHitbox.center, swordHitbox.size * 0.5F, swordHitbox.transform.rotation)) {
 					IDamageable damageable = toDamage.GetComponent<IDamageable>();
@@ -184,10 +190,10 @@ public class PlayerController : MonoBehaviour {
 				}
 				swordCooldownTimer = swordCooldown;
 			}
-		};
+		});
 
 		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
-		planeMissileAction.canceled += (InputAction.CallbackContext ctx) => {
+		planeMissileAction.canceled += (planeMissileCanceledAction = (InputAction.CallbackContext ctx) => {
 			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !GameManager.instance.gameOver) {
 				Vector3 startVelocity = lookForward * 100.0F;
 				GameObject missile = Instantiate(lockOnMissilePrefab, transform.position + lookForward * 1.5F, Quaternion.LookRotation(startVelocity));
@@ -199,15 +205,22 @@ public class PlayerController : MonoBehaviour {
 
 				planeMissileCooldownTimer = planeMissileFireCooldown;
 			}
-		};
+		});
 		boostAction = InputSystem.actions.FindAction("Boost");
 		airbrakeAction = InputSystem.actions.FindAction("Airbrake");
 		firePlaneGunAction = InputSystem.actions.FindAction("FirePlaneGun");
 		pauseAction = InputSystem.actions.FindAction("Pause");
-		pauseAction.performed += (InputAction.CallbackContext ctx) => uiScreen.PauseToggle();
+		pauseAction.performed += (pausePerformedAction = (InputAction.CallbackContext ctx) => uiScreen.PauseToggle());
 
 		SetMouseCapture(true);
 		health = maxHealth;
+	}
+	private void OnDestroy() {
+		pauseAction.performed -= pausePerformedAction;
+		planeMissileAction.canceled -= planeMissileCanceledAction;
+		swordAction.performed -= swordPerformedAction;
+		rocketAction.performed -= rocketPerformedAction;
+		switchModeAction.performed -= switchModePerformedAction;
 	}
 
 	private void OnEnable() { }
@@ -255,7 +268,9 @@ public class PlayerController : MonoBehaviour {
 				lookYaw += lookAmount.x * sensitivity;
 				lookPitch = Mathf.Clamp(lookPitch - lookAmount.y * sensitivity, -60.0F, 60.0F);
 				transform.eulerAngles = new Vector3(0.0F, lookYaw, 0.0F);
-			} break;
+				playerModelObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+			}
+			break;
 			case TransformState.PLANE: {
 				bool boost = boostAction.IsPressed();
 

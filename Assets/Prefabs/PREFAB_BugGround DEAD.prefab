@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.36, y: 1.35831, z: 3.45}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5120488728076107722}
@@ -108,9 +108,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 63639b45bb38bfe44af8eb7b8b8f6969, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 227ee6908b5907a4aa4b0a534decb745, type: 2}
     - target: {fileID: 919132149155446097, guid: 63639b45bb38bfe44af8eb7b8b8f6969, type: 3}
       propertyPath: m_Name
       value: bug_mandible_peice
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63639b45bb38bfe44af8eb7b8b8f6969, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 63639b45bb38bfe44af8eb7b8b8f6969, type: 3}
       propertyPath: m_TagString
@@ -275,9 +283,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -179.669
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 63639b45bb38bfe44af8eb7b8b8f6969, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 227ee6908b5907a4aa4b0a534decb745, type: 2}
     - target: {fileID: 919132149155446097, guid: 63639b45bb38bfe44af8eb7b8b8f6969, type: 3}
       propertyPath: m_Name
       value: bug_mandible_peice (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63639b45bb38bfe44af8eb7b8b8f6969, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 63639b45bb38bfe44af8eb7b8b8f6969, type: 3}
       propertyPath: m_TagString
@@ -442,9 +458,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d315bf0655a96534a8ecb6ad64e05d9d, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 227ee6908b5907a4aa4b0a534decb745, type: 2}
     - target: {fileID: 919132149155446097, guid: d315bf0655a96534a8ecb6ad64e05d9d, type: 3}
       propertyPath: m_Name
       value: bug_body_peice
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d315bf0655a96534a8ecb6ad64e05d9d, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d315bf0655a96534a8ecb6ad64e05d9d, type: 3}
       propertyPath: m_TagString
@@ -609,9 +633,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 79a04d0194d3bd8419dee16c0fb05f25, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 227ee6908b5907a4aa4b0a534decb745, type: 2}
     - target: {fileID: 919132149155446097, guid: 79a04d0194d3bd8419dee16c0fb05f25, type: 3}
       propertyPath: m_Name
       value: bug_head_peice
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79a04d0194d3bd8419dee16c0fb05f25, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 79a04d0194d3bd8419dee16c0fb05f25, type: 3}
       propertyPath: m_TagString
@@ -791,9 +823,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -5.738
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 227ee6908b5907a4aa4b0a534decb745, type: 2}
     - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
       propertyPath: m_Name
       value: bug_leg_peice (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
       propertyPath: m_TagString
@@ -958,9 +998,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -5.738
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 227ee6908b5907a4aa4b0a534decb745, type: 2}
     - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
       propertyPath: m_Name
       value: bug_leg_peice (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
       propertyPath: m_TagString
@@ -1125,9 +1173,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -5.738
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 227ee6908b5907a4aa4b0a534decb745, type: 2}
     - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
       propertyPath: m_Name
       value: bug_leg_peice (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
       propertyPath: m_TagString
@@ -1292,9 +1348,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -5.738
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 227ee6908b5907a4aa4b0a534decb745, type: 2}
     - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
       propertyPath: m_Name
       value: bug_leg_peice
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6efde307849138641b3e27905ccb2cdc, type: 3}
       propertyPath: m_TagString
