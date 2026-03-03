@@ -110,9 +110,9 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 			if (attackTriggerFrames > 0 && closeEnoughTarget) {
 				foreach (Collider collider in Physics.OverlapBox(transform.position + new Vector3(0.0F, 0.532F, 0.0F) + transform.forward * 1.5F, new Vector3(0.5F, 0.5F, 1.0F), transform.rotation)) {
 					PlayerCollisionController player = collider.GetComponent<PlayerCollisionController>();
-					BuildingController building = collider.GetComponent<BuildingController>();
-					if (building || player) {
-						building?.TakeDamage(damageAmount, building.transform.position);
+					IBugTarget bugTarget = collider.GetComponent<IBugTarget>();
+					if (bugTarget != null || player != null) {
+						bugTarget?.TakeDamage(damageAmount, collider.transform.position);
 						if (player) {
 							PlayerController.instance.TakeDamage(damageAmount);
 						}
