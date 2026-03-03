@@ -419,9 +419,11 @@ public class PlayerController : MonoBehaviour {
 
 			if (firePlaneGunAction.IsPressed() && planeBulletCooldownTimer < 0.0F) {
 				planeBulletFireCount++;
-				GameObject bullet = Instantiate(planeBulletPrefab, transform.localToWorldMatrix * new Vector4((planeBulletFireCount & 1) == 0 ? 1.0F : -1.0F, 0.0F, -1.0F, 1.0F), Quaternion.identity);
+				Vector3 fireFrom = transform.localToWorldMatrix * new Vector4((planeBulletFireCount & 1) == 0 ? 1.0F : -1.0F, 0.0F, -1.0F, 1.0F);
+				GameObject bullet = Instantiate(planeBulletPrefab, fireFrom, Quaternion.identity);
 				BulletController bulletController = bullet.GetComponent<BulletController>();
-				bulletController.velocity = lookForward * 400.0F;
+				Vector3 fireDirection = cameraRayHit ? Vector3.Normalize(cameraRayHitPos - fireFrom) : lookForward;
+				bulletController.velocity = fireDirection * 400.0F;
 				bulletController.damageAmount = planeBulletDamage;
 				planeBulletCooldownTimer = 1.0F / planeGunFireRate;
 			}

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour {
 	public Material groundBugMaterial;
 	public Material groundBugOutlineMaterial;
 	const int groundBugsToTargetAndAttackPerTick = 50;
-	int currentGroundBugTargetAttackIdx = 0;
+	int currentGroundBugTargetIdx = 0;
 	List<EnemyGround> allGroundBugs = new();
 	GraphicsBuffer groundEnemyLocalToWorlds;
 	GraphicsBuffer groundEnemyAnimTimes;
@@ -31,6 +32,12 @@ public class GameManager : MonoBehaviour {
 	// So we can efficiently target buildings
 	List<BuildingController> allBuildings = new();
 	List<Vector3> buildingPositions = new();
+
+	// For amortized bug targeting for turrets
+	List<TurretRailgunController> turrets = new();
+	Collider[] overlapTestArray = new Collider[128];
+	const int turretsToTargetPerTick = 5;
+	int currentTurretTargetIdx = 0;
 
 	const float GRID_SIZE = 300.0F;
 	const int GRID_RESOLUTION = 300;
@@ -154,7 +161,6 @@ public class GameManager : MonoBehaviour {
 		allGroundBugs.Add(enemy);
 		return id;
 	}
-
 	public void RemoveGroundBug(int id) {
 		if (id < allGroundBugs.Count) {
 			allGroundBugs[id] = allGroundBugs.Last();
@@ -162,14 +168,24 @@ public class GameManager : MonoBehaviour {
 			allGroundBugs.RemoveAt(allGroundBugs.Count - 1);
 		}
 	}
-
+	public int RegisterTurret(TurretRailgunController turret) {
+		int id = turrets.Count;
+		turrets.Add(turret);
+		return id;
+	}
+	public void RemoveTurret(int id) {
+		if (id < allGroundBugs.Count) {
+			turrets[id] = turrets.Last();
+			turrets[id].gameManagerRegisteredIdx = id;
+			turrets.RemoveAt(turrets.Count - 1);
+		}
+	}
 	public int RegisterBuilding(BuildingController building) {
 		int id = allBuildings.Count;
 		allBuildings.Add(building);
 		buildingPositions.Add(building.transform.position);
 		return id;
 	}
-
 	public void RemoveBuilding(int id) {
 		if (id < allBuildings.Count) {
 			allBuildings[id] = allBuildings.Last();
@@ -236,12 +252,12 @@ public class GameManager : MonoBehaviour {
 		cmdBuf.DrawProcedural(Matrix4x4.identity, groundBugOutlineMaterial, 0, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
 	}
 	void GroundBugsTarget() {
-		currentGroundBugTargetAttackIdx %= allGroundBugs.Count;
+		currentGroundBugTargetIdx %= allGroundBugs.Count;
 		for (int i = 0; i < groundBugsToTargetAndAttackPerTick; i++) {
-			if (++currentGroundBugTargetAttackIdx == allGroundBugs.Count) {
-				currentGroundBugTargetAttackIdx = 0;
+			if (++currentGroundBugTargetIdx == allGroundBugs.Count) {
+				currentGroundBugTargetIdx = 0;
 			}
-			EnemyGround bug = allGroundBugs[currentGroundBugTargetAttackIdx];
+			EnemyGround bug = allGroundBugs[currentGroundBugTargetIdx];
 			if (bug.attackCooldownTimer <= 0.0F) {
 				// Target
 				GameObject bestTarget = PlayerController.instance.gameObject;
@@ -266,8 +282,33 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 	}
+	void TurretsTarget() {
+		currentTurretTargetIdx %= turrets.Count;
+		for (int i = 0; i < Mathf.Min(turretsToTargetPerTick, turrets.Count); i++) {
+			if (++currentTurretTargetIdx == allGroundBugs.Count) {
+				currentTurretTargetIdx = 0;
+			}
+			TurretRailgunController turret = turrets[i];
+			Vector3 turretPos = turret.transform.position;
+			int overlapCount = Physics.OverlapSphereNonAlloc(turretPos, turret.range, overlapTestArray);
+			float bestDist = float.PositiveInfinity;
+			Collider bestTarget = null;
+			for (int j = 0; j < overlapCount; j++) {
+				Collider collider = overlapTestArray[j];
+				float sqrDist = (collider.transform.position - turretPos).sqrMagnitude;
+				if (sqrDist < bestDist && collider.GetComponent<EnemyGround>()) {
+					bestTarget = collider;
+					bestDist = sqrDist;
+				}
+			}
+			if (bestTarget != null) {
+				turret.target = bestTarget;
+			}
+		}
+	}
 	void FixedUpdate() {
 		GroundBugsTarget();
+		TurretsTarget();
 		gameTime += Time.fixedDeltaTime;
 		if (allBuildings.Count <= 0 || PlayerController.instance.IsDead()) {
 			gameOver = true;
