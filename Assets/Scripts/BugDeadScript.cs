@@ -12,14 +12,10 @@ public class BugDeadScript : MonoBehaviour {
     public GameObject pieceBody;
 
     private void Awake() {
-        //groundBugDead = this.groundBugDead;
-
         Invoke("TimedMesh", 0.1f);
-
     }
 
     private void TimedMesh() {
-
         pieceHead.GetComponent<CapsuleCollider>().enabled = false;
         pieceMan1.GetComponent<CapsuleCollider>().enabled = false;
         pieceMan2.GetComponent<CapsuleCollider>().enabled = false;
@@ -28,9 +24,6 @@ public class BugDeadScript : MonoBehaviour {
         pieceLeg3.GetComponent<CapsuleCollider>().enabled = false;
         pieceLeg4.GetComponent<CapsuleCollider>().enabled = false;
         pieceBody.GetComponent<CapsuleCollider>().enabled = false;
-
-
-        print("bug dead!");
 
         Invoke("timedDestroy", 10);
     }

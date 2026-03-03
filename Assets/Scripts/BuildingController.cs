@@ -1,15 +1,12 @@
 using UnityEngine;
 
 public class BuildingController : MonoBehaviour, IDamageable {
+	public int gameManagerRegisteredIdx;
 	void Start() {
-		GameManager.instance.buildingCount++;
+		gameManagerRegisteredIdx = GameManager.instance.RegisterBuilding(this);
 	}
 	void OnDestroy() {
-		GameManager.instance.buildingCount--;
-	}
-
-	// Update is called once per frame
-	void Update() {
+		GameManager.instance.RemoveBuilding(gameManagerRegisteredIdx);
 	}
 	public void TakeDamage(float amount, Vector3 pos) {
 		Destroy(gameObject);
