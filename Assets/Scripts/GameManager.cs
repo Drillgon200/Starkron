@@ -313,10 +313,10 @@ public class GameManager : MonoBehaviour {
 		}
 		currentTurretTargetIdx %= turrets.Count;
 		for (int i = 0; i < Mathf.Min(turretsToTargetPerTick, turrets.Count); i++) {
-			if (++currentTurretTargetIdx == allGroundBugs.Count) {
+			if (++currentTurretTargetIdx == turrets.Count) {
 				currentTurretTargetIdx = 0;
 			}
-			TurretRailgunController turret = turrets[i];
+			TurretRailgunController turret = turrets[currentTurretTargetIdx];
 			Vector3 turretPos = turret.transform.position;
 			int overlapCount = Physics.OverlapSphereNonAlloc(turretPos, turret.range, overlapTestArray);
 			float bestDist = float.PositiveInfinity;
