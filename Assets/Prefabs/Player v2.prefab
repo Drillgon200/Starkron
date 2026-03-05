@@ -491,6 +491,12 @@ MonoBehaviour:
   lookForward: {x: 0, y: 0, z: 0}
   forward: {x: 0, y: 0, z: 0}
   right: {x: 0, y: 0, z: 0}
+  actionsDisabled: 0
+  shopInteractRadius: 14
+  isPlacingObject: 0
+  canPlaceObject: 0
+  placementHologram: {fileID: 0}
+  placementPrefab: {fileID: 0}
   maxHealth: 100
   healthRechargeRate: 20
   healthRechargeCooldown: 3
@@ -533,7 +539,6 @@ MonoBehaviour:
   planeBulletDamage: 5
   planeTiltSpringStiffness: 50
   planeTiltSpringDamping: 0.99
-  bankTotal: 0
   bankUICounterText: {fileID: 0}
   CrystalCollectFX: {fileID: 8300000, guid: 7ff7ac7eab96454499c6ccaef95db43d, type: 3}
   transformTime: 0
