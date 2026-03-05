@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviour {
 		public float groupDelay;
 		[SerializeField]
 		public float hiveHealth;
+		[SerializeField]
+		public float jellyProbability;
 	}
 	public List<Wave> waves = new();
 	public int currentWave = 0;
@@ -251,6 +253,13 @@ public class GameManager : MonoBehaviour {
 			buildingPositions[id] = buildingPositions.Last();
 			buildingPositions.RemoveAt(buildingPositions.Count - 1);
 		}
+	}
+
+	public GameObject RandomBuilding() {
+		return allBuildings.Count == 0 ? null : allBuildings[Random.Range(0, allBuildings.Count)].gameObject;
+	}
+	public GameObject RandomTurret() {
+		return turrets.Count == 0 ? null : turrets[Random.Range(0, turrets.Count)].gameObject;
 	}
 
 	// Update is called once per frame

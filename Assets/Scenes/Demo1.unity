@@ -11954,6 +11954,7 @@ MonoBehaviour:
     groupMemberCount: 1
     groupDelay: 0
     hiveHealth: 200
+    jellyProbability: 0
   - hives:
     - {fileID: 2136214760}
     - {fileID: 1720686885}
@@ -11962,6 +11963,7 @@ MonoBehaviour:
     groupMemberCount: 20
     groupDelay: 10
     hiveHealth: 200
+    jellyProbability: 0.01
   - hives:
     - {fileID: 2136214760}
     - {fileID: 1720686885}
@@ -11970,8 +11972,9 @@ MonoBehaviour:
     spawnRateMin: 2
     spawnRateMax: 3
     groupMemberCount: 1
-    groupDelay: 0
+    groupDelay: 0.01
     hiveHealth: 400
+    jellyProbability: 0
   - hives:
     - {fileID: 2136214760}
     - {fileID: 1720686885}
@@ -11986,6 +11989,7 @@ MonoBehaviour:
     groupMemberCount: 1
     groupDelay: 0
     hiveHealth: 400
+    jellyProbability: 0.01
   currentWave: 0
   randomGlobal: 1337
 --- !u!4 &1690840492 stripped

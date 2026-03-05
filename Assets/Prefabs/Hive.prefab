@@ -324,6 +324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
+  flyingJellyPrefab: {fileID: 6120076748757765532, guid: 35f8b9ad76f20394a81f45aefda55f91, type: 3}
   spawnRange: 5
   hiveDamageB: {fileID: 8300000, guid: b63df167bc99ed9418dc6337ef9cc3fa, type: 3}
 --- !u!1 &7775310009235047850

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class HiveController : MonoBehaviour, IDamageable {
 	public GameObject groundBugPrefab;
+	public GameObject flyingJellyPrefab;
 	public float spawnRange = 5.0F;
 	public AudioClip hiveDamageB;
 	float health;
@@ -19,11 +20,17 @@ public class HiveController : MonoBehaviour, IDamageable {
 				}
 
 				Vector3 spawnPos = new Vector3(transform.position.x + Random.Range(-spawnRange, spawnRange), transform.position.y + 0.25F, transform.position.z + Random.Range(-spawnRange, spawnRange));
-				RaycastHit hit;
-				if (Physics.Raycast(spawnPos + Vector3.up * 10.0F, Vector3.down, out hit, 20.0F)) {
-					spawnPos = hit.point + Vector3.up * 0.25F;
-					GameObject groundBug = Instantiate(groundBugPrefab, spawnPos, Quaternion.identity);
-					spawnDelay += 1.0F / (GameManager.instance.spawnRateMultiplier * Random.Range(wave.spawnRateMin, wave.spawnRateMax));
+				float spawnIncreaseTime = 1.0F / (GameManager.instance.spawnRateMultiplier * Random.Range(wave.spawnRateMin, wave.spawnRateMax));
+				if (Random.value < wave.jellyProbability) {
+					GameObject jelly = Instantiate(flyingJellyPrefab, spawnPos + Vector3.up * 10.0F, Quaternion.identity);
+					spawnDelay += spawnIncreaseTime;
+				} else {
+					RaycastHit hit;
+					if (Physics.Raycast(spawnPos + Vector3.up * 10.0F, Vector3.down, out hit, 20.0F)) {
+						spawnPos = hit.point + Vector3.up * 0.25F;
+						GameObject groundBug = Instantiate(groundBugPrefab, spawnPos, Quaternion.identity);
+						spawnDelay += spawnIncreaseTime;
+					}
 				}
 			}
 		}

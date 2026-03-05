@@ -826,9 +826,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7448253750715330977}
         m_TargetAssemblyTypeName: MenuV1, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: VsyncToggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1077,7 +1077,7 @@ GameObject:
   - component: {fileID: 5510822150261313279}
   - component: {fileID: 205559727284961620}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1198,7 +1198,7 @@ GameObject:
   - component: {fileID: 6596809195363289092}
   - component: {fileID: 6845286322050036961}
   m_Layer: 5
-  m_Name: button (2)
+  m_Name: ResolutionButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1515,7 +1515,7 @@ GameObject:
   - component: {fileID: 5649408459297030776}
   - component: {fileID: 2751959426542614841}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1987,7 +1987,7 @@ GameObject:
   - component: {fileID: 7704258478217789914}
   - component: {fileID: 626197234795903557}
   m_Layer: 5
-  m_Name: button (5)
+  m_Name: VsyncButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2909610543457258747}
         m_TargetAssemblyTypeName: MenuV1, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
@@ -3112,7 +3112,7 @@ GameObject:
   - component: {fileID: 2956387500651243136}
   - component: {fileID: 8166499528105735694}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3594,9 +3594,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 7448253750715330977}
         m_TargetAssemblyTypeName: MenuV1, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: ResolutionToggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4198,7 +4198,7 @@ GameObject:
   - component: {fileID: 776573052713656310}
   - component: {fileID: 3680322160977888342}
   m_Layer: 5
-  m_Name: button (4)
+  m_Name: MusicVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

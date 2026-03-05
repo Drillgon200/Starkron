@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShieldBarMat
-  m_Shader: {fileID: -6465566751694194690, guid: 7d948d65e015f9f4b9839a5aebacd4a1, type: 3}
+  m_Name: EnemyJellyMat
+  m_Shader: {fileID: -6465566751694194690, guid: 4bd16e35e6efd014596aa73636cb0127, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -18,12 +18,17 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _MainTex:
+    - _BaseMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -41,16 +46,24 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorMask: 15
-    - _Health: 0.96
-    - _Stencil: 0
-    - _StencilComp: 8
-    - _StencilOp: 0
-    - _StencilReadMask: 255
-    - _StencilWriteMask: 255
-    - _UIMaskSoftnessX: 1
-    - _UIMaskSoftnessY: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ShadowAngle: -0.28
     m_Colors:
-    - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
+    - _BaseColor: {r: 0.47435012, g: 0.3254272, b: 0.6698113, a: 1}
+    - _ShadowColor: {r: 0.41362584, g: 0.43518445, b: 0.5188679, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!114 &1541199682492482999
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Editor::UnityEditor.Rendering.Universal.AssetVersion
+  version: 10
