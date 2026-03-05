@@ -4,6 +4,7 @@ using UnityEngine;
 public class HiveController : MonoBehaviour, IDamageable {
 	public GameObject groundBugPrefab;
 	public float spawnRange = 5.0F;
+	public AudioClip hiveDamageB;
 	float health;
 	float spawnDelay;
 	int bugsSpawnedInCurrentGroup;
@@ -44,6 +45,7 @@ public class HiveController : MonoBehaviour, IDamageable {
 				GameManager.instance.statHivesKilledByTurrets++;
 			}
 			GameManager.instance.hiveCount--;
+			SoundFXManager.instance.PlaySoundFXClip(hiveDamageB, transform, 0.8F);
 			gameObject.SetActive(false);
 		}
 	}

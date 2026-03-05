@@ -12,6 +12,7 @@ public class BuildingController : MonoBehaviour, IBugTarget {
 		if (source == IDamageable.DamageSource.PLAYER) {
 			GameManager.instance.statBuildingsDestroyedByPlayer++;
 		}
+		GameManager.instance.statBuildingsDestroyed++;
 		Destroy(gameObject);
 	}
 }

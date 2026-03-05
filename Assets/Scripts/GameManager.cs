@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour {
 	public int statBugsKilledByTurrets;
 	public int statHivesKilledByPlayer;
 	public int statHivesKilledByTurrets;
+	public int statBuildingsDestroyed;
+	public int statBuildingsTotal;
 	public int statBuildingsDestroyedByPlayer;
 
 	public int bugCount;
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour {
 	const float GRID_SIZE = 400.0F;
 	const int GRID_RESOLUTION = 400;
 
-	public Vector3 CITY_CENTER = new Vector3(-0.1755F, 0.0F, -0.58833F);
+	public Vector3 CITY_CENTER = new Vector3(2.014788F, 0.0F, 2.673001F);
 
 	[System.Serializable]
 	public struct Wave {
@@ -63,6 +65,8 @@ public class GameManager : MonoBehaviour {
 	}
 	public List<Wave> waves = new();
 	public int currentWave = 0;
+	float nextWaveCountdownTimer = 0;
+	bool needsNextWave;
 
 	byte[] directions = new byte[GRID_RESOLUTION * GRID_RESOLUTION];
 
@@ -103,11 +107,9 @@ public class GameManager : MonoBehaviour {
 		}
 		hiveCount = 0;
 		currentWave++;
-		foreach (HiveController controller in waves[currentWave].hives) {
-			controller.gameObject.SetActive(true);
-			hiveCount++;
-			controller.WaveInit(waves[currentWave]);
-		}
+		uiScreen.ShowNextWaveIndicator();
+		needsNextWave = true;
+		nextWaveCountdownTimer = 4.0F;
 	}
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -206,6 +208,7 @@ public class GameManager : MonoBehaviour {
 			"Bugs killed by turrets: " + statBugsKilledByTurrets + "\n" +
 			"Hives killed by you: " + statHivesKilledByPlayer + "\n" +
 			"Hives killed by turrets: " + statHivesKilledByTurrets + "\n" +
+			"Buildings destroyed: " + statBuildingsDestroyed + "/" + statBuildingsTotal + "\n" +
 			"Buildings destroyed by you: " + statBuildingsDestroyedByPlayer;
 	}
 
@@ -237,6 +240,7 @@ public class GameManager : MonoBehaviour {
 		int id = allBuildings.Count;
 		allBuildings.Add(building);
 		buildingPositions.Add(building.transform.position);
+		statBuildingsTotal++;
 		return id;
 	}
 	public void RemoveBuilding(int id) {
@@ -379,14 +383,28 @@ public class GameManager : MonoBehaviour {
 	void FixedUpdate() {
 		GroundBugsTarget();
 		TurretsTarget();
+		if (needsNextWave && nextWaveCountdownTimer <= 0.0F) {
+			foreach (HiveController controller in waves[currentWave].hives) {
+				controller.gameObject.SetActive(true);
+				hiveCount++;
+				controller.WaveInit(waves[currentWave]);
+			}
+			needsNextWave = false;
+		}
+		nextWaveCountdownTimer -= Time.fixedDeltaTime;
 		gameTime += Time.fixedDeltaTime;
 		if (allBuildings.Count <= 0 || PlayerController.instance.IsDead()) {
 			gameOver = true;
+			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowLoseOverlay();
-		} else if (hiveCount <= 0 && currentWave < waves.Count - 1) {
+		} else if (hiveCount <= 0 && currentWave < waves.Count - 1 && !needsNextWave) {
+			if (currentWave == 0) {
+				uiScreen.EnqueueAlert(uiScreen.messageShop, 6.0F);
+			}
 			IncrementWave();
-		} else if (bugCount <= 0 && hiveCount <= 0 && currentWave >= waves.Count - 1) {
+		} else if (bugCount <= 0 && hiveCount <= 0 && currentWave >= waves.Count - 1 && !needsNextWave) {
 			gameOver = true;
+			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowWinOverlay();
 		}
 	}

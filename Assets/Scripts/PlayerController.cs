@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -32,6 +33,8 @@ public class PlayerController : MonoBehaviour {
 	InputAction airbrakeAction;
 	InputAction firePlaneGunAction;
 
+	InputAction openShopAction;
+
 	public float cameraDistance = 10.0F;
 	public float cameraRise = 2.0F;
 	float lookYaw;
@@ -43,6 +46,13 @@ public class PlayerController : MonoBehaviour {
 	public Vector3 forward;
 	public Vector3 right;
 
+	public bool actionsDisabled = false;
+
+	public float shopInteractRadius = 11.0F;
+	public bool isPlacingObject;
+	public bool canPlaceObject;
+	public GameObject placementHologram;
+	public GameObject placementPrefab;
 
 	bool onGround;
 	float hoverFuelLeft;
@@ -113,17 +123,18 @@ public class PlayerController : MonoBehaviour {
 	float planeBoostTurnRotation;
 	public float planeTiltSpringStiffness = 0.5F;
 	public float planeTiltSpringDamping = 0.9F;
-	float boostTimer;
 
 	System.Action<InputAction.CallbackContext> switchModePerformedAction;
 	System.Action<InputAction.CallbackContext> rocketPerformedAction;
 	System.Action<InputAction.CallbackContext> swordPerformedAction;
 	System.Action<InputAction.CallbackContext> planeMissileCanceledAction;
 	System.Action<InputAction.CallbackContext> pausePerformedAction;
+	System.Action<InputAction.CallbackContext> openShopPerformedAction;
+	System.Action<InputAction.CallbackContext> objectPlaceStartedAction;
 
-	//ROSS changes
-	public int bankTotal = 0;
+	int bankTotal = 0;
 	public TMP_Text bankUICounterText;
+	[SerializeField] private AudioClip CrystalCollectFX;
 
 	enum TransformState {
 		MECH,
@@ -140,6 +151,7 @@ public class PlayerController : MonoBehaviour {
 	}
 	void Awake() {
 		instance = this;
+		bankUICounterText.text = "x " + bankTotal.ToString();
 	}
 
 	public void SetMouseCapture(bool cap) {
@@ -164,7 +176,7 @@ public class PlayerController : MonoBehaviour {
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		switchModeAction = InputSystem.actions.FindAction("SwitchMode");
 		switchModeAction.performed += (switchModePerformedAction = (InputAction.CallbackContext ctx) => {
-			if (GameManager.instance.gameOver) {
+			if (actionsDisabled) {
 				return;
 			}
 			switch (transformState) {
@@ -187,10 +199,20 @@ public class PlayerController : MonoBehaviour {
 			}
 		});
 		machineGunAction = InputSystem.actions.FindAction("FireMachineGun");
+		machineGunAction.started += (objectPlaceStartedAction = (InputAction.CallbackContext ctx) => {
+			if (isPlacingObject && canPlaceObject) {
+				machineGunAction.Disable();
+				machineGunAction.Enable();
+				isPlacingObject = false;
+				Instantiate(placementPrefab, placementHologram.transform.position, placementHologram.transform.rotation);
+				Destroy(placementHologram);
+				placementPrefab = null;
+			}
+		});
 		sprintAction = InputSystem.actions.FindAction("Sprint");
 		swordAction = InputSystem.actions.FindAction("Sword");
 		swordAction.performed += (swordPerformedAction = (InputAction.CallbackContext ctx) => {
-			if (swordCooldownTimer <= 0.0F && !GameManager.instance.gameOver) {
+			if (swordCooldownTimer <= 0.0F && !actionsDisabled) {
 				foreach (Collider toDamage in Physics.OverlapBox(swordHitbox.transform.position + swordHitbox.center, swordHitbox.size * 0.5F, swordHitbox.transform.rotation)) {
 					IDamageable damageable = toDamage.GetComponent<IDamageable>();
 					if (damageable != null) {
@@ -203,7 +225,7 @@ public class PlayerController : MonoBehaviour {
 
 		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
 		planeMissileAction.canceled += (planeMissileCanceledAction = (InputAction.CallbackContext ctx) => {
-			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !GameManager.instance.gameOver) {
+			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !actionsDisabled) {
 				Vector3 startVelocity = lookForward * 100.0F;
 				GameObject missile = Instantiate(lockOnMissilePrefab, transform.position + lookForward * 1.5F, Quaternion.LookRotation(startVelocity));
 				MissileControllerPlane missileController = missile.GetComponent<MissileControllerPlane>();
@@ -221,14 +243,29 @@ public class PlayerController : MonoBehaviour {
 		pauseAction = InputSystem.actions.FindAction("Pause");
 		pauseAction.performed += (pausePerformedAction = (InputAction.CallbackContext ctx) => uiScreen.PauseToggle());
 
+		openShopAction = InputSystem.actions.FindAction("OpenShop");
+		openShopAction.performed += (openShopPerformedAction = (InputAction.CallbackContext ctx) => {
+			if (!actionsDisabled && Vector3.Distance(transform.position, GameManager.instance.CITY_CENTER) <= shopInteractRadius) {
+				uiScreen.OpenShop();
+			}
+		});
+
 		SetMouseCapture(true);
 		health = maxHealth;
 	}
 
+	public int GetBankTotal() {
+		return bankTotal;
+	}
+	public void SetBankTotal(int total) {
+		bankTotal = total;
+		bankUICounterText.text = "x " + bankTotal.ToString();
+	}
+
 	void OnTriggerEnter(Collider other) {
 		if (other.transform.tag == "CrystalTag") {
-			bankTotal++;
-			bankUICounterText.text = "Crystal x" + bankTotal.ToString();
+			SetBankTotal(bankTotal + 1);
+			SoundFXManager.instance.PlaySoundFXClip(CrystalCollectFX, transform, 1f);
 			Destroy(other.gameObject);
 		}
 	}
@@ -239,6 +276,8 @@ public class PlayerController : MonoBehaviour {
 		swordAction.performed -= swordPerformedAction;
 		rocketAction.performed -= rocketPerformedAction;
 		switchModeAction.performed -= switchModePerformedAction;
+		openShopAction.performed -= openShopPerformedAction;
+		machineGunAction.started -= objectPlaceStartedAction;
 	}
 
 	private void OnEnable() { }
@@ -266,7 +305,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (GameManager.instance.gameOver) {
+		if (actionsDisabled) {
 			return;
 		}
 		float dt = Time.deltaTime;
@@ -333,6 +372,19 @@ public class PlayerController : MonoBehaviour {
 			health = Mathf.Min(maxHealth, health + healthRechargeRate * dt);
 		}
 		healthRechargeCooldownTimer -= dt;
+
+		if (isPlacingObject) {
+			canPlaceObject = false;
+			if (cameraRayHit) {
+				Vector3 placePos = cameraRayHitPos;
+				placementHologram.transform.position = placePos;
+				if (Vector3.Distance(cameraRayHitPos, transform.position) < 20.0F) {
+					canPlaceObject = true;
+				}
+			}
+			placementHologram.transform.Find("PlaceFalse").gameObject.SetActive(!canPlaceObject);
+			placementHologram.transform.Find("PlaceTrue").gameObject.SetActive(canPlaceObject);
+		}
 	}
 
 	Vector3 RandomVec3InCone(float coneHalfAngle) {
@@ -342,7 +394,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		if (GameManager.instance.gameOver) {
+		if (actionsDisabled) {
 			return;
 		}
 		float dt = Time.fixedDeltaTime;
@@ -498,6 +550,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		} break;
 		}
+		uiScreen.SetInteractIndicator(Vector3.Distance(transform.position, GameManager.instance.CITY_CENTER) <= shopInteractRadius);
 		rocketCooldownTimer -= dt;
 		swordCooldownTimer -= dt;
 		transformCooldown -= dt;

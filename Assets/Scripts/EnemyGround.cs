@@ -38,6 +38,9 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 	public const float animAttackLength = 17.0F / 24.0F;
 	public const float blendTime = 0.15F;
 
+	public AudioSource hurtSFX;
+	public AudioSource walkSFX;
+
 	void Start() {
 		if (GameManager.instance.bugCount >= GameManager.instance.bugCap) {
 			// Too many bugs
@@ -49,6 +52,7 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 		gameManagerRegisteredIdx = GameManager.instance.RegisterGroundBug(this);
 
 		SwitchAnimStateTo(AnimationState.WALKING, animWalkOffset, animWalkLength);
+		walkSFX.Play();
 		animBlendFactor = 1.0F;
 	}
 	void OnDestroy() {
@@ -133,6 +137,7 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 
 	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
 		health -= amount;
+		//hurtSFX.Play();
 		if (health <= 0.0F) {
 			if (source == IDamageable.DamageSource.PLAYER) {
 				GameManager.instance.statBugsKilledByPlayer++;
