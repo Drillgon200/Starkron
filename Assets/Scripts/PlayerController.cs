@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -379,7 +380,13 @@ public class PlayerController : MonoBehaviour {
 				Vector3 placePos = cameraRayHitPos;
 				placementHologram.transform.position = placePos;
 				if (Vector3.Distance(cameraRayHitPos, transform.position) < 20.0F) {
-					canPlaceObject = true;
+					bool onFlatGround =
+						Physics.OverlapBox(placePos + new Vector3(1.0F, 0.0F, 1.0F),   Vector3.one * 0.3F).Length != 0 &&
+						Physics.OverlapBox(placePos + new Vector3(1.0F, 0.0F, -1.0F),  Vector3.one * 0.3F).Length != 0 &&
+						Physics.OverlapBox(placePos + new Vector3(-1.0F, 0.0F, 1.0F),  Vector3.one * 0.3F).Length != 0 &&
+						Physics.OverlapBox(placePos + new Vector3(-1.0F, 0.0F, -1.0F), Vector3.one * 0.3F).Length != 0;
+					bool unobstructed = Physics.OverlapBox(placePos + Vector3.up * 1.5F, Vector3.one).Length == 0;
+					canPlaceObject = onFlatGround && unobstructed;
 				}
 			}
 			placementHologram.transform.Find("PlaceFalse").gameObject.SetActive(!canPlaceObject);
