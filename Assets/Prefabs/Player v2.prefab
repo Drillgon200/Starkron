@@ -307,7 +307,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -479,7 +479,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   lookCam: {fileID: 6412375199489756631}
   rigidBody: {fileID: 1386855184237042348}
-  shadow: {fileID: 6142394850750418197}
   playerModelObject: {fileID: 208211005714567637}
   renderMeshFilter: {fileID: 2518717191340033346}
   mechCollider: {fileID: 8890648644329579501}
@@ -489,7 +488,12 @@ MonoBehaviour:
   uiScreen: {fileID: 0}
   cameraDistance: 6
   cameraRise: 1.5
+  lookForward: {x: 0, y: 0, z: 0}
+  forward: {x: 0, y: 0, z: 0}
+  right: {x: 0, y: 0, z: 0}
   maxHealth: 100
+  healthRechargeRate: 20
+  healthRechargeCooldown: 3
   hoverSpeed: 15
   moveSpeedGround: 50
   moveSpeedAir: 10
@@ -529,6 +533,9 @@ MonoBehaviour:
   planeBulletDamage: 5
   planeTiltSpringStiffness: 50
   planeTiltSpringDamping: 0.99
+  bankTotal: 0
+  bankUICounterText: {fileID: 0}
+  CrystalCollectFX: {fileID: 8300000, guid: 7ff7ac7eab96454499c6ccaef95db43d, type: 3}
   transformTime: 0
 --- !u!114 &203214487517430387
 MonoBehaviour:
