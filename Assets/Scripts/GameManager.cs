@@ -1,11 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
@@ -45,8 +41,8 @@ public class GameManager : MonoBehaviour {
 	const int turretsToTargetPerTick = 5;
 	int currentTurretTargetIdx = 0;
 
-	const float GRID_SIZE = 300.0F;
-	const int GRID_RESOLUTION = 300;
+	const float GRID_SIZE = 400.0F;
+	const int GRID_RESOLUTION = 400;
 
 	byte[] directions = new byte[GRID_RESOLUTION * GRID_RESOLUTION];
 
@@ -213,8 +209,8 @@ public class GameManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		//DrawDebugPathingVisualization();
 		//BurnCycles(10000000);
-		//if (Mathf.Repeat((float)gameTime, 4.0F) < 2.0F) {
 		Unity.Collections.NativeArray<float> matrices = new(allGroundBugs.Count * 16, Unity.Collections.Allocator.Temp);
 		Unity.Collections.NativeArray<float> animTimes = new(allGroundBugs.Count * 4, Unity.Collections.Allocator.Temp);
 		float animFrames = 41 - 15;

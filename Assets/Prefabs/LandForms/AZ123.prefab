@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6623997782972166904}
   - component: {fileID: 1101264591670902856}
   - component: {fileID: 345121658517498882}
+  - component: {fileID: 5409971717101922300}
   m_Layer: 6
   m_Name: AZ123
   m_TagString: Untagged
@@ -113,3 +114,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -6969294841584298627, guid: 82977dee761a3bd40af9d1c0aa7cca5f, type: 3}
+--- !u!114 &5409971717101922300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027314791828219227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908f9f3fa7b97434daefd0aad52823a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BugCollision

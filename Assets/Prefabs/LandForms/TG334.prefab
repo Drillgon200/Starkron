@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7838326154270639702}
   - component: {fileID: 5190932265367184745}
   - component: {fileID: 6080667315247658072}
+  - component: {fileID: 7590931696933174429}
   m_Layer: 6
   m_Name: TG334
   m_TagString: Untagged
@@ -113,3 +114,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4193353645867004037, guid: 2f239a7eacabd5a41b2093ae3bfeb2ed, type: 3}
+--- !u!114 &7590931696933174429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2422394367695311615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908f9f3fa7b97434daefd0aad52823a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BugCollision

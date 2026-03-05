@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 862681703730337666}
   - component: {fileID: 583855996717730511}
   - component: {fileID: 5296758082136521884}
+  - component: {fileID: 2452894075041656427}
   m_Layer: 6
   m_Name: landform_A
   m_TagString: Untagged
@@ -113,3 +114,15 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1509314677530110229, guid: 5bf41c1fc60487c4aa5e7424d43dbe6d, type: 3}
+--- !u!114 &2452894075041656427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7859122359236871102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 908f9f3fa7b97434daefd0aad52823a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BugCollision
