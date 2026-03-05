@@ -44,6 +44,26 @@ public class GameManager : MonoBehaviour {
 	const float GRID_SIZE = 400.0F;
 	const int GRID_RESOLUTION = 400;
 
+	public Vector3 CITY_CENTER = new Vector3(-0.1755F, 0.0F, -0.58833F);
+
+	[System.Serializable]
+	public struct Wave {
+		[SerializeField]
+		public List<HiveController> hives;
+		[SerializeField]
+		public float spawnRateMin;
+		[SerializeField]
+		public float spawnRateMax;
+		[SerializeField]
+		public int groupMemberCount;
+		[SerializeField]
+		public float groupDelay;
+		[SerializeField]
+		public float hiveHealth;
+	}
+	public List<Wave> waves = new();
+	public int currentWave = 0;
+
 	byte[] directions = new byte[GRID_RESOLUTION * GRID_RESOLUTION];
 
 	Vector2[] directionByteToDirection = new Vector2[8]{
@@ -76,9 +96,31 @@ public class GameManager : MonoBehaviour {
 		groundEnemyAnimTimes?.Dispose();
 		groundEnemyAnimTimes = null;
 	}
+	
+	void IncrementWave() {
+		foreach (HiveController controller in waves[currentWave].hives) {
+			controller.gameObject.SetActive(false);
+		}
+		hiveCount = 0;
+		currentWave++;
+		foreach (HiveController controller in waves[currentWave].hives) {
+			controller.gameObject.SetActive(true);
+			hiveCount++;
+			controller.WaveInit(waves[currentWave]);
+		}
+	}
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
+		foreach (HiveController controller in FindObjectsByType<HiveController>(FindObjectsSortMode.None)) {
+			controller.gameObject.SetActive(false);
+		}
+		foreach (HiveController controller in waves[currentWave].hives) {
+			controller.gameObject.SetActive(true);
+			hiveCount++;
+			controller.WaveInit(waves[currentWave]);
+		}
+
 		groundEnemyLocalToWorlds = new GraphicsBuffer(GraphicsBuffer.Target.Structured, bugCap, 16 * sizeof(float));
 		groundEnemyAnimTimes = new GraphicsBuffer(GraphicsBuffer.Target.Structured, bugCap, 4 * sizeof(float));
 
@@ -103,7 +145,7 @@ public class GameManager : MonoBehaviour {
 			distances[i] = int.MaxValue;
 		}
 		// Will replace with something better once we get the actual city mechanics in
-		Vector2 cityPos = new Vector2(-0.1755F, -0.58833F);
+		Vector2 cityPos = new Vector2(CITY_CENTER.x, CITY_CENTER.z);
 		int targetX = Mathf.RoundToInt((cityPos.x / GRID_SIZE + 0.5F) * GRID_RESOLUTION);
 		int targetY = Mathf.RoundToInt((cityPos.y / GRID_SIZE + 0.5F) * GRID_RESOLUTION);
 		costs[targetY * GRID_RESOLUTION + targetX] = 0;
@@ -211,56 +253,60 @@ public class GameManager : MonoBehaviour {
 	void Update() {
 		//DrawDebugPathingVisualization();
 		//BurnCycles(10000000);
-		Unity.Collections.NativeArray<float> matrices = new(allGroundBugs.Count * 16, Unity.Collections.Allocator.Temp);
-		Unity.Collections.NativeArray<float> animTimes = new(allGroundBugs.Count * 4, Unity.Collections.Allocator.Temp);
-		float animFrames = 41 - 15;
-		float animLength = animFrames / 24.0F;
 		int bugsToDraw = Mathf.Min(allGroundBugs.Count, bugCap);
-		for (int i = 0; i < bugsToDraw; i++) {
-			EnemyGround bug = allGroundBugs[i];
-			Matrix4x4 l2w = bug.transform.localToWorldMatrix;
-			matrices[i * 16 + 0] = l2w.m00;
-			matrices[i * 16 + 1] = l2w.m10;
-			matrices[i * 16 + 2] = l2w.m20;
-			matrices[i * 16 + 3] = l2w.m30;
-			matrices[i * 16 + 4] = l2w.m01;
-			matrices[i * 16 + 5] = l2w.m11;
-			matrices[i * 16 + 6] = l2w.m21;
-			matrices[i * 16 + 7] = l2w.m31;
-			matrices[i * 16 + 8] = l2w.m02;
-			matrices[i * 16 + 9] = l2w.m12;
-			matrices[i * 16 + 10] = l2w.m22;
-			matrices[i * 16 + 11] = l2w.m32;
-			matrices[i * 16 + 12] = l2w.m03;
-			matrices[i * 16 + 13] = l2w.m13;
-			matrices[i * 16 + 14] = l2w.m23;
-			matrices[i * 16 + 15] = l2w.m33;
-			animTimes[i * 4 + 0] = Mathf.Repeat(bug.lastAnimTime, bug.lastAnimLength) * 24.0F + bug.lastAnimOffset;
-			animTimes[i * 4 + 1] = Mathf.Repeat(bug.animTime, bug.animLength) * 24.0F + bug.animOffset;
-			animTimes[i * 4 + 2] = bug.animBlendFactor;
+		if (bugsToDraw > 0) {
+			Unity.Collections.NativeArray<float> matrices = new(allGroundBugs.Count * 16, Unity.Collections.Allocator.Temp);
+			Unity.Collections.NativeArray<float> animTimes = new(allGroundBugs.Count * 4, Unity.Collections.Allocator.Temp);
+			float animFrames = 41 - 15;
+			float animLength = animFrames / 24.0F;
+			for (int i = 0; i < bugsToDraw; i++) {
+				EnemyGround bug = allGroundBugs[i];
+				Matrix4x4 l2w = bug.transform.localToWorldMatrix;
+				matrices[i * 16 + 0] = l2w.m00;
+				matrices[i * 16 + 1] = l2w.m10;
+				matrices[i * 16 + 2] = l2w.m20;
+				matrices[i * 16 + 3] = l2w.m30;
+				matrices[i * 16 + 4] = l2w.m01;
+				matrices[i * 16 + 5] = l2w.m11;
+				matrices[i * 16 + 6] = l2w.m21;
+				matrices[i * 16 + 7] = l2w.m31;
+				matrices[i * 16 + 8] = l2w.m02;
+				matrices[i * 16 + 9] = l2w.m12;
+				matrices[i * 16 + 10] = l2w.m22;
+				matrices[i * 16 + 11] = l2w.m32;
+				matrices[i * 16 + 12] = l2w.m03;
+				matrices[i * 16 + 13] = l2w.m13;
+				matrices[i * 16 + 14] = l2w.m23;
+				matrices[i * 16 + 15] = l2w.m33;
+				animTimes[i * 4 + 0] = Mathf.Repeat(bug.lastAnimTime, bug.lastAnimLength) * 24.0F + bug.lastAnimOffset;
+				animTimes[i * 4 + 1] = Mathf.Repeat(bug.animTime, bug.animLength) * 24.0F + bug.animOffset;
+				animTimes[i * 4 + 2] = bug.animBlendFactor;
+			}
+			groundEnemyLocalToWorlds.SetData(matrices);
+			groundEnemyAnimTimes.SetData(animTimes);
+			RenderParams renderParams = new RenderParams(groundBugMaterial);
+			renderParams.worldBounds = new Bounds(Vector3.zero, new Vector3(50000.0F, 50000.0F, 50000.0F));
+			renderParams.matProps = new MaterialPropertyBlock();
+			renderParams.matProps.SetBuffer("_LocalToWorld", groundEnemyLocalToWorlds);
+			renderParams.matProps.SetBuffer("_AnimTime", groundEnemyAnimTimes);
+			renderParams.shadowCastingMode = ShadowCastingMode.On;
+			int groundBugVertexCount = 1968;
+			Graphics.RenderPrimitives(renderParams, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
 		}
-		groundEnemyLocalToWorlds.SetData(matrices);
-		groundEnemyAnimTimes.SetData(animTimes);
-		RenderParams renderParams = new RenderParams(groundBugMaterial);
-		renderParams.worldBounds = new Bounds(Vector3.zero, new Vector3(50000.0F, 50000.0F, 50000.0F));
-		renderParams.matProps = new MaterialPropertyBlock();
-		renderParams.matProps.SetBuffer("_LocalToWorld", groundEnemyLocalToWorlds);
-		renderParams.matProps.SetBuffer("_AnimTime", groundEnemyAnimTimes);
-		renderParams.shadowCastingMode = ShadowCastingMode.On;
-		int groundBugVertexCount = 1968;
-		Graphics.RenderPrimitives(renderParams, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
 	}
 
 	public void DrawOutlines(CommandBuffer cmdBuf) {
-		cmdBuf.SetGlobalBuffer("_LocalToWorld", groundEnemyLocalToWorlds);
-		cmdBuf.SetGlobalBuffer("_AnimTime", groundEnemyAnimTimes);
-		Vector3 camPos = PlayerController.instance.lookCam.transform.position;
-		Vector3 camForward = PlayerController.instance.lookForward;
-		cmdBuf.SetGlobalVector("_CamPos", camPos);
-		cmdBuf.SetGlobalVector("_CamForward", camForward);
-		int groundBugVertexCount = 1968;
 		int bugsToDraw = Mathf.Min(allGroundBugs.Count, bugCap);
-		cmdBuf.DrawProcedural(Matrix4x4.identity, groundBugOutlineMaterial, 0, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
+		if (bugsToDraw > 0) {
+			cmdBuf.SetGlobalBuffer("_LocalToWorld", groundEnemyLocalToWorlds);
+			cmdBuf.SetGlobalBuffer("_AnimTime", groundEnemyAnimTimes);
+			Vector3 camPos = PlayerController.instance.lookCam.transform.position;
+			Vector3 camForward = PlayerController.instance.lookForward;
+			cmdBuf.SetGlobalVector("_CamPos", camPos);
+			cmdBuf.SetGlobalVector("_CamForward", camForward);
+			int groundBugVertexCount = 1968;
+			cmdBuf.DrawProcedural(Matrix4x4.identity, groundBugOutlineMaterial, 0, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
+		}
 	}
 	void GroundBugsTarget() {
 		if (allGroundBugs.Count == 0) {
@@ -337,7 +383,9 @@ public class GameManager : MonoBehaviour {
 		if (allBuildings.Count <= 0 || PlayerController.instance.IsDead()) {
 			gameOver = true;
 			uiScreen.ShowLoseOverlay();
-		} else if (bugCount <= 0 && hiveCount <= 0) {
+		} else if (hiveCount <= 0 && currentWave < waves.Count - 1) {
+			IncrementWave();
+		} else if (bugCount <= 0 && hiveCount <= 0 && currentWave >= waves.Count - 1) {
 			gameOver = true;
 			uiScreen.ShowWinOverlay();
 		}
