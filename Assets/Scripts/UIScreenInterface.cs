@@ -15,6 +15,7 @@ public class UIScreenInterface : MonoBehaviour {
 	public GameObject shopOverlay;
 	public GameObject waveInfo;
 	public AudioSource alert;
+	public AudioClip denySound;
 	bool guiActive;
 
 	public GameObject turretPrefab;
@@ -96,6 +97,8 @@ public class UIScreenInterface : MonoBehaviour {
 			player.placementPrefab = turretPrefab;
 			player.placementHologram = Instantiate(turretHologramPrefab, player.transform.position, Quaternion.identity);
 			CloseShop();
+		} else {
+			SoundFXManager.instance.PlaySoundFXClip(denySound, player.transform, 1.0F);
 		}
 	}
 

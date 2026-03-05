@@ -2492,7 +2492,7 @@ MonoBehaviour:
   minimapTexture: {fileID: 2800000, guid: 2e0680f16b0e6904baa3f31f164d2316, type: 3}
   shieldBarTexture: {fileID: 2800000, guid: 3e88225d0ada716409b794606d4c6f07, type: 3}
   shieldBarMat: {fileID: 2100000, guid: 1b15b231e33d8db4da452d0be19cbd8d, type: 2}
-  player: {fileID: 0}
+  player: {fileID: 1311469867}
   minimapWorldRadius: 100
 --- !u!1001 &366683103
 PrefabInstance:
@@ -4518,6 +4518,7 @@ MonoBehaviour:
   shopOverlay: {fileID: 278591504}
   waveInfo: {fileID: 1550861048}
   alert: {fileID: 1079383423}
+  denySound: {fileID: 8300000, guid: 9866757783eeb1f45b2e0d6c05e50a97, type: 3}
   turretPrefab: {fileID: 6133831574818507395, guid: fd0f82a5272fae940a2d7fad43006f22, type: 3}
   turretHologramPrefab: {fileID: 6133831574818507395, guid: faab20e47b6b58a4aa4459beee1214c9, type: 3}
   timeBetweenAlerts: 1
@@ -9227,6 +9228,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6010289672690388855, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
   m_PrefabInstance: {fileID: 1257577127}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1311469867 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2743394094906511014, guid: 6fb274c445d7fa3418d46e1eaef029b3, type: 3}
+  m_PrefabInstance: {fileID: 1257577127}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd78f950e2b86e74f887ebe1b14cf24c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
 --- !u!4 &1314058373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2804107492482712893, guid: e4d887dbc606e584cbcd24b94fa73f5a, type: 3}
