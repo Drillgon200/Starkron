@@ -1,0 +1,157 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Avatar Mask v3
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: booster_handle
+    m_Weight: 1
+  - m_Path: booster_handle/L_booster_handle
+    m_Weight: 1
+  - m_Path: booster_handle/R_booster_handle
+    m_Weight: 1
+  - m_Path: L_arm_Handle
+    m_Weight: 1
+  - m_Path: L_foot_IK_Handle
+    m_Weight: 1
+  - m_Path: L_hand_ik_Handle
+    m_Weight: 1
+  - m_Path: L_Leg_Handle
+    m_Weight: 1
+  - m_Path: R_arm_Handle
+    m_Weight: 1
+  - m_Path: R_foot_IK_Handle
+    m_Weight: 1
+  - m_Path: R_hand_ik_Handle
+    m_Weight: 1
+  - m_Path: R_Leg_Handle
+    m_Weight: 1
+  - m_Path: root_Motion
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/minigun_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/minigun_handle/minigun
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher/missleA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher/missleB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher/missleC
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher/missleD
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/head_controller
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/head_controller/neck_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/head_controller/neck_pnt/head_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/head_controller/neck_pnt/helmet_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_bicep_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle/L_wrist_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle/L_wrist_pnt/L_hand_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle/L_wrist_pnt/L_hand_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle/L_wrist_pnt/Sword
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_forearm_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_bicep_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_fist_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_fist_handle/R_wrist_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_fist_handle/R_wrist_pnt/R_hand_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_fist_handle/R_wrist_pnt/R_hand_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_forearm_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/L_rocket_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/L_thruster_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/L_thruster_end_pnt/L_thruster_end_pnt1
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/R_rocket_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/R_thruster_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/R_thruster_end_pnt/R_thruster_end_pnt1
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/hip_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_foot_Handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_foot_Handle/L_ankle_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_foot_Handle/L_ankle_jnt/L_foot_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_foot_Handle/L_ankle_jnt/L_toe_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_shin_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_thigh_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_foot_Handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_foot_Handle/R_ankle_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_foot_Handle/R_ankle_jnt/R_foot_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_foot_Handle/R_ankle_jnt/R_toe_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_shin_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_thigh_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/torso_mesh
+    m_Weight: 0
