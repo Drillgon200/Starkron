@@ -6,6 +6,7 @@ public class MissileControllerPlane : MonoBehaviour {
 	float age;
 	public float damageAmount = 10.0F;
 	public float explosionRadius = 10.0F;
+	public GameObject explosionVFXPrefab;
 	public Vector3 velocity;
 	public GameObject target;
 	Vector3 lastTargetPos;
@@ -33,6 +34,9 @@ public class MissileControllerPlane : MonoBehaviour {
 				}
 			}
 		}
+		transform.Find("SmokeTrail").SetParent(null);
+		GameObject vfx = Instantiate(explosionVFXPrefab, transform.position, Quaternion.identity);
+		Destroy(vfx, 3.0F);
 		Destroy(gameObject);
 	}
 

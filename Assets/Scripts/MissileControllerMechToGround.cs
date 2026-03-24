@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class MissileControllerMechToGround : MonoBehaviour {
+	public GameObject explosionVFXPrefab;
 	public Vector3 velocity;
 	public Vector3 target;
 	float age;
@@ -23,6 +24,8 @@ public class MissileControllerMechToGround : MonoBehaviour {
 					damageable.TakeDamage(damageAmount, toDamage.ClosestPoint(transform.position), IDamageable.DamageSource.PLAYER);
 				}
 			}
+			GameObject vfx = Instantiate(explosionVFXPrefab, transform.position, Quaternion.identity);
+			Destroy(vfx, 3.0F);
 			Destroy(gameObject);
 		}
 		transform.position += velocity * dt;

@@ -89,6 +89,13 @@ public class PlayerController : MonoBehaviour {
 	int rocketsLeftToFire;
 	Vector3 rocketTargetPos;
 
+	public GameObject[] minigunPositions = new GameObject[2];
+	int nextMinigunFirePosition = 0;
+	public GameObject[] planeMissilePositions = new GameObject[2];
+	int nextPlaneMissileFirePosition = 0;
+	public GameObject[] mechMissilePositions = new GameObject[4];
+	int nextMechMissilePosition = 0;
+
 	public GameObject machineGunBulletPrefab;
 	public float machineGunStartFireRate = 5.0F;
 	public float machineGunMaxFireRate = 25.0F;
@@ -196,6 +203,7 @@ public class PlayerController : MonoBehaviour {
 			if (transformState == TransformState.MECH && cameraRayHit && rocketCooldownTimer <= 0.0F) {
 				rocketSpawnTimer = 0.0F;
 				rocketsLeftToFire = rocketSalvoCount;
+				nextMechMissilePosition = 0;
 				rocketTargetPos = cameraRayHitPos;
 			}
 		});
@@ -227,8 +235,10 @@ public class PlayerController : MonoBehaviour {
 		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
 		planeMissileAction.canceled += (planeMissileCanceledAction = (InputAction.CallbackContext ctx) => {
 			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !actionsDisabled) {
+				Vector3 fireFrom = planeMissilePositions[nextPlaneMissileFirePosition].transform.position;
+				nextPlaneMissileFirePosition = (nextPlaneMissileFirePosition + 1) % planeMissilePositions.Length;
 				Vector3 startVelocity = lookForward * 100.0F;
-				GameObject missile = Instantiate(lockOnMissilePrefab, transform.position + lookForward * 1.5F, Quaternion.LookRotation(startVelocity));
+				GameObject missile = Instantiate(lockOnMissilePrefab, fireFrom, Quaternion.LookRotation(startVelocity));
 				MissileControllerPlane missileController = missile.GetComponent<MissileControllerPlane>();
 				missileController.velocity = startVelocity;
 				missileController.speed = planeMissileSpeed;
@@ -442,7 +452,8 @@ public class PlayerController : MonoBehaviour {
 				rocketsLeftToFire--;
 				rocketCooldownTimer = rocketCooldown;
 				Vector3 startVelocity = RandomVec3InCone(20.0F) * 15.0F;
-				GameObject rocket = Instantiate(rocketPrefab, transform.position + new Vector3(0.0F, 1.5F, 0.0F), Quaternion.LookRotation(startVelocity));
+				Vector3 fireFrom = mechMissilePositions[nextMechMissilePosition++].transform.position;
+				GameObject rocket = Instantiate(rocketPrefab, fireFrom, Quaternion.LookRotation(startVelocity));
 				MissileControllerMechToGround rocketController = rocket.GetComponent<MissileControllerMechToGround>();
 				rocketController.velocity = startVelocity;
 				rocketController.target = rocketTargetPos + new Vector3(Random.Range(-rocketRandomTargetRadius, rocketRandomTargetRadius), 0.0F, Random.Range(-rocketRandomTargetRadius, rocketRandomTargetRadius));
@@ -453,8 +464,10 @@ public class PlayerController : MonoBehaviour {
 			if (machineGunAction.IsPressed()) {
 				machineGunFireRate = Mathf.Min(machineGunMaxFireRate, machineGunFireRate + machineGunFireRateWarmupRate * dt);
 				float secondsPerBullet = 1.0F / machineGunFireRate;
-				if (machineGunFireTimer >= secondsPerBullet) {
-					Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + forward;
+				if (machineGunFireTimer * 2.0F >= secondsPerBullet) {
+					Vector3 fireFrom = minigunPositions[nextMinigunFirePosition].transform.position;
+					nextMinigunFirePosition = (nextMinigunFirePosition + 1) % minigunPositions.Length;
+					//Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + forward;
 					Vector3 fireTo = cameraRayHit ? cameraRayHitPos : lookCam.transform.position + lookForward * 1000.0F;
 					Vector3 inaccuracy = RandomVec3InCone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
 					Vector3 fireVec = Quaternion.LookRotation(fireTo - fireFrom) * new Vector3(inaccuracy.x, inaccuracy.z, inaccuracy.y);
@@ -497,12 +510,14 @@ public class PlayerController : MonoBehaviour {
 			}
 
 			if (firePlaneGunAction.IsPressed() && planeBulletCooldownTimer < 0.0F) {
+				Vector3 fireFrom = minigunPositions[nextMinigunFirePosition].transform.position;
+				nextMinigunFirePosition = (nextMinigunFirePosition + 1) % minigunPositions.Length;
 				planeBulletFireCount++;
-				Vector3 fireFrom = transform.localToWorldMatrix * new Vector4((planeBulletFireCount & 1) == 0 ? 1.0F : -1.0F, 0.0F, -1.0F, 1.0F);
+				//Vector3 fireFrom = transform.localToWorldMatrix * new Vector4((planeBulletFireCount & 1) == 0 ? 1.0F : -1.0F, 0.0F, -1.0F, 1.0F);
 				GameObject bullet = Instantiate(planeBulletPrefab, fireFrom, Quaternion.identity);
 				BulletController bulletController = bullet.GetComponent<BulletController>();
 				Vector3 fireDirection = cameraRayHit ? Vector3.Normalize(cameraRayHitPos - fireFrom) : lookForward;
-				bulletController.velocity = fireDirection * 400.0F;
+				bulletController.velocity = fireDirection * 800.0F;
 				bulletController.damageAmount = planeBulletDamage;
 				planeBulletCooldownTimer = 1.0F / planeGunFireRate;
 			}

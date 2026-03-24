@@ -55,8 +55,6 @@ Shader "Custom/CelTextureAnimatedShader"
 
 			StructuredBuffer<float4x4> _LocalToWorld;
 			StructuredBuffer<float4> _AnimTime;
-			float3 _CamPos;
-			float3 _CamForward;
 
 			Varyings vert(Attributes IN) {
 				float4 animTimes = _AnimTime[IN.instanceId];

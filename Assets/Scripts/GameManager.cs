@@ -270,8 +270,6 @@ public class GameManager : MonoBehaviour {
 		if (bugsToDraw > 0) {
 			Unity.Collections.NativeArray<float> matrices = new(allGroundBugs.Count * 16, Unity.Collections.Allocator.Temp);
 			Unity.Collections.NativeArray<float> animTimes = new(allGroundBugs.Count * 4, Unity.Collections.Allocator.Temp);
-			float animFrames = 41 - 15;
-			float animLength = animFrames / 24.0F;
 			for (int i = 0; i < bugsToDraw; i++) {
 				EnemyGround bug = allGroundBugs[i];
 				Matrix4x4 l2w = bug.transform.localToWorldMatrix;
