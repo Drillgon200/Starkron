@@ -10,10 +10,10 @@ public class MachineGunBulletController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		age += Time.deltaTime;
-		GetComponent<LineRenderer>().widthMultiplier = (1.0F - age / lifetime) * width;
 		if (age > lifetime) {
 			Destroy(gameObject);
 		}
+		age += Time.deltaTime;
+		GetComponent<LineRenderer>().widthMultiplier = (1.0F - age / lifetime) * width;
 	}
 }

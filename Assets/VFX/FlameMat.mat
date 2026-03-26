@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: CelMat
-  m_Shader: {fileID: -6465566751694194690, guid: 4bd16e35e6efd014596aa73636cb0127, type: 3}
+  m_Name: FlameMat
+  m_Shader: {fileID: -6465566751694194690, guid: 22b5b02cd484d3b4ca00834d1e517ccc, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -24,12 +24,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 0}
+    - _SampleTexture2D_ce136e457c31481aa50c1029d6029868_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 70ef715c628721c428d24268143cba43, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _ShadowMap:
-        m_Texture: {fileID: 0}
+    - _SampleTexture2D_f454cb08fae34cbcaa81fcbc69427bca_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 02356a4e6ec0dd6448d41e06ed071eae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -46,15 +46,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Intensity: 10
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ShadowAngle: -0.2
-    m_Colors:
-    - _BaseColor: {r: 0.7567996, g: 0.7735849, b: 0.6896582, a: 1}
-    - _ShadowColor: {r: 0.4056604, g: 0.3946387, b: 0.38843897, a: 0}
+    m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &5243329810480275594
+--- !u!114 &3897394724840889067
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
