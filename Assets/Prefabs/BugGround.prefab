@@ -222,6 +222,7 @@ MonoBehaviour:
   target: {fileID: 0}
   gameManagerRegisteredIdx: 0
   deathParts: {fileID: 8678948862853920630, guid: 36a02b9ea25ae0344a76a4b03bb1d519, type: 3}
+  bloodVFX: {fileID: 142561106403934823, guid: a6246f152c0373c45b3f793ceda517db, type: 3}
   lastAnimOffset: 0
   lastAnimLength: 0
   lastAnimTime: 0

@@ -109,7 +109,6 @@ public class CharController : MonoBehaviour
         {
             //SWORD
             swordActive = false;
-            StartCoroutine(CoroutineTimer());
         }   
 
         if (Input.GetKey(KeyCode.Mouse0) && playerDown == false)
@@ -259,7 +258,10 @@ public class CharController : MonoBehaviour
     public void SetGrounded(bool grounded) {
 		animator.SetBool("isGrounded", grounded);
 	}
-
+    public void ActivateSword() {
+		swordMesh.SetActive(true);
+		StartCoroutine(CoroutineTimer());
+	}
 
 	IEnumerator CoroutineTimer()
     {
