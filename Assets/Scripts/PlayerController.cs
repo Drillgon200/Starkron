@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour {
 	float machineGunFireTimer;
 
 	public BoxCollider swordHitbox;
+	public bool swordEnabled = false;
 	public float swordDamage = 50.0F;
 	public float swordCooldown = 1.0F;
 	float swordCooldownTimer;
@@ -123,7 +124,6 @@ public class PlayerController : MonoBehaviour {
 	public GameObject planeMissileLockOnTarget = null;
 
 	public GameObject planeBulletPrefab;
-	int planeBulletFireCount;
 	public float planeGunFireRate = 5.0F;
 	public float planeBulletDamage = 50.0F;
 	float planeBulletCooldownTimer;
@@ -275,7 +275,8 @@ public class PlayerController : MonoBehaviour {
 		sprintAction = InputSystem.actions.FindAction("Sprint");
 		swordAction = InputSystem.actions.FindAction("Sword");
 		swordAction.performed += (swordPerformedAction = (InputAction.CallbackContext ctx) => {
-			if (swordCooldownTimer <= 0.0F && !actionsDisabled) {
+			if (swordCooldownTimer <= 0.0F && !actionsDisabled && swordEnabled) {
+				playerAnimController.ActivateSword();
 				foreach (Collider toDamage in Physics.OverlapBox(swordHitbox.transform.position + swordHitbox.center, swordHitbox.size * 0.5F, swordHitbox.transform.rotation)) {
 					IDamageable damageable = toDamage.GetComponent<IDamageable>();
 					if (damageable != null) {
@@ -604,8 +605,6 @@ public class PlayerController : MonoBehaviour {
 			if (firePlaneGunAction.IsPressed() && planeBulletCooldownTimer < 0.0F) {
 				Vector3 fireFrom = minigunPositions[nextMinigunFirePosition].transform.position;
 				nextMinigunFirePosition = (nextMinigunFirePosition + 1) % minigunPositions.Length;
-				planeBulletFireCount++;
-				//Vector3 fireFrom = transform.localToWorldMatrix * new Vector4((planeBulletFireCount & 1) == 0 ? 1.0F : -1.0F, 0.0F, -1.0F, 1.0F);
 				GameObject bullet = Instantiate(planeBulletPrefab, fireFrom, Quaternion.identity);
 				BulletController bulletController = bullet.GetComponent<BulletController>();
 				Vector3 fireDirection = cameraRayHit ? Vector3.Normalize(cameraRayHitPos - fireFrom) : lookForward;
