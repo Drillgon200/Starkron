@@ -42,7 +42,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _ColorMask: 15
-    - _Health: 1
+    - _Health: 0
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
