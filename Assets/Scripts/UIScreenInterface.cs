@@ -3,7 +3,6 @@ using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Progress;
 
 public class UIScreenInterface : MonoBehaviour {
 	public GameObject pauseOverlay;

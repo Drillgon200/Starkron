@@ -1,9 +1,7 @@
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 
 public class PlayerController : MonoBehaviour {
 	public static PlayerController instance;
