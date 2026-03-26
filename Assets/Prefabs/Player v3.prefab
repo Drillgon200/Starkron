@@ -279,6 +279,7 @@ MonoBehaviour:
   lookCam: {fileID: 2378204394847123902}
   rigidBody: {fileID: 7775592327331245846}
   playerModelObject: {fileID: 8234526905003636425}
+  playerModelRig: {fileID: 700454555892849604}
   renderMeshFilter: {fileID: 2739279962345791403}
   mechCollider: {fileID: 4487644817130543947}
   planeCollider: {fileID: 6113140926221175480}
@@ -1206,6 +1207,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8574330588316797779, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
   m_PrefabInstance: {fileID: 8261638190342876971}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &700454555892849604 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8872020469415163119, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
+  m_PrefabInstance: {fileID: 8261638190342876971}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1409423478816829397 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7000980889648283902, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
@@ -1226,7 +1232,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4648765833057765813, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
   m_PrefabInstance: {fileID: 8261638190342876971}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 700454555892849604}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72a015e0f4b50d241831f088802ae15f, type: 3}
