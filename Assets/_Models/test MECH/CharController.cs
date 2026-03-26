@@ -50,7 +50,6 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift) && playerDown == false)
         {
-            print("RUN");
             playerRun = true;
         }
         else
@@ -60,7 +59,6 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) && playerDown == false && playerRun == false)
         {
-            print("forward");
             animator.SetBool("isForwardMoving", true);
         }
         else
@@ -70,7 +68,6 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) && playerDown == false && playerRun == true)
         {
-            print("run fowrward");
             animator.SetBool("isRun", true);
         }
         else
@@ -80,7 +77,6 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.S) && playerDown == false)
         {
-            print("BACKWARD");
             animator.SetBool("isBackwards", true);
         }
         else
@@ -90,7 +86,6 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) && playerDown == false)
         {
-            print("straf LEFT");
             animator.SetBool("isLeftMoving", true);
         }
         else
@@ -100,7 +95,6 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D) && playerDown == false)
         {
-            print("straf RIGHT");
             animator.SetBool("isRightMoving", true);
         }
         else
@@ -120,7 +114,6 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0) && playerDown == false)
         {
-            print("machine gun");
             animator.SetBool("isMachineGun", true);
         }
         else
@@ -130,9 +123,7 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && playerDown == false)
         {
-            print("player jump good"); //jump test
             animator.SetBool("isJump", true);
-            animator.SetBool("isGrounded", false);
             isGroundTouch = false;
         }
         else
@@ -142,11 +133,9 @@ public class CharController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Keypad1) && playerDown == false && isGroundTouch == true)
         {
-            print("Damage on ground");
             animator.SetBool("isDamaged", true);
         }
         else if (Input.GetKeyDown(KeyCode.Keypad1) && playerDown == false && isGroundTouch == false) {
-            print("Damage bad falling");
             animator.SetBool("isDamaged", true);
             animator.SetBool("isFallingOkay", false);
             isFallingBad = true;
@@ -158,20 +147,14 @@ public class CharController : MonoBehaviour
         }
 
             if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == true) {
-                print("Toggle: NOT touching ground");
-                animator.SetBool("isGrounded", false);
                 isGroundTouch = false;
 
 
             }
             else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false && isFallingBad == false) {
-                print("Toggle: YES touching ground");
-                animator.SetBool("isGrounded", true);
                 isGroundTouch = true;
             }
             else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false && isFallingBad == true) {
-                print("Toggle: YES HURT touching ground");
-                animator.SetBool("isGrounded", true);
                 animator.SetBool("isFallingOkay", true);
 
                 isGroundTouch = true;
@@ -180,7 +163,6 @@ public class CharController : MonoBehaviour
             }
 
             if (Input.GetKey(KeyCode.Keypad4) && playerDown == true) {
-                print("get up recovery");
                 animator.SetBool("isRecover", true);
                 playerDown = false;
             }
@@ -201,7 +183,6 @@ public class CharController : MonoBehaviour
             }
 
             if (boostFlight == true) {
-                print("flight boost");
                 animator.SetBool("isFlightBoost", true);
             }
             else {
@@ -209,7 +190,6 @@ public class CharController : MonoBehaviour
             }
 
             if (Input.GetKey(KeyCode.Space)) {
-                print("airbrakes BOTH");
                 animator.SetBool("isBrakeBoth", true);
 
                 StartCoroutine(CoroutineTimer());
@@ -220,7 +200,6 @@ public class CharController : MonoBehaviour
             }
 
             if (Input.GetKey(KeyCode.Keypad1)) {
-                print("flight damage");
                 animator.SetBool("isDamaged", true);
             }
             else {
@@ -228,7 +207,6 @@ public class CharController : MonoBehaviour
             }
 
             if (Input.GetKey(KeyCode.Mouse0) && playerDown == false) {
-                print("machine gun");
                 animator.SetBool("isMachineGun", true);
             }
             else {
@@ -240,16 +218,13 @@ public class CharController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && playerDown == false) {
             if (isPlaneMode == false) {
                 swordMesh.SetActive(false);
-                print("Transform > PLANE MODE");
                 animator.SetBool("isTrans", true);
-                animator.SetBool("isGrounded", false);
                 isPlaneMode = true;
 
             }
             else if (isPlaneMode == true) {
                 isGroundTouch = false;
                 swordMesh.SetActive(false);
-                print("Transform > ROBOT MODE");
                 animator.SetBool("isTrans", false);
                 animator.SetBool("isFallingOkay", true);
                 
@@ -281,22 +256,23 @@ public class CharController : MonoBehaviour
 
     }
 
+    public void SetGrounded(bool grounded) {
+		animator.SetBool("isGrounded", grounded);
+	}
 
 
-    IEnumerator CoroutineTimer()
+	IEnumerator CoroutineTimer()
     {
 
         if (isPlaneMode == false) {
 
             if (swordActive == false) {
-                print("Sword");
                 swordMesh.SetActive(true);
                 //animator.SetBool("isSwordAttack", false);
                 animator.SetBool("isSwordAttack", true);
 
                 yield return new WaitForSeconds(swordTime);
 
-                print("Sword Off");
                 animator.SetBool("isSwordAttack", false);
                 swordActive = false;
 
