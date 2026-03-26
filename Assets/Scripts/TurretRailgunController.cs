@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class TurretRailgunController : MonoBehaviour, IBugTarget {
 	public GameObject barrel;
+	public GameObject muzzleFlash;
+	public ParticleSystem electricalArcVFX;
+	public GameObject sparksPrefab;
 	public Collider target;
 	public GameObject railgunProjectilePrefab;
 	public float range = 50.0F;
@@ -22,6 +25,7 @@ public class TurretRailgunController : MonoBehaviour, IBugTarget {
 
 	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
+		muzzleFlash.SetActive(false);
 		if (target) {
 			Vector3 targetDirection = Vector3.Normalize(target.bounds.center - barrel.transform.position);
 			Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
@@ -38,8 +42,11 @@ public class TurretRailgunController : MonoBehaviour, IBugTarget {
 				bulletRender.SetPosition(1, fireTo);
 				if (bulletRayHit) {
 					bulletHit.transform.gameObject.GetComponent<IDamageable>()?.TakeDamage(damage, fireTo, IDamageable.DamageSource.TURRET);
+					Instantiate(sparksPrefab, fireTo, Quaternion.identity);
 				}
 				fireCooldown = 1.0F / fireRate;
+				muzzleFlash.SetActive(true);
+				electricalArcVFX.Emit(3);
 			}
 		}
 		fireCooldown -= dt;
