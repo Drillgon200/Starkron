@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour {
 	public Camera lookCam;
 	public Rigidbody rigidBody;
 	public GameObject playerModelObject;
+	public GameObject playerModelRig;
+	Vector3 playerModelRigOriginalOffset;
 	public MeshFilter renderMeshFilter;
 	public Collider mechCollider;
 	public Collider planeCollider;
@@ -154,6 +156,7 @@ public class PlayerController : MonoBehaviour {
 	TransformState transformState = TransformState.MECH;
 	public float transformTime = 3.0F;
 	float transformCooldown;
+	float timeSinceLastTransform;
 
 	[System.Flags]
 	public enum JetEnables {
@@ -210,7 +213,6 @@ public class PlayerController : MonoBehaviour {
 	void Awake() {
 		instance = this;
 		bankUICounterText.text = "x " + bankTotal.ToString();
-		set_jet_vfx(0);
 	}
 
 	public void SetMouseCapture(bool cap) {
@@ -247,6 +249,7 @@ public class PlayerController : MonoBehaviour {
 			} break;
 			}
 			transformCooldown = transformTime;
+			timeSinceLastTransform = 0.0F;
 
 		});
 		rocketAction = InputSystem.actions.FindAction("FireRockets");
@@ -311,6 +314,10 @@ public class PlayerController : MonoBehaviour {
 				uiScreen.OpenShop();
 			}
 		});
+
+		playerModelRigOriginalOffset = playerModelRig.transform.localPosition;
+
+		set_jet_vfx(0);
 
 		SetMouseCapture(true);
 		health = maxHealth;
@@ -379,6 +386,12 @@ public class PlayerController : MonoBehaviour {
 			}
 			planeTiltRotationVelocity *= Mathf.Exp(dt * Mathf.Log(1.0F - planeTiltSpringDamping));
 			planeTiltRotation += planeTiltRotationVelocity * dt;
+			float visualTransformTime = 0.5F;
+			float transformToPlaneTime = Mathf.Clamp01(timeSinceLastTransform / visualTransformTime);
+			if (transformState == TransformState.PLANE_TO_MECH || transformState == TransformState.MECH) {
+				transformToPlaneTime = 1.0F - transformToPlaneTime;
+			}
+			playerModelRig.transform.SetLocalPositionAndRotation(playerModelRigOriginalOffset + Vector3.up * 0.9F * transformToPlaneTime, Quaternion.identity);
 			switch (transformState) {
 			case TransformState.MECH:
 			case TransformState.MECH_TO_PLANE:
@@ -654,6 +667,7 @@ public class PlayerController : MonoBehaviour {
 		rocketCooldownTimer -= dt;
 		swordCooldownTimer -= dt;
 		transformCooldown -= dt;
+		timeSinceLastTransform += dt;
 		planeMissileCooldownTimer -= dt;
 		planeBulletCooldownTimer -= dt;
 		set_jet_vfx(jetEnables);
