@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
@@ -413,6 +415,13 @@ public class GameManager : MonoBehaviour {
 			gameOver = true;
 			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowWinOverlay();
-		}
+            StartCoroutine(LoadCredits());
+        }
 	}
+
+    private IEnumerator LoadCredits() {
+        yield return new WaitForSeconds(10);
+                SceneManager.LoadScene("Scenes/EndingCredits");
+    }
+
 }
