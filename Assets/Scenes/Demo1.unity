@@ -2478,6 +2478,7 @@ GameObject:
   - component: {fileID: 260222463}
   - component: {fileID: 260222462}
   - component: {fileID: 260222461}
+  - component: {fileID: 260222464}
   m_Layer: 5
   m_Name: buy 1 button
   m_TagString: Untagged
@@ -2599,6 +2600,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260222459}
   m_CullTransparentMesh: 1
+--- !u!114 &260222464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260222459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586248112}
+          m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+          m_MethodName: SwordHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &267521898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4924,6 +4954,7 @@ GameObject:
   - component: {fileID: 538792619}
   - component: {fileID: 538792618}
   - component: {fileID: 538792617}
+  - component: {fileID: 538792620}
   m_Layer: 5
   m_Name: buy 3 button (4)
   m_TagString: Untagged
@@ -5033,6 +5064,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538792615}
   m_CullTransparentMesh: 1
+--- !u!114 &538792620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538792615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586248112}
+          m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+          m_MethodName: RepairBuildingsHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &553408898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5188,6 +5248,7 @@ GameObject:
   - component: {fileID: 575741632}
   - component: {fileID: 575741631}
   - component: {fileID: 575741630}
+  - component: {fileID: 575741633}
   m_Layer: 5
   m_Name: buy 3 button (1)
   m_TagString: Untagged
@@ -5258,7 +5319,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 575741631}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 586248112}
+        m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+        m_MethodName: TryBuyGunDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &575741631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5297,6 +5370,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575741628}
   m_CullTransparentMesh: 1
+--- !u!114 &575741633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575741628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586248112}
+          m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+          m_MethodName: GunDamageHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &577505760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6053,6 +6155,7 @@ GameObject:
   - component: {fileID: 643005610}
   - component: {fileID: 643005609}
   - component: {fileID: 643005608}
+  - component: {fileID: 643005611}
   m_Layer: 5
   m_Name: buy 3 button (5)
   m_TagString: Untagged
@@ -6162,6 +6265,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 643005606}
   m_CullTransparentMesh: 1
+--- !u!114 &643005611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643005606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586248112}
+          m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+          m_MethodName: OrbitalLazerHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &652949034
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9133,6 +9265,63 @@ Transform:
   - {fileID: 839457169}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1017756634
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1701940389355872489, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_Name
+      value: Sparks
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.4781413
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3454239
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.081392
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996983055806036645, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d71fd337f4cfee4bb5a99cdb88bcb4b, type: 3}
 --- !u!4 &1025836881 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1256986032919519322, guid: 59fc3e29c05790f46ae78b525c2ed699, type: 3}
@@ -10837,6 +11026,7 @@ GameObject:
   - component: {fileID: 1189614211}
   - component: {fileID: 1189614210}
   - component: {fileID: 1189614209}
+  - component: {fileID: 1189614212}
   m_Layer: 5
   m_Name: buy 3 button (2)
   m_TagString: Untagged
@@ -10907,7 +11097,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1189614210}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 586248112}
+        m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+        m_MethodName: TryBuyRockets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1189614210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10946,6 +11148,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189614207}
   m_CullTransparentMesh: 1
+--- !u!114 &1189614212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189614207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586248112}
+          m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+          m_MethodName: RocketCountHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &1205122471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14134,6 +14365,7 @@ GameObject:
   - component: {fileID: 1591384173}
   - component: {fileID: 1591384172}
   - component: {fileID: 1591384171}
+  - component: {fileID: 1591384174}
   m_Layer: 5
   m_Name: buy 3 button
   m_TagString: Untagged
@@ -14204,7 +14436,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1591384172}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 586248112}
+        m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+        m_MethodName: TryBuyHealthBoost
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1591384172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14243,6 +14487,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1591384169}
   m_CullTransparentMesh: 1
+--- !u!114 &1591384174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591384169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586248112}
+          m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+          m_MethodName: HealthBoostHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &1622083579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4188063952129788583, guid: cc83adf1cfca08345a0bafddc8d1f218, type: 3}
@@ -15791,6 +16064,7 @@ GameObject:
   - component: {fileID: 1835591327}
   - component: {fileID: 1835591326}
   - component: {fileID: 1835591325}
+  - component: {fileID: 1835591328}
   m_Layer: 5
   m_Name: buy 3 button (3)
   m_TagString: Untagged
@@ -15861,7 +16135,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1835591326}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 586248112}
+        m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+        m_MethodName: TryBuySword
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1835591326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15900,6 +16186,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835591323}
   m_CullTransparentMesh: 1
+--- !u!114 &1835591328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835591323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586248112}
+          m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+          m_MethodName: SwordHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &1837056626 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4193050130116504858, guid: 68ede01b787c5634db69c27ea914fc74, type: 3}
@@ -16880,6 +17195,7 @@ GameObject:
   - component: {fileID: 1953120135}
   - component: {fileID: 1953120134}
   - component: {fileID: 1953120133}
+  - component: {fileID: 1953120136}
   m_Layer: 5
   m_Name: buy 2 button
   m_TagString: Untagged
@@ -16989,6 +17305,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1953120131}
   m_CullTransparentMesh: 1
+--- !u!114 &1953120136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953120131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventTrigger
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 586248112}
+          m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+          m_MethodName: AntiAirTurretHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &1955416489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2177988271143286950, guid: 02ecd077a677eae4e886cd41112d36ac, type: 3}
@@ -31422,3 +31767,4 @@ SceneRoots:
   - {fileID: 2055421465}
   - {fileID: 1283183931}
   - {fileID: 1157050753}
+  - {fileID: 1017756634}

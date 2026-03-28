@@ -30,8 +30,6 @@ public class BugDeadScript : MonoBehaviour {
         pieceBody.GetComponent<CapsuleCollider>().enabled = false;
 
 
-        print("bug dead!");
-
         Invoke("timedDestroy", 10);
     }
 
