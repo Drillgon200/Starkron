@@ -8,6 +8,11 @@ TagManager:
   - bugPiecesTag
   - CrystalTag
   - BuildingTag
+  - DomeTag
+  - GroundBugTag
+  - missileTag
+  - MachineGunBulletTag
+  - PlayerTag
   layers:
   - Default
   - TransparentFX
