@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject placementHologram;
 	public GameObject placementPrefab;
 
-	bool onGround;
+    bool onGround;
 	float hoverFuelLeft;
 	public float maxHealth = 100.0F;
 	float health;
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject rocketPrefab;
 	public float rocketFireRate = 4.0F;
 	public float rocketCooldown = 4.0F;
-	public int rocketSalvoCount = 4;
+	public int rocketSalvoCount;
 	public float rocketRandomTargetRadius = 3.0F;
 	public float rocketDamage = 20.0F;
 	float rocketSpawnTimer = -1.0F;
