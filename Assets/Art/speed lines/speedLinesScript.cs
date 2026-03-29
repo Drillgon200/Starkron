@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using UnityEditor.Recorder;
+//using UnityEditor.Recorder;
 
 
 public class speedLinesScript : MonoBehaviour
