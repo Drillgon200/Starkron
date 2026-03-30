@@ -12,13 +12,37 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -9201590183732283197, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -9046843183608113441, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -9046160718284960515, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8992464873925294118, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8958334546550805576, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8953225143650116214, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -8916395903236191565, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8877102543516864031, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8836608733414671594, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -37,16 +61,28 @@ PrefabInstance:
       value: DomeTag
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0091919
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0091919
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0091919
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.27
+      value: 0.53
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3
+      value: 0.20000002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.77
+      value: 2.39
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_LocalRotation.w
@@ -80,9 +116,25 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -8618405135666109946, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8591636116103898302, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -8578247831105314711, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8453824076597931412, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8363412553686630156, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8324810647017252188, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -92,21 +144,49 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -8271041359441404498, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8140489662221071396, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -8128370058421382208, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8083851407844593678, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -8060654012371532079, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8005118712963022803, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7980273072588382867, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -7967533646860773052, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7813990827152732781, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -7534872974099951120, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7522847287532942859, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7507259136935493001, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -116,6 +196,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -7459445306813358772, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7427737918050649562, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -124,21 +208,57 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -7257298766758667681, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7228155353462070429, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7214560298999968898, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -7096891538657212760, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6991500116370062494, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -6842567170057537279, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6741767020771767204, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -6628687976741556445, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -6492453283549443941, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6412267471562798700, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6230380748237447504, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -6096875035306662487, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -6084101468125265718, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6066149113356932612, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -160,6 +280,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -5776483561262772809, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5744873177342751646, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5644005813858879189, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5561439452419592256, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -168,13 +300,37 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -5441816526827076028, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5368909943390227630, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5327007395919268877, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5171568011283682979, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -5067526104610750702, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4952067956212630282, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -4919781271889006055, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4843226722797810871, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4811614845750943803, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -184,9 +340,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -4784215250450231366, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4774439773082040527, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -4687291230670672249, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4680566820163676890, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -204,6 +368,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -4604412386070577619, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4533971129418266281, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4425370799125418605, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -212,9 +384,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -4376670933686436850, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4321079755636679076, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -4297057009893157382, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4281369853675889729, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -223,6 +403,10 @@ PrefabInstance:
     - target: {fileID: -4183776707461939641, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -4165877578743272721, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4132814143271023173, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -240,6 +424,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -3868065225500910374, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3794596767694626840, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3774221036074896522, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3666168293038161974, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3572995977690298915, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -3550043312277924258, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -247,6 +451,10 @@ PrefabInstance:
     - target: {fileID: -3523515774676744119, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -3473610978918994071, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3466531074705830226, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -256,13 +464,29 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -3346470419084909389, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -3270466631414668994, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -3210266397722762735, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -3046671810800214902, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -2878258959667360224, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2860226140995920958, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2810977204484978055, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -276,25 +500,97 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -2676120055211980065, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2620827034749394426, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2433166597332710066, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2429730081771652213, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2371684526762614450, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2347279952712738536, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2333585605836179164, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2331077706460458628, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -2299099621751779020, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -2288196304919277575, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2270667195701435840, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -2081288951840495574, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1994867189735312228, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1971039617168320667, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1957217764166402805, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1932209826589064053, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1912592109177998375, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -1838519913775634022, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1831181042177979122, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -1815991676466951410, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1730550336893967680, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -1704795559007747620, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1481606540970943350, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1396203288371440570, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -303,6 +599,10 @@ PrefabInstance:
     - target: {fileID: -1374963775823474452, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -1303642094164048715, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -1223658289613980872, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -328,6 +628,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -878403449330521710, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -876219006353898162, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -847227135825666239, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -335,6 +643,10 @@ PrefabInstance:
     - target: {fileID: -785831899389896182, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -780719969215242712, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -715856822121540524, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -344,13 +656,29 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -643426304762373765, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -592372790741380547, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -587573443436231436, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -544446802023788300, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: -444272266258776945, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -415660195896556743, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -369231038702013750, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -364,17 +692,65 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: -118039290820408946, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 231883046206007021, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 245029589631592800, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 300827109520662563, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 394385974234239437, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 429019426683255492, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 462948236455107419, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 472939630142940086, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 576258236079762940, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 592748036066544263, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 611105160113395575, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 725894204197931026, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 753767444691279535, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 769184345317063777, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 878967851402026913, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_Name
@@ -388,6 +764,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 1280127260324366824, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1492983032602480651, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1501159936568276125, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -395,6 +779,10 @@ PrefabInstance:
     - target: {fileID: 1570288405962451033, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 1741400261775748765, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1797390446468606084, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -420,6 +808,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 2175035742183027152, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2225387520309165793, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -427,6 +819,10 @@ PrefabInstance:
     - target: {fileID: 2280116776990509973, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 2450653963625860991, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2480899980221149440, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -440,9 +836,33 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 2542708629210770515, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2666442264137993458, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2668445581724813437, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2721238662453116976, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2873597047018093176, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 2883337274338430713, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2912480453885527982, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2924234980080739958, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -452,9 +872,17 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 3157299436400558883, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3220092081770631412, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 3226705860825812310, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3248481430401852994, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -463,6 +891,10 @@ PrefabInstance:
     - target: {fileID: 3316885610683358422, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328874532390116848, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3343361711913295319, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -475,6 +907,10 @@ PrefabInstance:
     - target: {fileID: 3501740111676111808, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652582712285304342, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3759774323631557912, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -504,6 +940,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 4002385586367690689, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4005302907516144419, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4159133152171124755, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4286152610606481210, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -516,6 +964,18 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 4406004379062798290, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4552611040407287017, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4566552324107739671, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4609667272588871703, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -523,6 +983,14 @@ PrefabInstance:
     - target: {fileID: 4647932793338409819, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721925099167540431, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753924531739208977, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4775945915268930419, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -532,6 +1000,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 5036486440407220928, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5191955546483194409, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
@@ -539,6 +1011,10 @@ PrefabInstance:
     - target: {fileID: 5198854556965034241, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232911062348878791, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5248160898770393437, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -548,9 +1024,21 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 5367821671389524095, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5371152962292313906, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5414284597909644264, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 5430213050572906498, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5435325586651768021, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -564,9 +1052,33 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 5606083358508598179, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5663162925841548227, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 5683693018056729637, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6031740757072394285, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6058033319803045247, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6126352815024987638, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6197805899856466428, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6218717175563873575, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -588,9 +1100,33 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 6443282568409727021, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443901129397178881, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6867513384072063378, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 6884197233264200275, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6889066216477528211, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6952959889632456861, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7016500566066074645, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7119802480875359340, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -604,9 +1140,33 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 7383135692422831400, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7473499302512257068, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499629496514487787, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7719375979220729504, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7811408093696195913, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7878635823899032372, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 7884484408953371727, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7891598122391105741, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -620,17 +1180,45 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 7973700954615245749, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7986528212176690462, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 8196600095301519479, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8206979189754522694, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 8216244238037850939, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8262688375885145834, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8293507086037529215, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8381447418321846448, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 8396941964014639666, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8493901881454220388, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8516868174865142286, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
@@ -644,9 +1232,25 @@ PrefabInstance:
       propertyPath: m_TagString
       value: DomeTag
       objectReference: {fileID: 0}
+    - target: {fileID: 8584931292798686754, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8648260095049413656, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
       propertyPath: m_TagString
       value: DomeTag
+      objectReference: {fileID: 0}
+    - target: {fileID: 8776160979585542877, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964490501544070711, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9181339448131644679, guid: e1ee8775c9d791e44bc79acb21fa6f73, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

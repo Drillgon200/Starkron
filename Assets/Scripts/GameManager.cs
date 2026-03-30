@@ -421,7 +421,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator LoadCredits() {
         yield return new WaitForSeconds(10);
-                SceneManager.LoadScene("Scenes/EndingCredits");
+		SceneManager.LoadScene("Scenes/EndingCredits");
     }
 
 }

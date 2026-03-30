@@ -2,46 +2,33 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public class CreditScroll : MonoBehaviour {
+	public int speed;
+	private bool start;
+	public static bool staticStop;
 
-public class CreditScroll : MonoBehaviour
-{
+	void Start() {
+		StartCoroutine(ScrollUp());
+		StartCoroutine(EndCredits());
+	}
 
-    public int speed;
-    private bool start;
-    public static bool staticStop;
+	void Update() {
+		if (start) {
+			GetComponent<Rigidbody2D>().linearVelocity = transform.up * speed;
+		}
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        StartCoroutine(ScrollUp());
-        StartCoroutine(EndCredits());
-    }
+		if (staticStop == true) {
+			speed = 0;
+		}
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (start == true)
-        {
+	private IEnumerator ScrollUp()	{
+		yield return new WaitForSeconds(10);
+		start = true;
+	}
 
-            GetComponent<Rigidbody2D>().linearVelocity = transform.up * speed;
-        }
-
-        if (staticStop == true)
-        {
-            speed = 0;
-        }
-    }
-
-    private IEnumerator ScrollUp()
-    {
-        yield return new WaitForSeconds(10);
-        start = true;
-    }
-
-    private IEnumerator EndCredits()
-    {
-        yield return new WaitForSeconds(190);
-        SceneManager.LoadScene("Scenes/CAGD_Logo");
-    }
-
+	private IEnumerator EndCredits() {
+		yield return new WaitForSeconds(190);
+		SceneManager.LoadScene("Scenes/CAGD_Logo");
+	}
 }

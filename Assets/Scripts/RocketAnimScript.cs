@@ -1,4 +1,3 @@
-//using UnityEditor.Rendering;
 using UnityEngine;
 
 public class RocketAnimScript : MonoBehaviour
@@ -13,26 +12,21 @@ public class RocketAnimScript : MonoBehaviour
     public float spaceTimer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    void Start()    {
         RocketB.SetActive(false);
         RocketC.SetActive(false);
         RocketD.SetActive(false);
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update()    {
         if (playerController.rocketSalvoCount == 1) {
             RocketA.SetActive(true);
-        } 
-        else if (playerController.rocketSalvoCount == 2) {
+        } else if (playerController.rocketSalvoCount == 2) {
             RocketB.SetActive(true);
-        }
-        else if (playerController.rocketSalvoCount == 3) {
+        } else if (playerController.rocketSalvoCount == 3) {
             RocketC.SetActive(true);
-        }
-        else if (playerController.rocketSalvoCount == 4) {
+        } else if (playerController.rocketSalvoCount == 4) {
             RocketD.SetActive(true);
         }
     }

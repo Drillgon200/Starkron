@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3426420196016189118}
   m_Layer: 6
   m_Name: TurretRailgun
-  m_TagString: Untagged
+  m_TagString: TurretTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

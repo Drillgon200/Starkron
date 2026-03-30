@@ -13,6 +13,7 @@ TagManager:
   - missileTag
   - MachineGunBulletTag
   - PlayerTag
+  - TurretTag
   layers:
   - Default
   - TransparentFX
