@@ -47,7 +47,6 @@ public class CADGscript : MonoBehaviour
     private IEnumerator LoadLevel()
     {
         yield return new WaitForSeconds(5);
-        print("load level");
         //SceneManager.LoadScene(1); // load level by name
         SceneManager.LoadScene("Scenes/MainMenu");
     }

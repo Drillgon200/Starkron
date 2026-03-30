@@ -26,11 +26,6 @@ public class CreditScroll : MonoBehaviour
             GetComponent<Rigidbody2D>().linearVelocity = transform.up * speed;
         }
 
-        if (Input.GetKeyDown(KeyCode.Z) || Input.GetMouseButtonDown(1))
-        {
-            SceneManager.LoadScene(0);
-        }
-
         if (staticStop == true)
         {
             speed = 0;
@@ -40,17 +35,13 @@ public class CreditScroll : MonoBehaviour
     private IEnumerator ScrollUp()
     {
         yield return new WaitForSeconds(10);
-        simpleStart();
+        start = true;
     }
 
     private IEnumerator EndCredits()
     {
         yield return new WaitForSeconds(190);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Scenes/CAGD_Logo");
     }
 
-    private void simpleStart()
-    {
-        start = true;
-    }
 }
