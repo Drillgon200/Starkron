@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject placementHologram;
 	public GameObject placementPrefab;
 
-    bool onGround;
+	bool onGround;
 	float hoverFuelLeft;
 	public float maxHealth = 100.0F;
 	float health;
