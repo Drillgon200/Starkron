@@ -1,0 +1,371 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Machine Gun Mech Avatar Mask 1
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: L_foot_IK_Handle
+    m_Weight: 0
+  - m_Path: L_hand_ik_Handle
+    m_Weight: 1
+  - m_Path: L_Leg_Handle
+    m_Weight: 0
+  - m_Path: R_foot_IK_Handle
+    m_Weight: 0
+  - m_Path: R_hand_ik_Handle
+    m_Weight: 1
+  - m_Path: R_Leg_Handle
+    m_Weight: 0
+  - m_Path: root_Motion
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/booster_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/booster_handle/L_booster_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/booster_handle/R_booster_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/L_arm_Handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/R_arm_Handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher/missleA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher/missleB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher/missleC
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/Chest_mesh/packLauncher/missleD
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/cockpit_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/cockpit_handle/cock_pit_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/cockpit_handle/cock_pit_jnt/cockpit
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/cockpit_handle/cock_pit_jnt/nose_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/cockpit_handle/cock_pit_jnt/nose_handle/nose_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/cockpit_handle/cock_pit_jnt/nose_handle/nose_jnt/nose
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/cockpit_handle/cock_pit_jnt/nose_handle/nose_jnt/tip_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/head_controller
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/head_controller/neck_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/head_controller/neck_pnt/head_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/head_controller/neck_pnt/helmet_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_bicep_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle/L_wrist_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle/L_wrist_pnt/L_hand_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle/L_wrist_pnt/L_hand_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_fist_handle/L_wrist_pnt/Sword
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/L_shoulder_pnt/L_elbow_pnt/L_forearm_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_bicep_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_fist_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_fist_handle/R_wrist_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_fist_handle/R_wrist_pnt/R_hand_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_fist_handle/R_wrist_pnt/R_hand_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/colar_bone_pnt/R_shoulder_pnt/R_elbow_pnt/R_forearm_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/backBoosterB_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/backBoosterB_handle/flame_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/backBoosterB_handle/flame_pnt/jetFireB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/backBoosterB_handle/flame_pnt/tip_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/L_rocket_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/L_thruster_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/L_thruster_pnt/L_thruster_end_pnt/L_thruster_end_pnt1
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/miniGunA_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/miniGunA_handle/minigun_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/miniGunA_handle/minigun_jnt/minigun
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/miniGunA_handle/minigun_jnt/tip_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/miniGunB_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/miniGunB_handle/minigun_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/miniGunB_handle/minigun_jnt/minigun
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/miniGunB_handle/minigun_jnt/tip_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/backBoosterA_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/backBoosterA_handle/flame_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/backBoosterA_handle/flame_jnt/jetFireA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/backBoosterA_handle/flame_jnt/tip_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/R_rocket_mesh
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/R_thruster_end_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/R_thruster_pnt/R_thruster_end_pnt/R_thruster_end_pnt1
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/airBrakeA_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/airBrakeA_handle/joint11
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/airBrakeA_handle/joint11/airBrakA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/airBrakeA_handle/joint11/joint12
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/decorA_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/decorA_handle/wingDecorA_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/decorA_handle/wingDecorA_jnt/WingDecorA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/joint8
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/joint8/jetFireA_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/joint8/jetFireA_handle/joint9
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/joint8/jetFireA_handle/joint9/jetFireA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/joint8/jetFireA_handle/joint9/joint10
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/wingATip_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/wingATip_handle/wingFlapA_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/wingATip_handle/wingFlapA_jnt/joint3
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/wingATip_handle/wingFlapA_jnt/WingSmallA1
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/WingLargeA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingA_handle/wing_set_jntA/WingLargeA/jetTurbineA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/airBrakeB_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/airBrakeB_handle/airbrake_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/airBrakeB_handle/airbrake_jnt/AirBrakeB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/airBrakeB_handle/airbrake_jnt/tip_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/decorB_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/decorB_handle/wingDecorB_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/decorB_handle/wingDecorB_jnt/WingDecorB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/wingBTip_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/wingBTip_handle/wingFlapB_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/wingBTip_handle/wingFlapB_jnt/tip_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/wingBTip_handle/wingFlapB_jnt/WingSmallA
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/WingLargeB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/WingLargeB/turbineB_pnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/WingLargeB/turbineB_pnt/jetFireB_handle
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/WingLargeB/turbineB_pnt/jetFireB_handle/jetfire_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/WingLargeB/turbineB_pnt/jetFireB_handle/jetfire_jnt/jetFireB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/WingLargeB/turbineB_pnt/jetFireB_handle/jetfire_jnt/tip_jnt
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/chest_controller/torso_pnt/wingB_handle/wing_set_jntB/WingLargeB/turbineB_pnt/jetTurbineB
+    m_Weight: 1
+  - m_Path: root_Motion/Root_controller/ROOT/hip_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/hip_mesh/tailfinA_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/hip_mesh/tailfinB_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/boosterB_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/boosterB_handle/boosterB_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/boosterB_handle/boosterB_jnt/boosterB
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/boosterB_handle/boosterB_jnt/flameB_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/boosterB_handle/boosterB_jnt/flameB_handle/flameB_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/boosterB_handle/boosterB_jnt/flameB_handle/flameB_jnt/booster_fire
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/boosterB_handle/boosterB_jnt/flameB_handle/flameB_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/flameB_handle1
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/flameB_handle1/flameB_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/flameB_handle1/flameB_jnt/booster_fire
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/flameB_handle1/flameB_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_foot_Handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_foot_Handle/L_ankle_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_foot_Handle/L_ankle_jnt/L_foot_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_foot_Handle/L_ankle_jnt/L_toe_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_knee_jnt/L_shin_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/L_hip_jnt/L_thigh_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/boosterA_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/boosterA_handle/boosterA_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/boosterA_handle/boosterA_jnt/boosteA
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/boosterA_handle/boosterA_jnt/flameA_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/boosterA_handle/boosterA_jnt/flameA_handle/flameA_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/boosterA_handle/boosterA_jnt/flameA_handle/flameA_jnt/booster_fire
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/boosterA_handle/boosterA_jnt/flameA_handle/flameA_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/flameA_handle1
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/flameA_handle1/flameA_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/flameA_handle1/flameA_jnt/booster_fire
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/flameA_handle1/flameA_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_foot_Handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_foot_Handle/R_ankle_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_foot_Handle/R_ankle_jnt/R_foot_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_foot_Handle/R_ankle_jnt/R_toe_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_knee_jnt/R_shin_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/R_hip_jnt/R_thigh_mesh
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailFinA
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailfinC_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailfinC_handle/TailFinC_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailfinC_handle/TailFinC_jnt/tailFinA
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailfinC_handle/TailFinC_jnt/tailfinE_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailfinC_handle/TailFinC_jnt/tailfinE_handle/TailFinE_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailfinC_handle/TailFinC_jnt/tailfinE_handle/TailFinE_jnt/tailFinA
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailfinC_handle/TailFinC_jnt/tailfinE_handle/TailFinE_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tailfinC_handle/TailFinC_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinA_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailFinB
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailfinD_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailfinD_handle/TailFinD_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailfinD_handle/TailFinD_jnt/tailFinB
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailfinD_handle/TailFinD_jnt/tailfinF_handle
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailfinD_handle/TailFinD_jnt/tailfinF_handle/TailFinF_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailfinD_handle/TailFinD_jnt/tailfinF_handle/TailFinF_jnt/tailFinB
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailfinD_handle/TailFinD_jnt/tailfinF_handle/TailFinF_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tailfinD_handle/TailFinD_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/TailFinB_jnt/tip_jnt
+    m_Weight: 0
+  - m_Path: root_Motion/Root_controller/ROOT/torso_mesh
+    m_Weight: 0

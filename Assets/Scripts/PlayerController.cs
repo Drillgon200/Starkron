@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 	public Mesh mechMesh;
 	public Mesh planeMesh;
 	public UIScreenInterface uiScreen;
-	public CharController playerAnimController;
+	public CharAnimController playerAnimController;
 
 	// Mech actions
 	InputAction moveAction;
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject rocketPrefab;
 	public float rocketFireRate = 4.0F;
 	public float rocketCooldown = 4.0F;
-	public int rocketSalvoCount = 4;
+	public int rocketSalvoCount;
 	public float rocketRandomTargetRadius = 3.0F;
 	public float rocketDamage = 20.0F;
 	float rocketSpawnTimer = -1.0F;
