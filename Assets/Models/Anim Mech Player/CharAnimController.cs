@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
-public class CharController : MonoBehaviour{	
+public class CharAnimController : MonoBehaviour{	
 	private Animator animator;
 	public bool isPlaneMode;
 	public GameObject swordMesh;
@@ -26,89 +26,80 @@ public class CharController : MonoBehaviour{
 	}
 
 	void Update() {
-		//MECH mode animations =======================================
+		// MECH mode animations =======================================
 		if (!isPlaneMode) {
 
-		if (Input.GetKey(KeyCode.LeftShift) && playerDown == false)
-		{
-			playerRun = true;
-		} else {
-			playerRun = false;
-		}
+			if (Input.GetKey(KeyCode.LeftShift) && playerDown == false) {
+				playerRun = true;
+			} else {
+				playerRun = false;
+			}
 
-		if (Input.GetKey(KeyCode.W) && playerDown == false && playerRun == false)
-		{
-			animator.SetBool("isForwardMoving", true);
-		} else {
-			animator.SetBool("isForwardMoving", false);
-		}
+			if (Input.GetKey(KeyCode.W) && playerDown == false && playerRun == false) {
+				animator.SetBool("isForwardMoving", true);
+			} else {
+				animator.SetBool("isForwardMoving", false);
+			}
 
-		if (Input.GetKey(KeyCode.W) && playerDown == false && playerRun == true)
-		{
-			animator.SetBool("isRun", true);
-		}else {
-			animator.SetBool("isRun", false);
-		}
+			if (Input.GetKey(KeyCode.W) && playerDown == false && playerRun == true) {
+				animator.SetBool("isRun", true);
+			} else {
+				animator.SetBool("isRun", false);
+			}
 
-		if (Input.GetKey(KeyCode.S) && playerDown == false)
-		{
-			animator.SetBool("isBackwards", true);
-		}else {
-			animator.SetBool("isBackwards", false);
-		}
+			if (Input.GetKey(KeyCode.S) && playerDown == false)	{
+				animator.SetBool("isBackwards", true);
+			} else {
+				animator.SetBool("isBackwards", false);
+			}
 
-		if (Input.GetKey(KeyCode.A) && playerDown == false)
-		{
-			animator.SetBool("isLeftMoving", true);
-		} else {
-			animator.SetBool("isLeftMoving", false);
-		}
+			if (Input.GetKey(KeyCode.A) && playerDown == false)	{
+				animator.SetBool("isLeftMoving", true);
+			} else {
+				animator.SetBool("isLeftMoving", false);
+			}
 
-		if (Input.GetKey(KeyCode.D) && playerDown == false)
-		{
-			animator.SetBool("isRightMoving", true);
-		} else {
-			animator.SetBool("isRightMoving", false);
-		}
+			if (Input.GetKey(KeyCode.D) && playerDown == false)	{
+				animator.SetBool("isRightMoving", true);
+			} else {
+				animator.SetBool("isRightMoving", false);
+			}
 
-		if (Input.GetKeyDown(KeyCode.F) 
-			&& isPlaneMode == false 
-			&& playerDown == false
-			&& isGroundTouch == true) {
-			swordActive = false;
-		}   
+			if (Input.GetKeyDown(KeyCode.F) 
+				&& isPlaneMode == false 
+				&& playerDown == false
+				&& isGroundTouch == true) {
+				swordActive = false;
+			}   
 
-		if (Input.GetKey(KeyCode.Mouse0) && playerDown == false)
-		{
-			animator.SetBool("isMachineGun", true);
-		} else {
-			animator.SetBool("isMachineGun", false);
-		}
+			if (Input.GetKey(KeyCode.Mouse0) && playerDown == false) {
+				animator.SetBool("isMachineGun", true);
+			} else {
+				animator.SetBool("isMachineGun", false);
+			}
 
-		if (Input.GetKey(KeyCode.Space) && playerDown == false)
-		{
-			animator.SetBool("isJump", true);
-			isGroundTouch = false;
-		} else {
-			animator.SetBool("isJump", false);
-		}
+			if (Input.GetKey(KeyCode.Space) && playerDown == false)	{
+				animator.SetBool("isJump", true);
+				isGroundTouch = false;
+			} else {
+				animator.SetBool("isJump", false);
+			}
 
-		if (Input.GetKeyDown(KeyCode.Keypad1) && playerDown == false && isGroundTouch == true)
-		{
-			animator.SetBool("isDamaged", true);
-		} else if (Input.GetKeyDown(KeyCode.Keypad1) && playerDown == false && isGroundTouch == false) {
-			animator.SetBool("isDamaged", true);
-			animator.SetBool("isFallingOkay", false);
-			isFallingBad = true;
-		} else 
-		{           
-			animator.SetBool("isDamaged", false);
-		}
+			if (Input.GetKeyDown(KeyCode.Keypad1) && playerDown == false && isGroundTouch == true) {
+				animator.SetBool("isDamaged", true);
+			} else if (Input.GetKeyDown(KeyCode.Keypad1) && playerDown == false && isGroundTouch == false) {
+				animator.SetBool("isDamaged", true);
+				animator.SetBool("isFallingOkay", false);
+				isFallingBad = true;
+			} else {           
+				animator.SetBool("isDamaged", false);
+			}
 			if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == true) {
 				isGroundTouch = false;
-			} else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false && isFallingBad == false) {
+			} else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false &&isFallingBad == false) {
 				isGroundTouch = true;
-			} else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false && isFallingBad == true) {
+			} else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false &&
+				isFallingBad == true) {
 				animator.SetBool("isFallingOkay", true);
 				isGroundTouch = true;
 				playerDown = true;
@@ -123,7 +114,8 @@ public class CharController : MonoBehaviour{
 			}
 		}
 
-		//FLIGHT mode animations ================================
+		// FLIGHT mode animations ================================
+
 		if (isPlaneMode) {
 			if (Input.GetKey(KeyCode.LeftShift)) {
 				boostFlight = true;
@@ -158,14 +150,14 @@ public class CharController : MonoBehaviour{
 			}
 		}
 
-		if (Input.GetKeyDown(KeyCode.Q) && playerDown == false) {
+		if (Input.GetKeyDown(KeyCode.Q) && !playerDown) {
 			if (isPlaneMode == false) {
 				swordMesh.SetActive(false);
 				animator.SetBool("isTrans", true);
 				isPlaneMode = true;
 				animator.SetBool("isMachineGun", false);
 
-			} else if (isPlaneMode == true) {
+			} else if (isPlaneMode) {
 				isGroundTouch = false;
 				swordMesh.SetActive(false);
 				animator.SetBool("isTrans", false);
@@ -200,8 +192,8 @@ public class CharController : MonoBehaviour{
 
 		if (isPlaneMode == true) {
 			if (Input.GetKey(KeyCode.Space)) {
-			yield return new WaitForSeconds(2);
-			animator.SetBool("isFlightStop", true);
+				yield return new WaitForSeconds(2);
+				animator.SetBool("isFlightStop", true);
 			}
 		}
 	}

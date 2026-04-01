@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class deletPicture : MonoBehaviour {
+public class DeletePicture : MonoBehaviour {
 	public int time;
 
 	void OnTriggerEnter(Collider other) {

@@ -415,13 +415,13 @@ public class GameManager : MonoBehaviour {
 			gameOver = true;
 			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowWinOverlay();
-            StartCoroutine(LoadCredits());
-        }
+			StartCoroutine(LoadCredits());
+		}
 	}
 
-    private IEnumerator LoadCredits() {
-        yield return new WaitForSeconds(10);
+	private IEnumerator LoadCredits() {
+		yield return new WaitForSeconds(10);
 		SceneManager.LoadScene("Scenes/EndingCredits");
-    }
+	}
 
 }

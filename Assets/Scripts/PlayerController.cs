@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 	public Mesh mechMesh;
 	public Mesh planeMesh;
 	public UIScreenInterface uiScreen;
-	public CharController playerAnimController;
+	public CharAnimController playerAnimController;
 
 	// Mech actions
 	InputAction moveAction;

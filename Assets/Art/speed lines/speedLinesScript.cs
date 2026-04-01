@@ -1,16 +1,16 @@
 using UnityEngine;
 using System.Collections;
 
-public class speedLinesScript : MonoBehaviour {
-	public CharController charController;
+public class SpeedLinesScript : MonoBehaviour {
+	public CharAnimController charController;
 	public PlayerController playerController;
 	public float delayTime;
 
 	void Update() {
-		if (Input.GetKey(KeyCode.LeftShift) && charController.playerDown == false) {
-			if (charController.isPlaneMode == false && Input.GetKey(KeyCode.W)) {
+		if (Input.GetKey(KeyCode.LeftShift) && !charController.playerDown) {
+			if (!charController.isPlaneMode && Input.GetKey(KeyCode.W)) {
 				GetComponent<UnityEngine.UI.Image>().enabled = true;
-			} else if (charController.isPlaneMode == true) {
+			} else if (charController.isPlaneMode) {
 				GetComponent<UnityEngine.UI.Image>().enabled = true;
 			} else {
 				GetComponent<UnityEngine.UI.Image>().enabled = false;

@@ -2,8 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CADGscript : MonoBehaviour
-{
+public class CAGDscript : MonoBehaviour {
 	public AudioSource clackSFX;
 	public AudioSource harpSFX;
 	private float volumeSFX;
@@ -14,12 +13,12 @@ public class CADGscript : MonoBehaviour
 		hitCounter = 0;
 	}
 
-	private void Update()	{
+	private void Update() {
 		if (this.GetComponent<BoxCollider>().enabled == false) {
 			StartCoroutine(StartDelay());
 		}
 		StartCoroutine(EndDelay());
-		StartCoroutine(LoadLevel());
+		StartCoroutine(LoadMainMenu());
 	}
 
 	void OnTriggerEnter(Collider other)	{
@@ -31,17 +30,17 @@ public class CADGscript : MonoBehaviour
 		}
 	}
 
-	private IEnumerator LoadLevel()	{
+	private IEnumerator LoadMainMenu()	{
 		yield return new WaitForSeconds(5);
 		SceneManager.LoadScene("Scenes/MainMenu");
 	}
 
-	private IEnumerator EndDelay()	{
+	private IEnumerator EndDelay() {
 		yield return new WaitForSeconds(1.27f);
 		Camera.main.orthographic = true;
 	}
 
-	private IEnumerator StartDelay()	{
+	private IEnumerator StartDelay() {
 		yield return new WaitForSeconds(.25f);
 		this.GetComponent<BoxCollider>().enabled = true;
 		yield return new WaitForSeconds(.1f);

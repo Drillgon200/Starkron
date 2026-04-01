@@ -7,20 +7,20 @@ public class BuildingController : MonoBehaviour, IBugTarget {
 
 	void Start() {
 		gameManagerRegisteredIdx = GameManager.instance.RegisterBuilding(this);
-        buildingHealth = 4;
-    }
+		buildingHealth = 4;
+	}
 	void OnDestroy() {
 		GameManager.instance.RemoveBuilding(gameManagerRegisteredIdx);
-    }
+	}
 	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
-        buildingHealth = buildingHealth- 1;
-        if (source == IDamageable.DamageSource.PLAYER && buildingHealth == 0) {			
-				GameManager.instance.statBuildingsDestroyedByPlayer++;
-		}
-
-        if (buildingHealth == 0) {
+		buildingHealth--;
+		
+		if (buildingHealth <= 0) {
+            if (source == IDamageable.DamageSource.PLAYER) {
+                GameManager.instance.statBuildingsDestroyedByPlayer++;
+            }
             GameManager.instance.statBuildingsDestroyed++;
-            Destroy(gameObject);
-        }     
+			Destroy(gameObject);
+		}     
 	}
 }

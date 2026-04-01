@@ -17,7 +17,7 @@ public class CreditScroll : MonoBehaviour {
 			GetComponent<Rigidbody2D>().linearVelocity = transform.up * speed;
 		}
 
-		if (staticStop == true) {
+		if (staticStop) {
 			speed = 0;
 		}
 	}
