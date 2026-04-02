@@ -29692,32 +29692,38 @@ MonoBehaviour:
   waves:
   - hives:
     - {fileID: 567015932}
+    hiveCount: 1
     spawnRateMin: 1
     spawnRateMax: 3
     groupMemberCount: 1
     groupDelay: 0.5
     hiveHealth: 200
     jellyProbability: 0
+    crystalCount: 3
   - hives:
     - {fileID: 801979227}
     - {fileID: 1561750537}
+    hiveCount: 2
     spawnRateMin: 2
     spawnRateMax: 3
     groupMemberCount: 2
     groupDelay: 10
     hiveHealth: 200
     jellyProbability: 0.01
+    crystalCount: 3
   - hives:
     - {fileID: 1720686885}
     - {fileID: 1581042669}
     - {fileID: 2089421711}
     - {fileID: 2060881568}
+    hiveCount: 4
     spawnRateMin: 1
     spawnRateMax: 3
     groupMemberCount: 1
     groupDelay: 2
     hiveHealth: 400
     jellyProbability: 0
+    crystalCount: 3
   - hives:
     - {fileID: 2136214760}
     - {fileID: 1720686885}
@@ -29727,12 +29733,15 @@ MonoBehaviour:
     - {fileID: 2089421711}
     - {fileID: 1581042669}
     - {fileID: 801979227}
+    hiveCount: 8
     spawnRateMin: 1
     spawnRateMax: 3
     groupMemberCount: 1
     groupDelay: 4
     hiveHealth: 400
     jellyProbability: 0.01
+    crystalCount: 3
+  allCrystals: []
   currentWave: 0
   randomGlobal: 1337
 --- !u!4 &1690840492 stripped

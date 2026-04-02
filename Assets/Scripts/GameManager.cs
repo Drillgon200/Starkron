@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
@@ -55,6 +57,8 @@ public class GameManager : MonoBehaviour {
 		[SerializeField]
 		public List<HiveController> hives;
 		[SerializeField]
+		public int hiveCount;
+		[SerializeField]
 		public float spawnRateMin;
 		[SerializeField]
 		public float spawnRateMax;
@@ -66,8 +70,11 @@ public class GameManager : MonoBehaviour {
 		public float hiveHealth;
 		[SerializeField]
 		public float jellyProbability;
+		[SerializeField]
+		public int crystalCount;
 	}
 	public List<Wave> waves = new();
+	public List<CrystalController> allCrystals = new();
 	public int currentWave = 0;
 	float nextWaveCountdownTimer = 0;
 	bool needsNextWave;
@@ -116,16 +123,46 @@ public class GameManager : MonoBehaviour {
 		nextWaveCountdownTimer = 4.0F;
 	}
 
+	void StartWave() {
+		// Shuffle the hives so they're random
+		List<HiveController> hives = new List<HiveController>(waves[currentWave].hives);
+		for (int i = 0; i < hives.Count - 1; i++) {
+			int swapIdx = Random.Range(i, hives.Count);
+			HiveController tmp = hives[i];
+			hives[i] = hives[swapIdx];
+			hives[swapIdx] = tmp;
+		}
+		for (int i = 0; i < waves[currentWave].hiveCount; i++) {
+			HiveController controller = hives[i];
+			controller.gameObject.SetActive(true);
+			hiveCount++;
+			controller.WaveInit(waves[currentWave]);
+		}
+
+		// Shuffle the crystals so they're random
+		List<CrystalController> crystals = allCrystals.Where(crystal => crystal != null && !crystal.gameObject.activeSelf).ToList();
+		for (int i = 0; i < crystals.Count - 1; i++) {
+			int swapIdx = Random.Range(i, crystals.Count);
+			CrystalController tmp = crystals[i];
+			crystals[i] = crystals[swapIdx];
+			crystals[swapIdx] = tmp;
+		}
+		int spawnCount = waves[currentWave].crystalCount;
+		for (int i = 0; i < spawnCount && i < crystals.Count; i++) {
+			crystals[i].gameObject.SetActive(true);
+		}
+	}
+
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start() {
 		foreach (HiveController controller in FindObjectsByType<HiveController>(FindObjectsSortMode.None)) {
 			controller.gameObject.SetActive(false);
 		}
-		foreach (HiveController controller in waves[currentWave].hives) {
-			controller.gameObject.SetActive(true);
-			hiveCount++;
-			controller.WaveInit(waves[currentWave]);
+		foreach (CrystalController controller in FindObjectsByType<CrystalController>(FindObjectsSortMode.None)) {
+			controller.gameObject.SetActive(false);
+			allCrystals.Add(controller);
 		}
+		StartWave();
 
 		groundEnemyLocalToWorlds = new GraphicsBuffer(GraphicsBuffer.Target.Structured, bugCap, 16 * sizeof(float));
 		groundEnemyAnimTimes = new GraphicsBuffer(GraphicsBuffer.Target.Structured, bugCap, 4 * sizeof(float));
@@ -393,11 +430,7 @@ public class GameManager : MonoBehaviour {
 		GroundBugsTarget();
 		TurretsTarget();
 		if (needsNextWave && nextWaveCountdownTimer <= 0.0F) {
-			foreach (HiveController controller in waves[currentWave].hives) {
-				controller.gameObject.SetActive(true);
-				hiveCount++;
-				controller.WaveInit(waves[currentWave]);
-			}
+			StartWave();
 			needsNextWave = false;
 		}
 		nextWaveCountdownTimer -= Time.fixedDeltaTime;
