@@ -275,7 +275,7 @@ public class PlayerController : MonoBehaviour {
 		sprintAction = InputSystem.actions.FindAction("Sprint");
 		swordAction = InputSystem.actions.FindAction("Sword");
 		swordAction.performed += (swordPerformedAction = (InputAction.CallbackContext ctx) => {
-			if (swordCooldownTimer <= 0.0F && !actionsDisabled && swordEnabled) {
+			if (swordCooldownTimer <= 0.0F && !actionsDisabled && swordEnabled && transformState == TransformState.MECH) {
 				playerAnimController.ActivateSword();
 				foreach (Collider toDamage in Physics.OverlapBox(swordHitbox.transform.position + swordHitbox.center, swordHitbox.size * 0.5F, swordHitbox.transform.rotation)) {
 					IDamageable damageable = toDamage.GetComponent<IDamageable>();
@@ -647,6 +647,7 @@ public class PlayerController : MonoBehaviour {
 				renderMeshFilter.mesh = planeMesh;
 				planeCollider.enabled = true;
 				mechCollider.enabled = false;
+				playerAnimController.SetIsPlaneMode(true);
 			}
 		} break;
 		case TransformState.PLANE_TO_MECH: {
@@ -657,6 +658,7 @@ public class PlayerController : MonoBehaviour {
 				planeCollider.enabled = false;
 				mechCollider.enabled = true;
 				playerModelObject.transform.localRotation = Quaternion.identity;
+				playerAnimController.SetIsPlaneMode(false);
 			}
 		} break;
 		}

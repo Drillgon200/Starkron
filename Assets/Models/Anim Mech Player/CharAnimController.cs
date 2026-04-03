@@ -150,22 +150,21 @@ public class CharAnimController : MonoBehaviour{
 			}
 		}
 
-		if (Input.GetKeyDown(KeyCode.Q) && !playerDown) {
-			if (isPlaneMode == false) {
-				swordMesh.SetActive(false);
-				animator.SetBool("isTrans", true);
-				isPlaneMode = true;
-				animator.SetBool("isMachineGun", false);
+	}
 
-			} else if (isPlaneMode) {
-				isGroundTouch = false;
-				swordMesh.SetActive(false);
-				animator.SetBool("isTrans", false);
-				animator.SetBool("isFallingOkay", true);
-				animator.SetBool("isMachineGunPlane", false);
-				isPlaneMode = false;
-			}
+	public void SetIsPlaneMode(bool planeMode) {
+		if (planeMode) {
+			swordMesh.SetActive(false);
+			animator.SetBool("isTrans", true);
+			animator.SetBool("isMachineGun", false);
+		} else {
+			isGroundTouch = false;
+			swordMesh.SetActive(false);
+			animator.SetBool("isTrans", false);
+			animator.SetBool("isFallingOkay", true);
+			animator.SetBool("isMachineGunPlane", false);
 		}
+		isPlaneMode = planeMode;
 	}
 
 	public void SetGrounded(bool grounded) {
