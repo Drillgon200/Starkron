@@ -9,7 +9,6 @@ public class CharAnimController : MonoBehaviour{
 	public bool swordActive;
 	public float swordTime;
 	public bool playerDown;
-	public bool playerRun;
 	public bool isGroundTouch;
 	public bool isFallingBad;
 	public bool boostFlight;
@@ -19,7 +18,6 @@ public class CharAnimController : MonoBehaviour{
 		swordMesh.SetActive(false);
 		swordActive = false;
 		playerDown = false;
-		playerRun = false;
 		isGroundTouch = true;
 		isFallingBad = false;
 		boostFlight = false;
@@ -28,42 +26,13 @@ public class CharAnimController : MonoBehaviour{
 	void Update() {
 		// MECH mode animations =======================================
 		if (!isPlaneMode) {
-
-			if (Input.GetKey(KeyCode.LeftShift) && playerDown == false) {
-				playerRun = true;
-			} else {
-				playerRun = false;
-			}
-
-			if (Input.GetKey(KeyCode.W) && playerDown == false && playerRun == false) {
-				animator.SetBool("isForwardMoving", true);
-			} else {
-				animator.SetBool("isForwardMoving", false);
-			}
-
-			if (Input.GetKey(KeyCode.W) && playerDown == false && playerRun == true) {
-				animator.SetBool("isRun", true);
-			} else {
-				animator.SetBool("isRun", false);
-			}
-
-			if (Input.GetKey(KeyCode.S) && playerDown == false)	{
-				animator.SetBool("isBackwards", true);
-			} else {
-				animator.SetBool("isBackwards", false);
-			}
-
-			if (Input.GetKey(KeyCode.A) && playerDown == false)	{
-				animator.SetBool("isLeftMoving", true);
-			} else {
-				animator.SetBool("isLeftMoving", false);
-			}
-
-			if (Input.GetKey(KeyCode.D) && playerDown == false)	{
-				animator.SetBool("isRightMoving", true);
-			} else {
-				animator.SetBool("isRightMoving", false);
-			}
+			bool playerRun = PlayerController.instance.IsSprinting();
+			Vector2 moveVector = PlayerController.instance.GetMoveDirection();
+			animator.SetBool("isRun", moveVector.sqrMagnitude > 0.0F && playerRun);
+			animator.SetBool("isForwardMoving", moveVector.y > 0.0F && !playerRun);
+			animator.SetBool("isBackwards", moveVector.y < 0.0F);
+			animator.SetBool("isLeftMoving", moveVector.x < 0.0F);
+			animator.SetBool("isRightMoving", moveVector.x > 0.0F);
 
 			if (Input.GetKeyDown(KeyCode.F) 
 				&& isPlaneMode == false 
@@ -96,7 +65,7 @@ public class CharAnimController : MonoBehaviour{
 			}
 			if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == true) {
 				isGroundTouch = false;
-			} else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false &&isFallingBad == false) {
+			} else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false && isFallingBad == false) {
 				isGroundTouch = true;
 			} else if (Input.GetKeyDown(KeyCode.Keypad3) && playerDown == false && isGroundTouch == false &&
 				isFallingBad == true) {
@@ -106,12 +75,7 @@ public class CharAnimController : MonoBehaviour{
 				isFallingBad = false;
 			}
 
-			if (Input.GetKey(KeyCode.Keypad4) && playerDown == true) {
-				animator.SetBool("isRecover", true);
-				playerDown = false;
-			} else {
-				animator.SetBool("isRecover", false);
-			}
+			animator.SetBool("isRecover", false);
 		}
 
 		// FLIGHT mode animations ================================
@@ -169,6 +133,10 @@ public class CharAnimController : MonoBehaviour{
 
 	public void SetGrounded(bool grounded) {
 		animator.SetBool("isGrounded", grounded);
+	}
+
+	public void FallRecover() {
+		animator.SetBool("isRecover", true);
 	}
 
 	public void ActivateSword() {

@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 3109601732099318943}
   - component: {fileID: 5391549695704939294}
   - component: {fileID: 6928842171629345396}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: BugGround
   m_TagString: GroundBugTag
   m_Icon: {fileID: 0}

@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour {
 	public Vector3 right;
 
 	public bool actionsDisabled = false;
+	public bool isFallingDamaged;
 
 	public float shopInteractRadius = 11.0F;
 	public bool isPlacingObject;
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject placementPrefab;
 
 	bool onGround;
+	float groundedTime;
 	float hoverFuelLeft;
 	public float maxHealth = 100.0F;
 	float health;
@@ -237,7 +239,7 @@ public class PlayerController : MonoBehaviour {
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		switchModeAction = InputSystem.actions.FindAction("SwitchMode");
 		switchModeAction.performed += (switchModePerformedAction = (InputAction.CallbackContext ctx) => {
-			if (actionsDisabled) {
+			if (actionsDisabled || isFallingDamaged) {
 				return;
 			}
 			switch (transformState) {
@@ -275,7 +277,7 @@ public class PlayerController : MonoBehaviour {
 		sprintAction = InputSystem.actions.FindAction("Sprint");
 		swordAction = InputSystem.actions.FindAction("Sword");
 		swordAction.performed += (swordPerformedAction = (InputAction.CallbackContext ctx) => {
-			if (swordCooldownTimer <= 0.0F && !actionsDisabled && swordEnabled && transformState == TransformState.MECH) {
+			if (swordCooldownTimer <= 0.0F && !actionsDisabled && !isFallingDamaged && swordEnabled && transformState == TransformState.MECH) {
 				playerAnimController.ActivateSword();
 				foreach (Collider toDamage in Physics.OverlapBox(swordHitbox.transform.position + swordHitbox.center, swordHitbox.size * 0.5F, swordHitbox.transform.rotation)) {
 					IDamageable damageable = toDamage.GetComponent<IDamageable>();
@@ -289,7 +291,7 @@ public class PlayerController : MonoBehaviour {
 
 		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
 		planeMissileAction.canceled += (planeMissileCanceledAction = (InputAction.CallbackContext ctx) => {
-			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !actionsDisabled) {
+			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !actionsDisabled && !isFallingDamaged) {
 				Vector3 fireFrom = planeMissilePositions[nextPlaneMissileFirePosition].transform.position;
 				nextPlaneMissileFirePosition = (nextPlaneMissileFirePosition + 1) % planeMissilePositions.Length;
 				Vector3 startVelocity = lookForward * 100.0F;
@@ -311,7 +313,7 @@ public class PlayerController : MonoBehaviour {
 
 		openShopAction = InputSystem.actions.FindAction("OpenShop");
 		openShopAction.performed += (openShopPerformedAction = (InputAction.CallbackContext ctx) => {
-			if (!actionsDisabled && Vector3.Distance(transform.position, GameManager.instance.CITY_CENTER) <= shopInteractRadius) {
+			if (!actionsDisabled && !isFallingDamaged && Vector3.Distance(transform.position, GameManager.instance.CITY_CENTER) <= shopInteractRadius) {
 				uiScreen.OpenShop();
 			}
 		});
@@ -330,6 +332,14 @@ public class PlayerController : MonoBehaviour {
 	public void SetBankTotal(int total) {
 		bankTotal = total;
 		bankUICounterText.text = "x " + bankTotal.ToString();
+	}
+
+	public bool IsSprinting() {
+		return !actionsDisabled && !isFallingDamaged && sprintAction.IsPressed();
+	}
+
+	public Vector2 GetMoveDirection() {
+		return actionsDisabled || isFallingDamaged ? Vector2.zero : moveAction.ReadValue<Vector2>();
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -375,7 +385,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (actionsDisabled) {
+		if (actionsDisabled || isFallingDamaged) {
 			return;
 		}
 		float dt = Time.deltaTime;
@@ -477,12 +487,22 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		float dt = Time.fixedDeltaTime;
+		if (onGround) {
+			groundedTime += dt;
+		} else {
+			groundedTime = 0.0F;
+		}
 		JetEnables jetEnables = 0;
-		if (actionsDisabled) {
+		if (actionsDisabled || isFallingDamaged) {
 			set_jet_vfx(jetEnables);
+			if (isFallingDamaged && onGround && groundedTime > 0.25F && moveAction.ReadValue<Vector2>().sqrMagnitude > 0.5F) {
+				playerAnimController.FallRecover();
+				isFallingDamaged = false;
+			}
+			onGround = false;
 			return;
 		}
-		float dt = Time.fixedDeltaTime;
 		switch (transformState) {
 		case TransformState.MECH: {
 			Vector3 velocity = new Vector3();
@@ -677,6 +697,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void TakeDamage(float damage) {
+		if (!onGround && transformState == TransformState.MECH) {
+			isFallingDamaged = true;
+		}
 		health -= damage;
 		healthRechargeCooldownTimer = healthRechargeCooldown;
 	}

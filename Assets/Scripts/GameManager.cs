@@ -410,7 +410,7 @@ public class GameManager : MonoBehaviour {
 			}
 			TurretRailgunController turret = turrets[currentTurretTargetIdx];
 			Vector3 turretPos = turret.transform.position;
-			int overlapCount = Physics.OverlapSphereNonAlloc(turretPos, turret.range, overlapTestArray);
+			int overlapCount = Physics.OverlapSphereNonAlloc(turretPos, turret.range, overlapTestArray, 1 << 7);
 			float bestDist = float.PositiveInfinity;
 			Collider bestTarget = null;
 			for (int j = 0; j < overlapCount; j++) {
