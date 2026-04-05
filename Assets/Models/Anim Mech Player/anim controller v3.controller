@@ -380,7 +380,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 5
   m_TransitionOffset: 0
   m_ExitTime: 0
   m_HasExitTime: 0
@@ -661,7 +661,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 0.46428573
   m_HasExitTime: 0
@@ -963,10 +963,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: isDamaged
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5010143652490691401}
   m_Solo: 0
@@ -1182,12 +1179,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: isDamaged
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
   - m_Name: isMachineGun
     m_Type: 4
     m_DefaultFloat: 0
@@ -1244,6 +1235,12 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   - m_Name: isMachineGunPlane
     m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: isDamaged
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -1358,7 +1355,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 5
   m_TransitionOffset: 0
   m_ExitTime: 0.1
   m_HasExitTime: 0
@@ -1457,7 +1454,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 5
   m_TransitionOffset: 0
   m_ExitTime: 0
   m_HasExitTime: 0
@@ -1634,7 +1631,7 @@ AnimatorStateMachine:
     m_Position: {x: -240, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3950937032300554846}
-    m_Position: {x: -260, y: 180, z: 0}
+    m_Position: {x: -270, y: 190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8882915307557683698}
     m_Position: {x: 330, y: 140, z: 0}
@@ -1649,7 +1646,7 @@ AnimatorStateMachine:
     m_Position: {x: 150, y: 810, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6396141240543780131}
-    m_Position: {x: -610, y: 210, z: 0}
+    m_Position: {x: -820, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7894170524845839656}
     m_Position: {x: -1020, y: 450, z: 0}
@@ -1737,10 +1734,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: isDamaged
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6504406123279965890}
   m_Solo: 0
@@ -1813,10 +1807,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: isDamaged
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3747860682629413539}
   m_Solo: 0
@@ -2166,10 +2157,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: isDamaged
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3747860682629413539}
   m_Solo: 0
@@ -2565,10 +2553,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: isDamaged
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3747860682629413539}
   m_Solo: 0
