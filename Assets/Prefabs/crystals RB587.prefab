@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5417277475284367193}
   - component: {fileID: 3486099191161320446}
   - component: {fileID: 82840519047973703}
+  - component: {fileID: 673493548147010502}
   m_Layer: 6
   m_Name: crystals RB587
   m_TagString: CrystalTag
@@ -140,3 +141,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 147.39749, y: 242.79001, z: 132.51947}
   m_Center: {x: -3.6779366, y: 111.76427, z: -18.687222}
+--- !u!114 &673493548147010502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883879345096726151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac8ea2a9e240c1439277b145f34d63d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrystalController
