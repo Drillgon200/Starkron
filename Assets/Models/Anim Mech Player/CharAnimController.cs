@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
 
 public class CharAnimController : MonoBehaviour{	
@@ -25,32 +24,15 @@ public class CharAnimController : MonoBehaviour{
 			animator.SetBool("isBackwards", moveVector.y < 0.0F);
 			animator.SetBool("isLeftMoving", moveVector.x < 0.0F);
 			animator.SetBool("isRightMoving", moveVector.x > 0.0F);
-
-			if (Input.GetKeyDown(KeyCode.Keypad1)) {
-				animator.SetBool("isDamaged", true);
-			} else if (Input.GetKeyDown(KeyCode.Keypad1)) {
-				animator.SetBool("isDamaged", true);
-				animator.SetBool("isFallingOkay", false);
-			} else {           
-				animator.SetBool("isDamaged", false);
-			}
 		}
 
 		// FLIGHT mode animations ================================
-
 		if (isPlaneMode) {
 			animator.SetBool("isFlightBoost", PlayerController.instance.IsBoosting());
 			bool braking = PlayerController.instance.IsBraking();
 			animator.SetBool("isBrakeBoth", braking);
 			animator.SetBool("isFlightStop", braking && PlayerController.instance.rigidBody.linearVelocity.sqrMagnitude < 4.0F);
-
-			if (Input.GetKey(KeyCode.Keypad1)) {
-				animator.SetBool("isDamaged", true);
-			} else {
-				animator.SetBool("isDamaged", false);
-			}
 		}
-
 	}
 
 	public void SetIsPlaneMode(bool planeMode) {
@@ -83,7 +65,10 @@ public class CharAnimController : MonoBehaviour{
 	public void SetFallingDamaged() {
 		animator.SetBool("isRecover", false);
 		animator.SetBool("isFallingOkay", false);
+	}
 
+	public void TakeDamage() {
+		animator.SetTrigger("isDamaged");
 	}
 
 	public void FallRecover() {
