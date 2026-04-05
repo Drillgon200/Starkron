@@ -7,16 +7,6 @@ public class SpeedLinesScript : MonoBehaviour {
 	public float delayTime;
 
 	void Update() {
-		if (Input.GetKey(KeyCode.LeftShift) && !charController.playerDown) {
-			if (!charController.isPlaneMode && Input.GetKey(KeyCode.W)) {
-				GetComponent<UnityEngine.UI.Image>().enabled = true;
-			} else if (charController.isPlaneMode) {
-				GetComponent<UnityEngine.UI.Image>().enabled = true;
-			} else {
-				GetComponent<UnityEngine.UI.Image>().enabled = false;
-			}
-		} else {
-			GetComponent<UnityEngine.UI.Image>().enabled = false;
-		}
+		GetComponent<UnityEngine.UI.Image>().enabled = playerController.IsBoosting() || playerController.IsSprinting() && playerController.GetMoveDirection().y > 0.5F;
 	}
 }

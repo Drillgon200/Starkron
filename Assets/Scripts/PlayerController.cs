@@ -309,7 +309,7 @@ public class PlayerController : MonoBehaviour {
 		airbrakeAction = InputSystem.actions.FindAction("Airbrake");
 		firePlaneGunAction = InputSystem.actions.FindAction("FirePlaneGun");
 		pauseAction = InputSystem.actions.FindAction("Pause");
-		pauseAction.performed += (pausePerformedAction = (InputAction.CallbackContext ctx) => uiScreen.PauseToggle());
+		pauseAction.performed += (pausePerformedAction = (InputAction.CallbackContext ctx) => TakeDamage(10)/*uiScreen.PauseToggle()*/);
 
 		openShopAction = InputSystem.actions.FindAction("OpenShop");
 		openShopAction.performed += (openShopPerformedAction = (InputAction.CallbackContext ctx) => {
@@ -319,6 +319,8 @@ public class PlayerController : MonoBehaviour {
 		});
 
 		playerModelRigOriginalOffset = playerModelRig.transform.localPosition;
+
+		rigidBody.sleepThreshold = 0.0F;
 
 		set_jet_vfx(0);
 
@@ -335,7 +337,15 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public bool IsSprinting() {
-		return !actionsDisabled && !isFallingDamaged && sprintAction.IsPressed();
+		return !actionsDisabled && !isFallingDamaged && transformState == TransformState.MECH && sprintAction.IsPressed();
+	}
+
+	public bool IsBoosting() {
+		return !actionsDisabled && !isFallingDamaged && transformState == TransformState.PLANE && boostAction.IsPressed();
+	}
+
+	public bool IsBraking() {
+		return !actionsDisabled && !isFallingDamaged && transformState == TransformState.PLANE && airbrakeAction.IsPressed();
 	}
 
 	public Vector2 GetMoveDirection() {
@@ -496,17 +506,19 @@ public class PlayerController : MonoBehaviour {
 		JetEnables jetEnables = 0;
 		if (actionsDisabled || isFallingDamaged) {
 			set_jet_vfx(jetEnables);
-			if (isFallingDamaged && onGround && groundedTime > 0.25F && moveAction.ReadValue<Vector2>().sqrMagnitude > 0.5F) {
+			if (isFallingDamaged && onGround && groundedTime > 0.5F && moveAction.ReadValue<Vector2>().sqrMagnitude > 0.5F * 0.5F) {
 				playerAnimController.FallRecover();
 				isFallingDamaged = false;
 			}
 			onGround = false;
 			return;
 		}
+		bool usingMachineGun = false;
+		bool usingJetpack = false;
 		switch (transformState) {
 		case TransformState.MECH: {
 			Vector3 velocity = new Vector3();
-			bool sprinting = sprintAction.IsPressed();
+			bool sprinting = IsSprinting();
 			{ // Movement input
 				Vector2 moveAmount = moveAction.ReadValue<Vector2>();
 				
@@ -517,6 +529,7 @@ public class PlayerController : MonoBehaviour {
 				velocity += right * moveAmount.x * moveSpeed * dt;
 				velocity += forward * moveAmount.y * moveSpeed * dt;
 				if (jumpAction.IsPressed() && hoverFuelLeft > 0.0F) {
+					usingJetpack = true;
 					velocity.y += hoverSpeed * dt;
 					hoverFuelLeft -= dt;
 					planeTiltRotationVelocity.x += moveAmount.y * 0.25F;
@@ -557,6 +570,7 @@ public class PlayerController : MonoBehaviour {
 			}
 
 			if (machineGunAction.IsPressed()) {
+				usingMachineGun = true;
 				machineGunFireRate = Mathf.Min(machineGunMaxFireRate, machineGunFireRate + machineGunFireRateWarmupRate * dt);
 				float secondsPerBullet = 1.0F / machineGunFireRate;
 				if (machineGunFireTimer * 2.0F >= secondsPerBullet) {
@@ -591,8 +605,8 @@ public class PlayerController : MonoBehaviour {
 			jetEnables |= JetEnables.FEET;
 			Vector3 velocity = new Vector3();
 			{ // Movement input
-				bool boost = boostAction.IsPressed();
-				bool brake = airbrakeAction.IsPressed();
+				bool boost = IsBoosting();
+				bool brake = IsBraking();
 				if (!brake) {
 					velocity += lookForward * (boost ? boostSpeed : flySpeed) * dt;
 				}
@@ -621,17 +635,20 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 			
-
-			if (firePlaneGunAction.IsPressed() && planeBulletCooldownTimer < 0.0F) {
-				Vector3 fireFrom = minigunPositions[nextMinigunFirePosition].transform.position;
-				nextMinigunFirePosition = (nextMinigunFirePosition + 1) % minigunPositions.Length;
-				GameObject bullet = Instantiate(planeBulletPrefab, fireFrom, Quaternion.identity);
-				BulletController bulletController = bullet.GetComponent<BulletController>();
-				Vector3 fireDirection = cameraRayHit ? Vector3.Normalize(cameraRayHitPos - fireFrom) : lookForward;
-				bulletController.velocity = fireDirection * 800.0F;
-				bulletController.damageAmount = planeBulletDamage;
-				planeBulletCooldownTimer = 1.0F / planeGunFireRate;
+			if (firePlaneGunAction.IsPressed()) {
+				usingMachineGun = true;
+				if (planeBulletCooldownTimer < 0.0F) {
+					Vector3 fireFrom = minigunPositions[nextMinigunFirePosition].transform.position;
+					nextMinigunFirePosition = (nextMinigunFirePosition + 1) % minigunPositions.Length;
+					GameObject bullet = Instantiate(planeBulletPrefab, fireFrom, Quaternion.identity);
+					BulletController bulletController = bullet.GetComponent<BulletController>();
+					Vector3 fireDirection = cameraRayHit ? Vector3.Normalize(cameraRayHitPos - fireFrom) : lookForward;
+					bulletController.velocity = fireDirection * 800.0F;
+					bulletController.damageAmount = planeBulletDamage;
+					planeBulletCooldownTimer = 1.0F / planeGunFireRate;
+				}
 			}
+			
 
 			if (planeMissileAction.IsPressed()) {
 				planeMissileHoldTime += dt;
@@ -693,11 +710,14 @@ public class PlayerController : MonoBehaviour {
 		planeBulletCooldownTimer -= dt;
 		set_jet_vfx(jetEnables);
 		playerAnimController.SetGrounded(onGround);
+		playerAnimController.SetIsMachineGun(usingMachineGun);
+		playerAnimController.SetJetpackActive(usingJetpack);
 		onGround = false;
 	}
 
 	public void TakeDamage(float damage) {
 		if (!onGround && transformState == TransformState.MECH) {
+			playerAnimController.SetFallingDamaged();
 			isFallingDamaged = true;
 		}
 		health -= damage;
