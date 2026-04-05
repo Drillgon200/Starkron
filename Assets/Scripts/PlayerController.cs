@@ -309,7 +309,7 @@ public class PlayerController : MonoBehaviour {
 		airbrakeAction = InputSystem.actions.FindAction("Airbrake");
 		firePlaneGunAction = InputSystem.actions.FindAction("FirePlaneGun");
 		pauseAction = InputSystem.actions.FindAction("Pause");
-		pauseAction.performed += (pausePerformedAction = (InputAction.CallbackContext ctx) => TakeDamage(10)/*uiScreen.PauseToggle()*/);
+		pauseAction.performed += (pausePerformedAction = (InputAction.CallbackContext ctx) => uiScreen.PauseToggle());
 
 		openShopAction = InputSystem.actions.FindAction("OpenShop");
 		openShopAction.performed += (openShopPerformedAction = (InputAction.CallbackContext ctx) => {
@@ -719,6 +719,8 @@ public class PlayerController : MonoBehaviour {
 		if (!onGround && transformState == TransformState.MECH) {
 			playerAnimController.SetFallingDamaged();
 			isFallingDamaged = true;
+		} else {
+			playerAnimController.TakeDamage();
 		}
 		health -= damage;
 		healthRechargeCooldownTimer = healthRechargeCooldown;
