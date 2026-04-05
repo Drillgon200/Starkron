@@ -271,7 +271,7 @@
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=90,y=90)",
                     "groups": ";Gamepad",
                     "action": "Look",
                     "isComposite": false,
@@ -345,11 +345,33 @@
                 },
                 {
                     "name": "",
+                    "id": "9b77b415-4403-41cf-b9e7-cd149f6aab7a",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "SwitchMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "96972160-8569-49a6-97ca-c3cb5df8386a",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "FireRockets",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "04823c24-3957-4411-b1e4-5bfc7e2e5979",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "FireRockets",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -367,11 +389,33 @@
                 },
                 {
                     "name": "",
+                    "id": "60bc7003-2c19-41d4-bf1e-1388d496a801",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FireMachineGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4f58beb6-73af-41b5-898a-b8926cdd5cd4",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e3b22f50-e82e-4712-b5ac-13e843975ec6",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -389,11 +433,33 @@
                 },
                 {
                     "name": "",
+                    "id": "8918b847-5cdb-4500-8161-79f05aaa4b98",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Sword",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6fcfb8e8-4a11-45e5-86c4-daee4a82d82f",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "ActivatePlaneMissile",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d964656c-0a6f-40c5-8456-c0d7ad36bff4",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "ActivatePlaneMissile",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -411,6 +477,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9a933b0e-9584-4104-8dd7-da4cdf60fcaf",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Boost",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "1e8d1b63-baf7-46c5-873e-1dd0689ce0da",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
@@ -422,11 +499,33 @@
                 },
                 {
                     "name": "",
+                    "id": "c9cfaa5f-395d-4e53-9822-5c3381a942e3",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "FirePlaneGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c60ae5b3-67b5-48f9-b2d4-523683019e08",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "Airbrake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2989d408-071c-4633-bdd5-9b262c1ae4b8",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "Airbrake",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -455,11 +554,33 @@
                 },
                 {
                     "name": "",
+                    "id": "8c00fa99-5495-4ff0-81f1-16710b4a6201",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "269df370-c85f-4629-b58c-2be505c584e9",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
+                    "action": "OpenShop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "145d2e65-dc52-46e0-91b4-5d84291fc565",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "OpenShop",
                     "isComposite": false,
                     "isPartOfComposite": false
