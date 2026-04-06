@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2750194026493923771}
   m_Layer: 0
   m_Name: MachineGunBullet
-  m_TagString: Untagged
+  m_TagString: MachineGunBulletTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -92,8 +92,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.011386871
-        value: 0.1146431
+        time: 0.013442993
+        value: 0.03393936
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -155,4 +155,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3f5c30612e2b547ad5a30ce34ddcf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MachineGunBulletController
-  lifetime: 0.1
+  lifetime: 0.05
+  width: 1

@@ -48,10 +48,10 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ShadowAngle: -0.72
+    - _ShadowAngle: -0.2
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.942772, b: 0.72156864, a: 1}
-    - _ShadowColor: {r: 0.7735849, g: 0.7082968, b: 0.6750623, a: 0}
+    - _BaseColor: {r: 0.7567996, g: 0.7735849, b: 0.6896582, a: 1}
+    - _ShadowColor: {r: 0.4056604, g: 0.3946387, b: 0.38843897, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5243329810480275594

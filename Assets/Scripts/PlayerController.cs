@@ -10,12 +10,15 @@ public class PlayerController : MonoBehaviour {
 	public Camera lookCam;
 	public Rigidbody rigidBody;
 	public GameObject playerModelObject;
+	public GameObject playerModelRig;
+	Vector3 playerModelRigOriginalOffset;
 	public MeshFilter renderMeshFilter;
 	public Collider mechCollider;
 	public Collider planeCollider;
 	public Mesh mechMesh;
 	public Mesh planeMesh;
 	public UIScreenInterface uiScreen;
+	public CharAnimController playerAnimController;
 
 	// Mech actions
 	InputAction moveAction;
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour {
 	public Vector3 right;
 
 	public bool actionsDisabled = false;
+	public bool isFallingDamaged;
 
 	public float shopInteractRadius = 11.0F;
 	public bool isPlacingObject;
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject placementPrefab;
 
 	bool onGround;
+	float groundedTime;
 	float hoverFuelLeft;
 	public float maxHealth = 100.0F;
 	float health;
@@ -81,13 +86,20 @@ public class PlayerController : MonoBehaviour {
 	public GameObject rocketPrefab;
 	public float rocketFireRate = 4.0F;
 	public float rocketCooldown = 4.0F;
-	public int rocketSalvoCount = 4;
+	public int rocketSalvoCount;
 	public float rocketRandomTargetRadius = 3.0F;
 	public float rocketDamage = 20.0F;
 	float rocketSpawnTimer = -1.0F;
 	float rocketCooldownTimer;
 	int rocketsLeftToFire;
 	Vector3 rocketTargetPos;
+
+	public GameObject[] minigunPositions = new GameObject[2];
+	int nextMinigunFirePosition = 0;
+	public GameObject[] planeMissilePositions = new GameObject[2];
+	int nextPlaneMissileFirePosition = 0;
+	public GameObject[] mechMissilePositions = new GameObject[4];
+	int nextMechMissilePosition = 0;
 
 	public GameObject machineGunBulletPrefab;
 	public float machineGunStartFireRate = 5.0F;
@@ -98,6 +110,7 @@ public class PlayerController : MonoBehaviour {
 	float machineGunFireTimer;
 
 	public BoxCollider swordHitbox;
+	public bool swordEnabled = false;
 	public float swordDamage = 50.0F;
 	public float swordCooldown = 1.0F;
 	float swordCooldownTimer;
@@ -113,7 +126,6 @@ public class PlayerController : MonoBehaviour {
 	public GameObject planeMissileLockOnTarget = null;
 
 	public GameObject planeBulletPrefab;
-	int planeBulletFireCount;
 	public float planeGunFireRate = 5.0F;
 	public float planeBulletDamage = 50.0F;
 	float planeBulletCooldownTimer;
@@ -146,6 +158,56 @@ public class PlayerController : MonoBehaviour {
 	TransformState transformState = TransformState.MECH;
 	public float transformTime = 3.0F;
 	float transformCooldown;
+	float timeSinceLastTransform;
+
+	[System.Flags]
+	public enum JetEnables {
+		BACK = 1 << 0,
+		WINGS = 1 << 1,
+		FEET = 1 << 2,
+		HEELS = 1 << 3
+	}
+
+	public ParticleSystem[] jetVFXBack = new ParticleSystem[2];
+	public ParticleSystem[] jetVFXWings = new ParticleSystem[2];
+	public ParticleSystem[] jetVFXFeet = new ParticleSystem[2];
+	public ParticleSystem[] jetVFXHeels = new ParticleSystem[2];
+
+	// The "Start" method annoying resets the particle system time to 0, so we can't use that.
+	void SetParticleSystemEmissionEnable(ParticleSystem vfx, bool enable) {
+		foreach (ParticleSystem p in vfx.GetComponentsInChildren<ParticleSystem>()) {
+			ParticleSystem.EmissionModule emission = p.emission;
+			emission.enabled = enable;
+		}
+	}
+
+	public void set_jet_vfx(JetEnables enables) {
+		foreach (ParticleSystem vfx in jetVFXBack.Concat(jetVFXWings).Concat(jetVFXFeet).Concat(jetVFXHeels)) {
+			SetParticleSystemEmissionEnable(vfx, false);
+			vfx.transform.Find("LensFlare")?.gameObject.SetActive(false);
+		}
+		if ((enables & JetEnables.BACK) != 0) {
+			foreach (ParticleSystem vfx in jetVFXBack) {
+				SetParticleSystemEmissionEnable(vfx, true);
+				vfx.transform.Find("LensFlare")?.gameObject.SetActive(true);
+			}
+		}
+		if ((enables & JetEnables.WINGS) != 0) {
+			foreach (ParticleSystem vfx in jetVFXWings) {
+				SetParticleSystemEmissionEnable(vfx, true);
+			}
+		}
+		if ((enables & JetEnables.FEET) != 0) {
+			foreach (ParticleSystem vfx in jetVFXFeet) {
+				SetParticleSystemEmissionEnable(vfx, true);
+			}
+		}
+		if ((enables & JetEnables.HEELS) != 0) {
+			foreach (ParticleSystem vfx in jetVFXHeels) {
+				SetParticleSystemEmissionEnable(vfx, true);
+			}
+		}
+	}
 
 	public Vector2 Get2DForward() {
 		return new Vector2(Mathf.Sin(lookYaw * Mathf.Deg2Rad), Mathf.Cos(lookYaw * Mathf.Deg2Rad));
@@ -177,7 +239,7 @@ public class PlayerController : MonoBehaviour {
 		jumpAction = InputSystem.actions.FindAction("Jump");
 		switchModeAction = InputSystem.actions.FindAction("SwitchMode");
 		switchModeAction.performed += (switchModePerformedAction = (InputAction.CallbackContext ctx) => {
-			if (actionsDisabled) {
+			if (actionsDisabled || isFallingDamaged) {
 				return;
 			}
 			switch (transformState) {
@@ -189,6 +251,7 @@ public class PlayerController : MonoBehaviour {
 			} break;
 			}
 			transformCooldown = transformTime;
+			timeSinceLastTransform = 0.0F;
 
 		});
 		rocketAction = InputSystem.actions.FindAction("FireRockets");
@@ -196,6 +259,7 @@ public class PlayerController : MonoBehaviour {
 			if (transformState == TransformState.MECH && cameraRayHit && rocketCooldownTimer <= 0.0F) {
 				rocketSpawnTimer = 0.0F;
 				rocketsLeftToFire = rocketSalvoCount;
+				nextMechMissilePosition = 0;
 				rocketTargetPos = cameraRayHitPos;
 			}
 		});
@@ -213,7 +277,8 @@ public class PlayerController : MonoBehaviour {
 		sprintAction = InputSystem.actions.FindAction("Sprint");
 		swordAction = InputSystem.actions.FindAction("Sword");
 		swordAction.performed += (swordPerformedAction = (InputAction.CallbackContext ctx) => {
-			if (swordCooldownTimer <= 0.0F && !actionsDisabled) {
+			if (swordCooldownTimer <= 0.0F && !actionsDisabled && !isFallingDamaged && swordEnabled && transformState == TransformState.MECH) {
+				playerAnimController.ActivateSword();
 				foreach (Collider toDamage in Physics.OverlapBox(swordHitbox.transform.position + swordHitbox.center, swordHitbox.size * 0.5F, swordHitbox.transform.rotation)) {
 					IDamageable damageable = toDamage.GetComponent<IDamageable>();
 					if (damageable != null) {
@@ -226,9 +291,11 @@ public class PlayerController : MonoBehaviour {
 
 		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
 		planeMissileAction.canceled += (planeMissileCanceledAction = (InputAction.CallbackContext ctx) => {
-			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !actionsDisabled) {
+			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !actionsDisabled && !isFallingDamaged) {
+				Vector3 fireFrom = planeMissilePositions[nextPlaneMissileFirePosition].transform.position;
+				nextPlaneMissileFirePosition = (nextPlaneMissileFirePosition + 1) % planeMissilePositions.Length;
 				Vector3 startVelocity = lookForward * 100.0F;
-				GameObject missile = Instantiate(lockOnMissilePrefab, transform.position + lookForward * 1.5F, Quaternion.LookRotation(startVelocity));
+				GameObject missile = Instantiate(lockOnMissilePrefab, fireFrom, Quaternion.LookRotation(startVelocity));
 				MissileControllerPlane missileController = missile.GetComponent<MissileControllerPlane>();
 				missileController.velocity = startVelocity;
 				missileController.speed = planeMissileSpeed;
@@ -246,10 +313,16 @@ public class PlayerController : MonoBehaviour {
 
 		openShopAction = InputSystem.actions.FindAction("OpenShop");
 		openShopAction.performed += (openShopPerformedAction = (InputAction.CallbackContext ctx) => {
-			if (!actionsDisabled && Vector3.Distance(transform.position, GameManager.instance.CITY_CENTER) <= shopInteractRadius) {
+			if (!actionsDisabled && !isFallingDamaged && Vector3.Distance(transform.position, GameManager.instance.CITY_CENTER) <= shopInteractRadius) {
 				uiScreen.OpenShop();
 			}
 		});
+
+		playerModelRigOriginalOffset = playerModelRig.transform.localPosition;
+
+		rigidBody.sleepThreshold = 0.0F;
+
+		set_jet_vfx(0);
 
 		SetMouseCapture(true);
 		health = maxHealth;
@@ -261,6 +334,22 @@ public class PlayerController : MonoBehaviour {
 	public void SetBankTotal(int total) {
 		bankTotal = total;
 		bankUICounterText.text = "x " + bankTotal.ToString();
+	}
+
+	public bool IsSprinting() {
+		return !actionsDisabled && !isFallingDamaged && transformState == TransformState.MECH && sprintAction.IsPressed();
+	}
+
+	public bool IsBoosting() {
+		return !actionsDisabled && !isFallingDamaged && transformState == TransformState.PLANE && boostAction.IsPressed();
+	}
+
+	public bool IsBraking() {
+		return !actionsDisabled && !isFallingDamaged && transformState == TransformState.PLANE && airbrakeAction.IsPressed();
+	}
+
+	public Vector2 GetMoveDirection() {
+		return actionsDisabled || isFallingDamaged ? Vector2.zero : moveAction.ReadValue<Vector2>();
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -306,7 +395,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (actionsDisabled) {
+		if (actionsDisabled || isFallingDamaged) {
 			return;
 		}
 		float dt = Time.deltaTime;
@@ -316,6 +405,14 @@ public class PlayerController : MonoBehaviour {
 			if (!mouseCaptured) {
 				lookAmount = Vector2.zero;
 			}
+			planeTiltRotationVelocity *= Mathf.Exp(dt * Mathf.Log(1.0F - planeTiltSpringDamping));
+			planeTiltRotation += planeTiltRotationVelocity * dt;
+			float visualTransformTime = 0.5F;
+			float transformToPlaneTime = Mathf.Clamp01(timeSinceLastTransform / visualTransformTime);
+			if (transformState == TransformState.PLANE_TO_MECH || transformState == TransformState.MECH) {
+				transformToPlaneTime = 1.0F - transformToPlaneTime;
+			}
+			playerModelRig.transform.SetLocalPositionAndRotation(playerModelRigOriginalOffset + Vector3.up * 0.9F * transformToPlaneTime, Quaternion.identity);
 			switch (transformState) {
 			case TransformState.MECH:
 			case TransformState.MECH_TO_PLANE:
@@ -324,6 +421,7 @@ public class PlayerController : MonoBehaviour {
 				lookPitch = Mathf.Clamp(lookPitch - lookAmount.y * sensitivity, -60.0F, 60.0F);
 				transform.eulerAngles = new Vector3(0.0F, lookYaw, 0.0F);
 				playerModelObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+				playerModelObject.transform.localRotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
 			}
 			break;
 			case TransformState.PLANE: {
@@ -343,8 +441,6 @@ public class PlayerController : MonoBehaviour {
 				playerModelObject.transform.Translate(0.0F, cameraRise, 0.0F, Space.Self);
 				playerModelObject.transform.Rotate(0.0F, 0.0F, -planeBoostTurnRotation * 90.0F, Space.Self);
 				playerModelObject.transform.Translate(0.0F, -cameraRise, 0.0F, Space.Self);
-				planeTiltRotationVelocity *= Mathf.Exp(dt * Mathf.Log(1.0F - planeTiltSpringDamping));
-				planeTiltRotation += planeTiltRotationVelocity * dt;
 				playerModelObject.transform.localRotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
 				planeTiltRotationVelocity.z -= yawLookChange * 0.05F;
 				planeTiltRotationVelocity.y += yawLookChange * 0.015F;
@@ -401,14 +497,28 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		if (actionsDisabled) {
+		float dt = Time.fixedDeltaTime;
+		if (onGround) {
+			groundedTime += dt;
+		} else {
+			groundedTime = 0.0F;
+		}
+		JetEnables jetEnables = 0;
+		if (actionsDisabled || isFallingDamaged) {
+			set_jet_vfx(jetEnables);
+			if (isFallingDamaged && onGround && groundedTime > 0.5F && moveAction.ReadValue<Vector2>().sqrMagnitude > 0.5F * 0.5F) {
+				playerAnimController.FallRecover();
+				isFallingDamaged = false;
+			}
+			onGround = false;
 			return;
 		}
-		float dt = Time.fixedDeltaTime;
+		bool usingMachineGun = false;
+		bool usingJetpack = false;
 		switch (transformState) {
 		case TransformState.MECH: {
 			Vector3 velocity = new Vector3();
-			bool sprinting = onGround && sprintAction.IsPressed();
+			bool sprinting = IsSprinting();
 			{ // Movement input
 				Vector2 moveAmount = moveAction.ReadValue<Vector2>();
 				
@@ -419,12 +529,20 @@ public class PlayerController : MonoBehaviour {
 				velocity += right * moveAmount.x * moveSpeed * dt;
 				velocity += forward * moveAmount.y * moveSpeed * dt;
 				if (jumpAction.IsPressed() && hoverFuelLeft > 0.0F) {
+					usingJetpack = true;
 					velocity.y += hoverSpeed * dt;
 					hoverFuelLeft -= dt;
+					planeTiltRotationVelocity.x += moveAmount.y * 0.25F;
+					planeTiltRotationVelocity.z -= moveAmount.x * 0.25F;
+					jetEnables |= JetEnables.BACK;
+
 				}
 				if (onGround && jumpAction.IsPressed()) {
 					velocity.y += jumpSpeed;
 					hoverFuelLeft = hoverFuelMax;
+				}
+				if (sprinting && moveAmount != Vector2.zero) {
+					jetEnables |= JetEnables.FEET | JetEnables.HEELS;
 				}
 			}
 			float drag =
@@ -442,7 +560,8 @@ public class PlayerController : MonoBehaviour {
 				rocketsLeftToFire--;
 				rocketCooldownTimer = rocketCooldown;
 				Vector3 startVelocity = RandomVec3InCone(20.0F) * 15.0F;
-				GameObject rocket = Instantiate(rocketPrefab, transform.position + new Vector3(0.0F, 1.5F, 0.0F), Quaternion.LookRotation(startVelocity));
+				Vector3 fireFrom = mechMissilePositions[nextMechMissilePosition++].transform.position;
+				GameObject rocket = Instantiate(rocketPrefab, fireFrom, Quaternion.LookRotation(startVelocity));
 				MissileControllerMechToGround rocketController = rocket.GetComponent<MissileControllerMechToGround>();
 				rocketController.velocity = startVelocity;
 				rocketController.target = rocketTargetPos + new Vector3(Random.Range(-rocketRandomTargetRadius, rocketRandomTargetRadius), 0.0F, Random.Range(-rocketRandomTargetRadius, rocketRandomTargetRadius));
@@ -451,10 +570,13 @@ public class PlayerController : MonoBehaviour {
 			}
 
 			if (machineGunAction.IsPressed()) {
+				usingMachineGun = true;
 				machineGunFireRate = Mathf.Min(machineGunMaxFireRate, machineGunFireRate + machineGunFireRateWarmupRate * dt);
 				float secondsPerBullet = 1.0F / machineGunFireRate;
-				if (machineGunFireTimer >= secondsPerBullet) {
-					Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + forward;
+				if (machineGunFireTimer * 2.0F >= secondsPerBullet) {
+					Vector3 fireFrom = minigunPositions[nextMinigunFirePosition].transform.position;
+					nextMinigunFirePosition = (nextMinigunFirePosition + 1) % minigunPositions.Length;
+					//Vector3 fireFrom = transform.position + new Vector3(0.0F, 0.25F, 0.0F) + forward;
 					Vector3 fireTo = cameraRayHit ? cameraRayHitPos : lookCam.transform.position + lookForward * 1000.0F;
 					Vector3 inaccuracy = RandomVec3InCone(Mathf.Lerp(0.2F, 2.0F, machineGunFireRate / machineGunMaxFireRate));
 					Vector3 fireVec = Quaternion.LookRotation(fireTo - fireFrom) * new Vector3(inaccuracy.x, inaccuracy.z, inaccuracy.y);
@@ -480,10 +602,11 @@ public class PlayerController : MonoBehaviour {
 		}
 		break;
 		case TransformState.PLANE: {
+			jetEnables |= JetEnables.FEET;
 			Vector3 velocity = new Vector3();
 			{ // Movement input
-				bool boost = boostAction.IsPressed();
-				bool brake = airbrakeAction.IsPressed();
+				bool boost = IsBoosting();
+				bool brake = IsBraking();
 				if (!brake) {
 					velocity += lookForward * (boost ? boostSpeed : flySpeed) * dt;
 				}
@@ -494,18 +617,38 @@ public class PlayerController : MonoBehaviour {
 					planeTiltRotationVelocity.x += moveAmount.y * 0.25F;
 					planeTiltRotationVelocity.z -= moveAmount.x * 0.25F;
 				}
+				float vfxSize = 1.0F;
+				float vfxSpeed = 8.0F;
+				if (boost) {
+					jetEnables |= JetEnables.WINGS;
+					vfxSize *= 2.0F;
+					vfxSpeed *= 2.0F;
+				}
+				if (brake) {
+					vfxSize *= 0.5F;
+					vfxSpeed *= 0.5F;
+				}
+				foreach (ParticleSystem vfx in jetVFXFeet) {
+					ParticleSystem.MainModule main = vfx.main;
+					main.startSize = vfxSize;
+					main.startSpeed = vfxSpeed;
+				}
 			}
-
-			if (firePlaneGunAction.IsPressed() && planeBulletCooldownTimer < 0.0F) {
-				planeBulletFireCount++;
-				Vector3 fireFrom = transform.localToWorldMatrix * new Vector4((planeBulletFireCount & 1) == 0 ? 1.0F : -1.0F, 0.0F, -1.0F, 1.0F);
-				GameObject bullet = Instantiate(planeBulletPrefab, fireFrom, Quaternion.identity);
-				BulletController bulletController = bullet.GetComponent<BulletController>();
-				Vector3 fireDirection = cameraRayHit ? Vector3.Normalize(cameraRayHitPos - fireFrom) : lookForward;
-				bulletController.velocity = fireDirection * 400.0F;
-				bulletController.damageAmount = planeBulletDamage;
-				planeBulletCooldownTimer = 1.0F / planeGunFireRate;
+			
+			if (firePlaneGunAction.IsPressed()) {
+				usingMachineGun = true;
+				if (planeBulletCooldownTimer < 0.0F) {
+					Vector3 fireFrom = minigunPositions[nextMinigunFirePosition].transform.position;
+					nextMinigunFirePosition = (nextMinigunFirePosition + 1) % minigunPositions.Length;
+					GameObject bullet = Instantiate(planeBulletPrefab, fireFrom, Quaternion.identity);
+					BulletController bulletController = bullet.GetComponent<BulletController>();
+					Vector3 fireDirection = cameraRayHit ? Vector3.Normalize(cameraRayHitPos - fireFrom) : lookForward;
+					bulletController.velocity = fireDirection * 800.0F;
+					bulletController.damageAmount = planeBulletDamage;
+					planeBulletCooldownTimer = 1.0F / planeGunFireRate;
+				}
 			}
+			
 
 			if (planeMissileAction.IsPressed()) {
 				planeMissileHoldTime += dt;
@@ -530,7 +673,6 @@ public class PlayerController : MonoBehaviour {
 			Vector3 dragAdjustment = rigidBody.linearVelocity * Mathf.Exp(dt * Mathf.Log(1.0F - flyDrag)) - rigidBody.linearVelocity;
 			rigidBody.AddForce(velocity + dragAdjustment, ForceMode.VelocityChange);
 			rigidBody.useGravity = false;
-			planeTiltRotationVelocity -= planeTiltRotation * planeTiltSpringStiffness * dt;
 		} break;
 		case TransformState.MECH_TO_PLANE: {
 			if (rigidBody.linearVelocity.y < 0.0F) {
@@ -542,8 +684,7 @@ public class PlayerController : MonoBehaviour {
 				renderMeshFilter.mesh = planeMesh;
 				planeCollider.enabled = true;
 				mechCollider.enabled = false;
-				planeTiltRotation = Vector3.zero;
-				planeTiltRotationVelocity = Vector3.zero;
+				playerAnimController.SetIsPlaneMode(true);
 			}
 		} break;
 		case TransformState.PLANE_TO_MECH: {
@@ -554,19 +695,33 @@ public class PlayerController : MonoBehaviour {
 				planeCollider.enabled = false;
 				mechCollider.enabled = true;
 				playerModelObject.transform.localRotation = Quaternion.identity;
+				playerAnimController.SetIsPlaneMode(false);
 			}
 		} break;
 		}
+		float tiltStiffness = planeTiltSpringStiffness * (transformState == TransformState.MECH ? 0.5F : 1.0F);
+		planeTiltRotationVelocity -= planeTiltRotation * tiltStiffness * dt;
 		uiScreen.SetInteractIndicator(Vector3.Distance(transform.position, GameManager.instance.CITY_CENTER) <= shopInteractRadius);
 		rocketCooldownTimer -= dt;
 		swordCooldownTimer -= dt;
 		transformCooldown -= dt;
+		timeSinceLastTransform += dt;
 		planeMissileCooldownTimer -= dt;
 		planeBulletCooldownTimer -= dt;
+		set_jet_vfx(jetEnables);
+		playerAnimController.SetGrounded(onGround);
+		playerAnimController.SetIsMachineGun(usingMachineGun);
+		playerAnimController.SetJetpackActive(usingJetpack);
 		onGround = false;
 	}
 
 	public void TakeDamage(float damage) {
+		if (!onGround && transformState == TransformState.MECH) {
+			playerAnimController.SetFallingDamaged();
+			isFallingDamaged = true;
+		} else {
+			playerAnimController.TakeDamage();
+		}
 		health -= damage;
 		healthRechargeCooldownTimer = healthRechargeCooldown;
 	}

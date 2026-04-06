@@ -18,9 +18,25 @@ public class UIScreenInterface : MonoBehaviour {
 	public AudioClip denySound;
 	bool guiActive;
 
+	enum ShopItem {
+		None,
+		OrbitalLazer,
+		RepairBuildings,
+		Sword,
+		AutoTurret,
+		AntiAirTurret,
+		HealthBoost,
+		GunDamage,
+		RocketCount
+	}
+
+	int[] shopPrices = new int[System.Enum.GetNames(typeof(ShopItem)).Length];
+	int[] itemStock = new int[System.Enum.GetNames(typeof(ShopItem)).Length];
+	string[] itemNames = new string[System.Enum.GetNames(typeof(ShopItem)).Length];
+
 	public GameObject turretPrefab;
 	public GameObject turretHologramPrefab;
-	int turretCost = 1;
+
 
 	struct QueuedAlertMessage {
 		public GameObject toDisplay;
@@ -47,6 +63,26 @@ public class UIScreenInterface : MonoBehaviour {
 		//temporary pop up messages for the DEMO1
 		EnqueueAlert(messageWindowDemo1, 4.0F);
 		EnqueueAlert(messageWindowTwoDemo1, 4.0F);
+		for (int i = 0; i < shopPrices.Length; i++) {
+			shopPrices[i] = 1;
+		}
+		itemStock[(int)ShopItem.OrbitalLazer] = int.MaxValue;
+		itemStock[(int)ShopItem.RepairBuildings] = 5;
+		itemStock[(int)ShopItem.Sword] = 1;
+		itemStock[(int)ShopItem.AutoTurret] = int.MaxValue;
+		itemStock[(int)ShopItem.AntiAirTurret] = int.MaxValue;
+		itemStock[(int)ShopItem.HealthBoost] = 3;
+		itemStock[(int)ShopItem.GunDamage] = 3;
+		itemStock[(int)ShopItem.RocketCount] = 3;
+		itemNames[(int)ShopItem.None] = "None";
+		itemNames[(int)ShopItem.OrbitalLazer] = "Orbital Lazer";
+		itemNames[(int)ShopItem.RepairBuildings] = "Repair Buildings";
+		itemNames[(int)ShopItem.Sword] = "Sword";
+		itemNames[(int)ShopItem.AutoTurret] = "Auto Turret";
+		itemNames[(int)ShopItem.AntiAirTurret] = "Anti-Air Turret";
+		itemNames[(int)ShopItem.HealthBoost] = "Health Boost";
+		itemNames[(int)ShopItem.GunDamage] = "Gun Damage ++";
+		itemNames[(int)ShopItem.RocketCount] = "Extra Rocket";
 	}
 
 	void FixedUpdate() {
@@ -75,7 +111,7 @@ public class UIScreenInterface : MonoBehaviour {
 
 	public void OpenShop() {
 		shopOverlay.SetActive(true);
-		shopOverlay.transform.Find("Item current").Find("Price Text").GetComponent<TMP_Text>().text = "$" + turretCost;
+		shopOverlay.transform.Find("Item current").Find("Price Text").GetComponent<TMP_Text>().text = "$";
 		PlayerController.instance.SetMouseCapture(false);
 		PlayerController.instance.actionsDisabled = true;
 		guiActive = true;
@@ -86,19 +122,64 @@ public class UIScreenInterface : MonoBehaviour {
 		PlayerController.instance.actionsDisabled = false;
 		guiActive = false;
 	}
+	void ShopItemHover(ShopItem button) {
+		shopOverlay.transform.Find("Item current").Find("Price Text").GetComponent<TMP_Text>().text = itemNames[(int)button] + (itemStock[(int)button] <= 0 ? ": Out of Stock" : ": $" + shopPrices[(int)button]);
+	}
+	bool TryPurchase(ShopItem item) {
+		PlayerController player = PlayerController.instance;
+		if (player.GetBankTotal() >= shopPrices[(int)item] && itemStock[(int)item] > 0) {
+			player.SetBankTotal(player.GetBankTotal() - shopPrices[(int)item]);
+			itemStock[(int)item]--;
+			ShopItemHover(item);
+			return true;
+		}
+		SoundFXManager.instance.PlaySoundFXClip(denySound, player.transform, 1.0F);
+		return false;
+	}
+	public void OrbitalLazerHover() { ShopItemHover(ShopItem.OrbitalLazer); }
+	public void RepairBuildingsHover() { ShopItemHover(ShopItem.RepairBuildings); }
+	public void SwordHover() { ShopItemHover(ShopItem.Sword); }
+	public void AutoTurretHover() { ShopItemHover(ShopItem.AutoTurret); }
+	public void AntiAirTurretHover() { ShopItemHover(ShopItem.AntiAirTurret); }
+	public void HealthBoostHover() { ShopItemHover(ShopItem.HealthBoost); }
+	public void GunDamageHover() { ShopItemHover(ShopItem.GunDamage); }
+	public void RocketCountHover() { ShopItemHover(ShopItem.RocketCount); }
 	public void TryBuyTurret() {
 		PlayerController player = PlayerController.instance;
-		if (player.GetBankTotal() >= turretCost && !player.isPlacingObject) {
-			player.SetBankTotal(player.GetBankTotal() - turretCost);
-			turretCost++;
-			shopOverlay.transform.Find("Item current").Find("Price Text").GetComponent<TMP_Text>().text = "$" + turretCost;
+		if (!player.isPlacingObject && TryPurchase(ShopItem.AutoTurret)) {
+			shopPrices[(int)ShopItem.AutoTurret]++;
 			player.isPlacingObject = true;
 			player.canPlaceObject = false;
 			player.placementPrefab = turretPrefab;
 			player.placementHologram = Instantiate(turretHologramPrefab, player.transform.position, Quaternion.identity);
 			CloseShop();
-		} else {
-			SoundFXManager.instance.PlaySoundFXClip(denySound, player.transform, 1.0F);
+		}
+	}
+
+	public void TryBuySword() {
+		if (TryPurchase(ShopItem.Sword)) {
+			PlayerController.instance.swordEnabled = true;
+			CloseShop();
+		}
+	}
+	public void TryBuyHealthBoost() {
+		if (TryPurchase(ShopItem.HealthBoost)) {
+			PlayerController.instance.maxHealth += 25.0F;
+			CloseShop();
+		}
+	}
+	public void TryBuyGunDamage() {
+		if (TryPurchase(ShopItem.GunDamage)) {
+			PlayerController.instance.machineGunBulletDamage += 5.0F;
+			PlayerController.instance.planeBulletDamage += 10.0F;
+			shopPrices[(int)ShopItem.GunDamage]++;
+			CloseShop();
+		}
+	}
+	public void TryBuyRockets() {
+		if (TryPurchase(ShopItem.RocketCount)) {
+			PlayerController.instance.rocketSalvoCount++;
+			CloseShop();
 		}
 	}
 

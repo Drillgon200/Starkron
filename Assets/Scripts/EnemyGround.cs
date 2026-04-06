@@ -17,6 +17,7 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 	public int gameManagerRegisteredIdx;
 
 	public GameObject deathParts;
+	public GameObject bloodVFX;
 
 	enum AnimationState {
 		WALKING,
@@ -145,6 +146,7 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 				GameManager.instance.statBugsKilledByTurrets++;
 			}
 			GameObject fragments = Instantiate(deathParts, transform.position - transform.forward * 1.0F, transform.rotation);
+			GameObject vfx = Instantiate(bloodVFX, transform.position + Vector3.up * 0.5F, Quaternion.identity);
 			Destroy(gameObject);
 		}
 	}

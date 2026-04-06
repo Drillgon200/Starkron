@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MT745
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a0537ee58a17cd446b2c4d6385d5711a, type: 3}
+      propertyPath: m_TagString
+      value: BuildingTag
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
