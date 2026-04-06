@@ -102,7 +102,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7abd2060e4e289f4fa7554432401316b, type: 2}
+  - {fileID: 2100000, guid: 45f0409ae334deb4598817832b69b712, type: 2}
   - {fileID: 2100000, guid: 2394bc6d8970a3441bbfe83e18f0c606, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -182,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb02d8ccddedde458885d95c86d65eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordPickUpScript
-  playerController: {fileID: 0}
 --- !u!54 &2611616071692285736
 Rigidbody:
   m_ObjectHideFlags: 0
