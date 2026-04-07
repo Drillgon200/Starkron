@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
 
 	// For amortized bug targeting for turrets
 	List<TurretRailgunController> turrets = new();
+	List<TurretAAController> aaTurrets = new();
 	Collider[] overlapTestArray = new Collider[128];
 	const int turretsToTargetPerTick = 5;
 	int currentTurretTargetIdx = 0;
@@ -271,10 +272,22 @@ public class GameManager : MonoBehaviour {
 		return id;
 	}
 	public void RemoveTurret(int id) {
-		if (id < allGroundBugs.Count) {
+		if (id < turrets.Count) {
 			turrets[id] = turrets.Last();
 			turrets[id].gameManagerRegisteredIdx = id;
 			turrets.RemoveAt(turrets.Count - 1);
+		}
+	}
+	public int RegisterAATurret(TurretAAController turret) {
+		int id = aaTurrets.Count;
+		aaTurrets.Add(turret);
+		return id;
+	}
+	public void RemoveAATurret(int id) {
+		if (id < aaTurrets.Count) {
+			aaTurrets[id] = aaTurrets.Last();
+			aaTurrets[id].gameManagerRegisteredIdx = id;
+			aaTurrets.RemoveAt(aaTurrets.Count - 1);
 		}
 	}
 	public int RegisterBuilding(BuildingController building) {
@@ -384,6 +397,13 @@ public class GameManager : MonoBehaviour {
 					bestTarget = allBuildings[bestBuildingIdx].gameObject;
 				}
 				foreach (TurretRailgunController turret in turrets) {
+					float newDist = (turret.transform.position - bug.transform.position).sqrMagnitude;
+					if (newDist < bestDistance) {
+						bestTarget = turret.gameObject;
+						bestDistance = newDist;
+					}
+				}
+				foreach (TurretAAController turret in aaTurrets) {
 					float newDist = (turret.transform.position - bug.transform.position).sqrMagnitude;
 					if (newDist < bestDistance) {
 						bestTarget = turret.gameObject;

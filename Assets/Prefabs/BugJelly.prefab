@@ -460,7 +460,7 @@ GameObject:
   - component: {fileID: 4720815337690119476}
   - component: {fileID: 6158050947943708066}
   - component: {fileID: 8384773143745424000}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BugJelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}

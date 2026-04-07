@@ -8659,6 +8659,8 @@ MonoBehaviour:
   denySound: {fileID: 8300000, guid: 9866757783eeb1f45b2e0d6c05e50a97, type: 3}
   turretPrefab: {fileID: 6133831574818507395, guid: fd0f82a5272fae940a2d7fad43006f22, type: 3}
   turretHologramPrefab: {fileID: 6133831574818507395, guid: faab20e47b6b58a4aa4459beee1214c9, type: 3}
+  turretAntiAirPrefab: {fileID: 6133831574818507395, guid: 13c154229ef3699408bf09e6cbe80521, type: 3}
+  turretAntiAirHologramPrefab: {fileID: 6133831574818507395, guid: cdd579265042bb14b8b8b8ebeb1af801, type: 3}
   timeBetweenAlerts: 1
 --- !u!114 &586248113
 MonoBehaviour:
@@ -24159,7 +24161,7 @@ MonoBehaviour:
     groupMemberCount: 1
     groupDelay: 11
     hiveHealth: 500
-    jellyProbability: 0.001
+    jellyProbability: 0.1
     crystalCount: 30
   - hives:
     - {fileID: 801979227}
@@ -27191,7 +27193,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1953120134}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 586248112}
+        m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+        m_MethodName: TryBuyAATurret
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1953120134
 MonoBehaviour:
   m_ObjectHideFlags: 0
