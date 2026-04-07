@@ -245,9 +245,11 @@ public class PlayerController : MonoBehaviour {
 			switch (transformState) {
 			case TransformState.MECH: {
 				transformState = TransformState.MECH_TO_PLANE;
+				playerAnimController.SetIsPlaneMode(true);
 			} break;
 			case TransformState.PLANE: {
 				transformState = TransformState.PLANE_TO_MECH;
+				playerAnimController.SetIsPlaneMode(false);
 			} break;
 			}
 			transformCooldown = transformTime;
@@ -683,8 +685,7 @@ public class PlayerController : MonoBehaviour {
 				rigidBody.useGravity = false;
 				renderMeshFilter.mesh = planeMesh;
 				planeCollider.enabled = true;
-				mechCollider.enabled = false;
-				playerAnimController.SetIsPlaneMode(true);
+				mechCollider.enabled = false;				
 			}
 		} break;
 		case TransformState.PLANE_TO_MECH: {
@@ -694,8 +695,7 @@ public class PlayerController : MonoBehaviour {
 				renderMeshFilter.mesh = mechMesh;
 				planeCollider.enabled = false;
 				mechCollider.enabled = true;
-				playerModelObject.transform.localRotation = Quaternion.identity;
-				playerAnimController.SetIsPlaneMode(false);
+				playerModelObject.transform.localRotation = Quaternion.identity;				
 			}
 		} break;
 		}
