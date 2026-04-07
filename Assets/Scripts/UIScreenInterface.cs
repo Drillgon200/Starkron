@@ -197,6 +197,12 @@ public class UIScreenInterface : MonoBehaviour {
 		}
 	}
 
+	public void TryBuyOrbitalLaser() {
+		if (TryPurchase(ShopItem.OrbitalLazer)) {
+			PlayerController.instance.orbitalAbilityCount++;
+			CloseShop();
+		}
+	}
 	public void ShowNextWaveIndicator() {
 		waveInfo.SetActive(true);
 		waveInfo.transform.Find("Wave").GetComponent<TMP_Text>().text = "Wave complete!";

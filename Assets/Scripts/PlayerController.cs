@@ -58,6 +58,9 @@ public class PlayerController : MonoBehaviour {
 	public bool canPlaceObject;
 	public GameObject placementHologram;
 	public GameObject placementPrefab;
+	public int orbitalAbilityCount;
+	public GameObject orbitalAbilityThrowable;
+	public GameObject oribitalStrikeOrigin;
 
 	bool onGround;
 	float groundedTime;
@@ -267,6 +270,17 @@ public class PlayerController : MonoBehaviour {
 		});
 		machineGunAction = InputSystem.actions.FindAction("FireMachineGun");
 		machineGunAction.started += (objectPlaceStartedAction = (InputAction.CallbackContext ctx) => {
+			if (orbitalAbilityCount > 0) {
+				Vector3 target = cameraRayHitPos;
+				Vector3 startPos = transform.position + Vector3.up * 1.0F + forward * 0.25F;
+				if (!cameraRayHit) {
+					target = startPos + lookForward * 100.0F;
+				}
+				OrbitalAbilityThrowableController ability = Instantiate(orbitalAbilityThrowable, startPos, Quaternion.identity).GetComponent<OrbitalAbilityThrowableController>();
+				ability.abilityOriginPoint = oribitalStrikeOrigin.transform.position;
+				ability.LaunchTowardPoint(target, 50.0F);
+				orbitalAbilityCount--;
+			}
 			if (isPlacingObject && canPlaceObject) {
 				machineGunAction.Disable();
 				machineGunAction.Enable();

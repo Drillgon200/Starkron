@@ -254,6 +254,10 @@ public class GameManager : MonoBehaviour {
 			"Buildings destroyed by you: " + statBuildingsDestroyedByPlayer;
 	}
 
+	public EnemyGround GetRandomGroundBug() {
+		return allGroundBugs.Count > 0 ? allGroundBugs[Random.Range(0, allGroundBugs.Count)] : null;
+	}
+
 	public int RegisterGroundBug(EnemyGround enemy) {
 		int id = allGroundBugs.Count;
 		allGroundBugs.Add(enemy);

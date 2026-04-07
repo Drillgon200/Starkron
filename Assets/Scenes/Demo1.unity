@@ -9487,7 +9487,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 643005609}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 586248112}
+        m_TargetAssemblyTypeName: UIScreenInterface, Assembly-CSharp
+        m_MethodName: TryBuyOrbitalLaser
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &643005609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18629,6 +18641,10 @@ PrefabInstance:
       propertyPath: bankUICounterText
       value: 
       objectReference: {fileID: 1517476496}
+    - target: {fileID: 117917700491249570, guid: 093a51fb4eadc8f40acd6245e8dc5627, type: 3}
+      propertyPath: orbitalAbilityThrowable
+      value: 
+      objectReference: {fileID: 996068404135728034, guid: 40cd6a69cde16244f93686ead54b60f9, type: 3}
     - target: {fileID: 1025239793375432896, guid: 093a51fb4eadc8f40acd6245e8dc5627, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.34
