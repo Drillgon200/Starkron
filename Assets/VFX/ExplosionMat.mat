@@ -38,12 +38,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Intensity: 20
+    - _Intensity: 40
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _BrightColor: {r: 0.8962264, g: 0.5769929, b: 0.32551616, a: 1}
-    - _SmokeColor: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
+    - _BrightColor: {r: 1, g: 0.7318058, b: 0.9600339, a: 1}
+    - _SmokeColor: {r: 0.33305895, g: 0.23111932, b: 0.40161723, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6865140740987006778

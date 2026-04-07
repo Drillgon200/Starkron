@@ -28,7 +28,7 @@ public class CharAnimController : MonoBehaviour{
 
 		// FLIGHT mode animations ================================
 		if (isPlaneMode) {
-			animator.SetBool("isFlightBoost", PlayerController.instance.IsBoosting());
+			//animator.SetBool("isFlightBoost", PlayerController.instance.IsBoosting());
 			bool braking = PlayerController.instance.IsBraking();
 			animator.SetBool("isBrakeBoth", braking);
 			animator.SetBool("isFlightStop", braking && PlayerController.instance.rigidBody.linearVelocity.sqrMagnitude < 4.0F);
