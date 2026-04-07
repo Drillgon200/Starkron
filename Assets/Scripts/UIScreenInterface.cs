@@ -36,6 +36,8 @@ public class UIScreenInterface : MonoBehaviour {
 
 	public GameObject turretPrefab;
 	public GameObject turretHologramPrefab;
+	public GameObject turretAntiAirPrefab;
+	public GameObject turretAntiAirHologramPrefab;
 
 
 	struct QueuedAlertMessage {
@@ -152,6 +154,18 @@ public class UIScreenInterface : MonoBehaviour {
 			player.canPlaceObject = false;
 			player.placementPrefab = turretPrefab;
 			player.placementHologram = Instantiate(turretHologramPrefab, player.transform.position, Quaternion.identity);
+			CloseShop();
+		}
+	}
+
+	public void TryBuyAATurret() {
+		PlayerController player = PlayerController.instance;
+		if (!player.isPlacingObject && TryPurchase(ShopItem.AntiAirTurret)) {
+			shopPrices[(int)ShopItem.AntiAirTurret]++;
+			player.isPlacingObject = true;
+			player.canPlaceObject = false;
+			player.placementPrefab = turretAntiAirPrefab;
+			player.placementHologram = Instantiate(turretAntiAirHologramPrefab, player.transform.position, Quaternion.identity);
 			CloseShop();
 		}
 	}
