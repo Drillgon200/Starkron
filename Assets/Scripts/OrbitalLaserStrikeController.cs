@@ -17,7 +17,7 @@ public class OrbitalLaserStrikeController : MonoBehaviour {
 
 	void FixedUpdate() {
 		int groundEnemyLayer = 1 << 7;
-		Collider[] potentialTargets = Physics.OverlapSphere(targetPos, trackingRadius, groundEnemyLayer);
+		Collider[] potentialTargets = Physics.OverlapSphere(currentPos, trackingRadius, groundEnemyLayer);
 		Collider bestPotentialTarget = null;
 		foreach (Collider c in potentialTargets) {
 			float distSq = (c.transform.position - currentPos).sqrMagnitude;
@@ -28,16 +28,14 @@ public class OrbitalLaserStrikeController : MonoBehaviour {
 				bestPotentialTarget = c;
 			}
 		}
-		if (!target) {
-			if (potentialTargets.Length > 0) {
-				target = bestPotentialTarget.gameObject;
-			} else {
-				EnemyGround groundBug = GameManager.instance.GetRandomGroundBug();
-				target = groundBug ? groundBug.gameObject : null;
-			}
-			if (target) {
-				targetPos = target.transform.position;
-			}
+		if (potentialTargets.Length > 0) {
+			target = bestPotentialTarget.gameObject;
+		} else if (!target) {
+			EnemyGround groundBug = GameManager.instance.GetRandomGroundBug();
+			target = groundBug ? groundBug.gameObject : null;
+		}
+		if (target) {
+			targetPos = target.transform.position;
 		}
 	}
 

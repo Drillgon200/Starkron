@@ -417,7 +417,7 @@ public class GameManager : MonoBehaviour {
 				if (bestDistance < 20.0F * 20.0F) {
 					bug.target = bestTarget;
 				}
-				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > transform.position.y + 5.0F)) {
+				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > bug.transform.position.y + 5.0F)) {
 					bug.target = null;
 				}
 			}
