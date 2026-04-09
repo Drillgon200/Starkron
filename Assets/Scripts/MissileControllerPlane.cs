@@ -33,6 +33,7 @@ public class MissileControllerPlane : MonoBehaviour {
 					damageable.TakeDamage(damageAmount, damagePoint, IDamageable.DamageSource.PLAYER);
 				}
 			}
+			collider.attachedRigidbody.AddExplosionForce(100.0F, transform.position, explosionRadius);
 		}
 		transform.Find("SmokeTrail").SetParent(null);
 		GameObject vfx = Instantiate(explosionVFXPrefab, transform.position, Quaternion.identity);
