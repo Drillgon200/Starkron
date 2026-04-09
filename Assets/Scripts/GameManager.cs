@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.Splines;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
@@ -47,6 +46,10 @@ public class GameManager : MonoBehaviour {
 	Collider[] overlapTestArray = new Collider[128];
 	const int turretsToTargetPerTick = 5;
 	int currentTurretTargetIdx = 0;
+
+	public GameObject wormBossPrefab;
+	public SplineContainer wormBossPath;
+	public bool wormKilledCity;
 
 	const float GRID_SIZE = 400.0F;
 	const int GRID_RESOLUTION = 400;
@@ -113,6 +116,11 @@ public class GameManager : MonoBehaviour {
 		groundEnemyAnimTimes = null;
 	}
 	
+	public void SpawnBoss() {
+		WormBossController boss = Instantiate(wormBossPrefab, Vector3.zero, Quaternion.identity).GetComponent<WormBossController>();
+		boss.pathObject = wormBossPath;
+		boss.scale = 5.0F;
+	}
 	void IncrementWave() {
 		foreach (HiveController controller in waves[currentWave].hives) {
 			controller.gameObject.SetActive(false);

@@ -10,9 +10,14 @@ public class OrbitalLaserStrikeController : MonoBehaviour {
 	public GameObject target;
 	public Vector3 targetPos;
 	public Vector3 currentPos;
+	public GameObject vfx;
+	public LineRenderer lightning;
+	public GameObject slag;
+	LineRenderer lineRenderer;
 
 	void Start() {
 		currentPos = targetPos;
+		lineRenderer = GetComponent<LineRenderer>();
 	}
 
 	void FixedUpdate() {
@@ -37,13 +42,25 @@ public class OrbitalLaserStrikeController : MonoBehaviour {
 		if (target) {
 			targetPos = target.transform.position;
 		}
+		int numLightningPoints = lightning.positionCount;
+		Vector3 startPos = lineRenderer.GetPosition(0);
+		float dist = Vector3.Distance(startPos, currentPos);
+		float lightningSize = 2.0F;
+		Quaternion basis = Quaternion.LookRotation(currentPos - startPos);
+		for (int i = 0; i < numLightningPoints; i++) {
+			Vector3 localPos = new Vector3(Random.Range(-lightningSize, lightningSize), Random.Range(-lightningSize, lightningSize), (float)i / (numLightningPoints - 1) * dist);
+			lightning.SetPosition(i, basis * localPos + startPos);
+		}
+		slag.transform.rotation = basis * Quaternion.AngleAxis(180.0F, Vector3.right);
 	}
 
 	void Update() {
 		float dt = Time.deltaTime;
 
 		currentPos = Vector3.MoveTowards(currentPos, targetPos, dt * laserTrackingSpeed);
-		GetComponent<LineRenderer>().SetPosition(1, currentPos);
+		vfx.transform.position = currentPos;
+		lineRenderer.SetPosition(1, currentPos);
+		lineRenderer.widthMultiplier = 0.5F * (Mathf.Sin(age * 100.0F) * 0.5F + 0.5F) + 1.0F;
 
 		if (age > maxAge) {
 			Destroy(gameObject);

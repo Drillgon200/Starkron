@@ -280,8 +280,7 @@ public class PlayerController : MonoBehaviour {
 				OrbitalAbilityThrowableController ability = Instantiate(orbitalAbilityThrowable, startPos, Quaternion.identity).GetComponent<OrbitalAbilityThrowableController>();
 				ability.abilityOriginPoint = oribitalStrikeOrigin.transform.position;
 				ability.LaunchTowardPoint(target, 50.0F);
-				//orbitalAbilityCount--;
-				TakeDamage(1.0F);
+				orbitalAbilityCount--;
 			}
 			if (isPlacingObject && canPlaceObject) {
 				machineGunAction.Disable();
