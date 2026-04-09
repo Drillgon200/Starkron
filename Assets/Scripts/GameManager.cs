@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.Splines;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
@@ -47,6 +46,10 @@ public class GameManager : MonoBehaviour {
 	Collider[] overlapTestArray = new Collider[128];
 	const int turretsToTargetPerTick = 5;
 	int currentTurretTargetIdx = 0;
+
+	public GameObject wormBossPrefab;
+	public SplineContainer wormBossPath;
+	public bool wormKilledCity;
 
 	const float GRID_SIZE = 400.0F;
 	const int GRID_RESOLUTION = 400;
@@ -113,6 +116,11 @@ public class GameManager : MonoBehaviour {
 		groundEnemyAnimTimes = null;
 	}
 	
+	public void SpawnBoss() {
+		WormBossController boss = Instantiate(wormBossPrefab, Vector3.zero, Quaternion.identity).GetComponent<WormBossController>();
+		boss.pathObject = wormBossPath;
+		boss.scale = 5.0F;
+	}
 	void IncrementWave() {
 		foreach (HiveController controller in waves[currentWave].hives) {
 			controller.gameObject.SetActive(false);
@@ -252,6 +260,10 @@ public class GameManager : MonoBehaviour {
 			"Hives killed by turrets: " + statHivesKilledByTurrets + "\n" +
 			"Buildings destroyed: " + statBuildingsDestroyed + "/" + statBuildingsTotal + "\n" +
 			"Buildings destroyed by you: " + statBuildingsDestroyedByPlayer;
+	}
+
+	public EnemyGround GetRandomGroundBug() {
+		return allGroundBugs.Count > 0 ? allGroundBugs[Random.Range(0, allGroundBugs.Count)] : null;
 	}
 
 	public int RegisterGroundBug(EnemyGround enemy) {
@@ -413,7 +425,7 @@ public class GameManager : MonoBehaviour {
 				if (bestDistance < 20.0F * 20.0F) {
 					bug.target = bestTarget;
 				}
-				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > transform.position.y + 5.0F)) {
+				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > bug.transform.position.y + 5.0F)) {
 					bug.target = null;
 				}
 			}

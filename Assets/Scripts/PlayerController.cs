@@ -58,8 +58,12 @@ public class PlayerController : MonoBehaviour {
 	public bool canPlaceObject;
 	public GameObject placementHologram;
 	public GameObject placementPrefab;
+	public int orbitalAbilityCount;
+	public GameObject orbitalAbilityThrowable;
+	public GameObject oribitalStrikeOrigin;
 
 	bool onGround;
+	bool hasCollisionObjects;
 	float groundedTime;
 	float hoverFuelLeft;
 	public float maxHealth = 100.0F;
@@ -267,6 +271,17 @@ public class PlayerController : MonoBehaviour {
 		});
 		machineGunAction = InputSystem.actions.FindAction("FireMachineGun");
 		machineGunAction.started += (objectPlaceStartedAction = (InputAction.CallbackContext ctx) => {
+			if (orbitalAbilityCount > 0) {
+				Vector3 target = cameraRayHitPos;
+				Vector3 startPos = transform.position + Vector3.up * 1.0F + forward * 0.25F;
+				if (!cameraRayHit) {
+					target = startPos + lookForward * 100.0F;
+				}
+				OrbitalAbilityThrowableController ability = Instantiate(orbitalAbilityThrowable, startPos, Quaternion.identity).GetComponent<OrbitalAbilityThrowableController>();
+				ability.abilityOriginPoint = oribitalStrikeOrigin.transform.position;
+				ability.LaunchTowardPoint(target, 50.0F);
+				orbitalAbilityCount--;
+			}
 			if (isPlacingObject && canPlaceObject) {
 				machineGunAction.Disable();
 				machineGunAction.Enable();
@@ -382,6 +397,7 @@ public class PlayerController : MonoBehaviour {
 				break;
 			}
 		}
+		hasCollisionObjects = true;
 	}
 
 	float SmoothCutoff(float x, float max) {
@@ -397,7 +413,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (actionsDisabled || isFallingDamaged) {
+		if (actionsDisabled) {
 			return;
 		}
 		float dt = Time.deltaTime;
@@ -465,6 +481,11 @@ public class PlayerController : MonoBehaviour {
 				modifiedCameraDistance = Mathf.Min(modifiedCameraDistance, Vector3.Distance(cameraStartPos, camBackHit.point) - 0.4F);
 			}
 			lookCam.transform.position = cameraStartPos - lookForward * modifiedCameraDistance;
+		}
+
+		if (isFallingDamaged) {
+			// Don't allow any actions while falling bad
+			return;
 		}
 
 		if (healthRechargeCooldownTimer <= 0.0F) {
@@ -712,11 +733,15 @@ public class PlayerController : MonoBehaviour {
 		playerAnimController.SetGrounded(onGround);
 		playerAnimController.SetIsMachineGun(usingMachineGun);
 		playerAnimController.SetJetpackActive(usingJetpack);
-		onGround = false;
+		if (!hasCollisionObjects) {
+			onGround = false;
+		}
+		hasCollisionObjects = false;
 	}
 
 	public void TakeDamage(float damage) {
-		if (!onGround && transformState == TransformState.MECH) {
+		int playerMask = 1 << 9;
+		if (!onGround && transformState == TransformState.MECH && Physics.OverlapSphere(transform.position - Vector3.up, 0.5F, ~playerMask, QueryTriggerInteraction.Ignore).Length == 0) {
 			playerAnimController.SetFallingDamaged();
 			isFallingDamaged = true;
 		} else {

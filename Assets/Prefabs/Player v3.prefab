@@ -300,6 +300,9 @@ MonoBehaviour:
   canPlaceObject: 0
   placementHologram: {fileID: 0}
   placementPrefab: {fileID: 0}
+  orbitalAbilityCount: 0
+  orbitalAbilityThrowable: {fileID: 0}
+  oribitalStrikeOrigin: {fileID: 0}
   maxHealth: 100
   healthRechargeRate: 20
   healthRechargeCooldown: 3
@@ -544,7 +547,7 @@ GameObject:
   - component: {fileID: 4487644817130543947}
   - component: {fileID: 6113140926221175480}
   - component: {fileID: 2133086180444587119}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: PlayerModel
   m_TagString: PlayerTag
   m_Icon: {fileID: 0}
