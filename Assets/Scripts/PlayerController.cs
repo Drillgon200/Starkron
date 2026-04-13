@@ -678,9 +678,10 @@ public class PlayerController : MonoBehaviour {
 				if (planeMissileHoldTime > planeMissileTrackingHoldTimeCutoff && planeMissileLockOnTarget == null) {
 					float cosLockOnAngle = Mathf.Cos(planeMissileLockOnAngle * Mathf.Deg2Rad);
 					float bestDistance = float.PositiveInfinity;
-					foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(planeMissileLockOnRadius, planeMissileLockOnRadius, planeMissileLockOnRadius))) {
-						if (collider.GetComponent<IFlyingEnemy>() != null && Vector3.Dot(Vector3.Normalize(collider.transform.position - lookCam.transform.position), lookForward) > cosLockOnAngle) {
-							float distanceToTarget = Vector3.Distance(transform.position, collider.transform.position);
+					int flyingEnemyMask = 1 << 8;
+					foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(planeMissileLockOnRadius, planeMissileLockOnRadius, planeMissileLockOnRadius), Quaternion.identity, flyingEnemyMask)) {
+						if (Vector3.Dot(Vector3.Normalize(collider.transform.position - lookCam.transform.position), lookForward) > cosLockOnAngle) {
+							float distanceToTarget = (transform.position - collider.transform.position).sqrMagnitude;
 							if (distanceToTarget < bestDistance) {
 								planeMissileLockOnTarget = collider.gameObject;
 								bestDistance = distanceToTarget;
