@@ -24188,7 +24188,7 @@ MonoBehaviour:
     groupMemberCount: 1
     groupDelay: 11
     hiveHealth: 500
-    jellyProbability: 0.1
+    jellyProbability: 0.0001
     crystalCount: 30
   - hives:
     - {fileID: 801979227}
