@@ -36,6 +36,8 @@ public class UIScreenInterface : MonoBehaviour {
 
 	public GameObject turretPrefab;
 	public GameObject turretHologramPrefab;
+	public GameObject turretAntiAirPrefab;
+	public GameObject turretAntiAirHologramPrefab;
 
 
 	struct QueuedAlertMessage {
@@ -156,6 +158,18 @@ public class UIScreenInterface : MonoBehaviour {
 		}
 	}
 
+	public void TryBuyAATurret() {
+		PlayerController player = PlayerController.instance;
+		if (!player.isPlacingObject && TryPurchase(ShopItem.AntiAirTurret)) {
+			shopPrices[(int)ShopItem.AntiAirTurret]++;
+			player.isPlacingObject = true;
+			player.canPlaceObject = false;
+			player.placementPrefab = turretAntiAirPrefab;
+			player.placementHologram = Instantiate(turretAntiAirHologramPrefab, player.transform.position, Quaternion.identity);
+			CloseShop();
+		}
+	}
+
 	public void TryBuySword() {
 		if (TryPurchase(ShopItem.Sword)) {
 			PlayerController.instance.swordEnabled = true;
@@ -183,6 +197,12 @@ public class UIScreenInterface : MonoBehaviour {
 		}
 	}
 
+	public void TryBuyOrbitalLaser() {
+		if (TryPurchase(ShopItem.OrbitalLazer)) {
+			PlayerController.instance.orbitalAbilityCount++;
+			CloseShop();
+		}
+	}
 	public void ShowNextWaveIndicator() {
 		waveInfo.SetActive(true);
 		waveInfo.transform.Find("Wave").GetComponent<TMP_Text>().text = "Wave complete!";

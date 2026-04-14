@@ -35,6 +35,7 @@ public class CharAnimController : MonoBehaviour{
 		}
 	}
 
+
 	public void SetIsPlaneMode(bool planeMode) {
 		if (planeMode) {
 			swordMesh.SetActive(false);

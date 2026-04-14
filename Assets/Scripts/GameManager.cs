@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.Splines;
 
 public class GameManager : MonoBehaviour {
 	public static GameManager instance;
@@ -43,9 +42,14 @@ public class GameManager : MonoBehaviour {
 
 	// For amortized bug targeting for turrets
 	List<TurretRailgunController> turrets = new();
+	List<TurretAAController> aaTurrets = new();
 	Collider[] overlapTestArray = new Collider[128];
 	const int turretsToTargetPerTick = 5;
 	int currentTurretTargetIdx = 0;
+
+	public GameObject wormBossPrefab;
+	public SplineContainer wormBossPath;
+	public bool wormKilledCity;
 
 	const float GRID_SIZE = 400.0F;
 	const int GRID_RESOLUTION = 400;
@@ -112,6 +116,11 @@ public class GameManager : MonoBehaviour {
 		groundEnemyAnimTimes = null;
 	}
 	
+	public void SpawnBoss() {
+		WormBossController boss = Instantiate(wormBossPrefab, Vector3.zero, Quaternion.identity).GetComponent<WormBossController>();
+		boss.pathObject = wormBossPath;
+		boss.scale = 5.0F;
+	}
 	void IncrementWave() {
 		foreach (HiveController controller in waves[currentWave].hives) {
 			controller.gameObject.SetActive(false);
@@ -253,6 +262,10 @@ public class GameManager : MonoBehaviour {
 			"Buildings destroyed by you: " + statBuildingsDestroyedByPlayer;
 	}
 
+	public EnemyGround GetRandomGroundBug() {
+		return allGroundBugs.Count > 0 ? allGroundBugs[Random.Range(0, allGroundBugs.Count)] : null;
+	}
+
 	public int RegisterGroundBug(EnemyGround enemy) {
 		int id = allGroundBugs.Count;
 		allGroundBugs.Add(enemy);
@@ -271,10 +284,22 @@ public class GameManager : MonoBehaviour {
 		return id;
 	}
 	public void RemoveTurret(int id) {
-		if (id < allGroundBugs.Count) {
+		if (id < turrets.Count) {
 			turrets[id] = turrets.Last();
 			turrets[id].gameManagerRegisteredIdx = id;
 			turrets.RemoveAt(turrets.Count - 1);
+		}
+	}
+	public int RegisterAATurret(TurretAAController turret) {
+		int id = aaTurrets.Count;
+		aaTurrets.Add(turret);
+		return id;
+	}
+	public void RemoveAATurret(int id) {
+		if (id < aaTurrets.Count) {
+			aaTurrets[id] = aaTurrets.Last();
+			aaTurrets[id].gameManagerRegisteredIdx = id;
+			aaTurrets.RemoveAt(aaTurrets.Count - 1);
 		}
 	}
 	public int RegisterBuilding(BuildingController building) {
@@ -390,10 +415,17 @@ public class GameManager : MonoBehaviour {
 						bestDistance = newDist;
 					}
 				}
+				foreach (TurretAAController turret in aaTurrets) {
+					float newDist = (turret.transform.position - bug.transform.position).sqrMagnitude;
+					if (newDist < bestDistance) {
+						bestTarget = turret.gameObject;
+						bestDistance = newDist;
+					}
+				}
 				if (bestDistance < 20.0F * 20.0F) {
 					bug.target = bestTarget;
 				}
-				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > transform.position.y + 5.0F)) {
+				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > bug.transform.position.y + 5.0F)) {
 					bug.target = null;
 				}
 			}

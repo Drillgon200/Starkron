@@ -15,6 +15,8 @@ TagManager:
   - PlayerTag
   - TurretTag
   - SwordPickUpTag
+  - eyeBallTag
+  - bossMouthTag
   layers:
   - Default
   - TransparentFX
@@ -24,8 +26,8 @@ TagManager:
   - UI
   - Outline
   - Enemy
-  - 
-  - 
+  - FlyingEnemy
+  - Player
   - 
   - 
   - 
