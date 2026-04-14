@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WormBoss
   pathObject: {fileID: 0}
-  middleSegmentCount: 50
+  middleSegmentCount: 10
   segmentSpacing: 0.9
   maxHealth: 20
   speed: 10
   scale: 1
-  segmentPrefab: {fileID: 272377803494885955, guid: 611e5b9dfe94a794c9e74553c6301069, type: 3}
-  headMesh: {fileID: 4068373912626513877, guid: a1b008632c47cc243852c1bf4874c727, type: 3}
-  tailMesh: {fileID: 4864056309639282896, guid: dcc103bf011f8134d813f032a8d5d717, type: 3}
+  headSegmentPrefab: {fileID: 4086750043568777672, guid: 6b0bb0d556bf5354d8d281368885616f, type: 3}
+  middleSegmentPrefab: {fileID: 4745318567963738550, guid: ba25fedfd81ccdd468766e21f9f9ca71, type: 3}
+  tailSegmentPrefab: {fileID: 6407997929574785049, guid: c938a561a8a857240814fa29aed64a13, type: 3}
