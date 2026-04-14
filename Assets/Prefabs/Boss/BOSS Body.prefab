@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WormWeakpointController
   controller: {fileID: 7805741743257643040}
-  health: 10
+  health: 100
 --- !u!1 &2082899869424326334
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,4 +418,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WormWeakpointController
   controller: {fileID: 7805741743257643040}
-  health: 10
+  health: 100
