@@ -267,6 +267,7 @@ public class PlayerController : MonoBehaviour {
 				rocketsLeftToFire = rocketSalvoCount;
 				nextMechMissilePosition = 0;
 				rocketTargetPos = cameraRayHitPos;
+				GameManager.instance.SpawnBoss();
 			}
 		});
 		machineGunAction = InputSystem.actions.FindAction("FireMachineGun");

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4051507656284666552}
   - component: {fileID: 1753320749527407523}
   - component: {fileID: 2206110819610977122}
+  - component: {fileID: 3217282754508855136}
   m_Layer: 6
   m_Name: eyeballB
   m_TagString: eyeBallTag
@@ -114,6 +115,20 @@ CapsuleCollider:
   m_Height: 155.8031
   m_Direction: 1
   m_Center: {x: 0.0000076293945, y: 0, z: 0}
+--- !u!114 &3217282754508855136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40630666398632538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb8d9b9989aa4b488d421ae1a482bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WormWeakpointController
+  controller: {fileID: 7805741743257643040}
+  health: 100
 --- !u!1 &2082899869424326334
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 553320413602134792}
+  - component: {fileID: 7805741743257643040}
   m_Layer: 0
   m_Name: BOSS Body
   m_TagString: Untagged
@@ -261,6 +277,19 @@ Transform:
   - {fileID: 7602663495873650122}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7805741743257643040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4745318567963738550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de39c7c6cd7163142b3e7b118eba1d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WormSegmentController
+  controller: {fileID: 0}
 --- !u!1 &8842583829843545464
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +302,7 @@ GameObject:
   - component: {fileID: 370004844860363619}
   - component: {fileID: 3242030626735937334}
   - component: {fileID: 1152458665997085931}
+  - component: {fileID: 493959568169777446}
   m_Layer: 6
   m_Name: eyeballA
   m_TagString: eyeBallTag
@@ -375,3 +405,17 @@ CapsuleCollider:
   m_Height: 155.66443
   m_Direction: 1
   m_Center: {x: 0.0000076293945, y: 0.000022888184, z: 0.000015258789}
+--- !u!114 &493959568169777446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8842583829843545464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb8d9b9989aa4b488d421ae1a482bc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WormWeakpointController
+  controller: {fileID: 7805741743257643040}
+  health: 100

@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour {
 	public void SpawnBoss() {
 		WormBossController boss = Instantiate(wormBossPrefab, Vector3.zero, Quaternion.identity).GetComponent<WormBossController>();
 		boss.pathObject = wormBossPath;
-		boss.scale = 5.0F;
+		boss.scale = 10.0F;
 	}
 	void IncrementWave() {
 		foreach (HiveController controller in waves[currentWave].hives) {
