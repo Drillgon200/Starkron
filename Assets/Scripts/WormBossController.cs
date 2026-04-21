@@ -67,6 +67,7 @@ public class WormBossController : MonoBehaviour {
 			foreach (WormSegmentController segment in wormSegments) {
 				Destroy(segment.gameObject);
 			}
+			GameManager.instance.wormAlive = false;
 			Destroy(gameObject);
 		}
 	}

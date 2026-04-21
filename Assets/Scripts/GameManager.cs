@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject wormBossPrefab;
 	public SplineContainer wormBossPath;
 	public bool wormKilledCity;
+	public bool wormAlive;
 
 	const float GRID_SIZE = 400.0F;
 	const int GRID_RESOLUTION = 400;
@@ -76,6 +77,8 @@ public class GameManager : MonoBehaviour {
 		public float jellyProbability;
 		[SerializeField]
 		public int crystalCount;
+		[SerializeField]
+		public bool hasWorm;
 	}
 	public List<Wave> waves = new();
 	public List<CrystalController> allCrystals = new();
@@ -117,6 +120,10 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	public void SpawnBoss() {
+		if (wormAlive) {
+			return;
+		}
+		wormAlive = true;
 		WormBossController boss = Instantiate(wormBossPrefab, Vector3.zero, Quaternion.identity).GetComponent<WormBossController>();
 		boss.pathObject = wormBossPath;
 		boss.scale = 10.0F;
@@ -159,6 +166,9 @@ public class GameManager : MonoBehaviour {
 		int spawnCount = waves[currentWave].crystalCount;
 		for (int i = 0; i < spawnCount && i < crystals.Count; i++) {
 			crystals[i].gameObject.SetActive(true);
+		}
+		if (waves[currentWave].hasWorm) {
+			SpawnBoss();
 		}
 	}
 
@@ -467,16 +477,16 @@ public class GameManager : MonoBehaviour {
 		}
 		nextWaveCountdownTimer -= Time.fixedDeltaTime;
 		gameTime += Time.fixedDeltaTime;
-		if (allBuildings.Count <= 0 || PlayerController.instance.IsDead()) {
+		if (allBuildings.Count <= 0 || wormKilledCity || PlayerController.instance.IsDead()) {
 			gameOver = true;
 			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowLoseOverlay();
-		} else if (hiveCount <= 0 && currentWave < waves.Count - 1 && !needsNextWave) {
+		} else if (hiveCount <= 0 && !wormAlive && currentWave < waves.Count - 1 && !needsNextWave) {
 			if (currentWave == 0) {
 				uiScreen.EnqueueAlert(uiScreen.messageShop, 6.0F);
 			}
 			IncrementWave();
-		} else if (bugCount <= 0 && hiveCount <= 0 && currentWave >= waves.Count - 1 && !needsNextWave) {
+		} else if (bugCount <= 0 && hiveCount <= 0 && !wormAlive && currentWave >= waves.Count - 1 && !needsNextWave) {
 			gameOver = true;
 			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowWinOverlay();
