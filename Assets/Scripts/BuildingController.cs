@@ -13,7 +13,7 @@ public class BuildingController : MonoBehaviour, IBugTarget {
 		GameManager.instance.RemoveBuilding(gameManagerRegisteredIdx);
 	}
 	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
-		buildingHealth--;
+		buildingHealth -= (int)Mathf.Ceil(amount);
 		
 		if (buildingHealth <= 0) {
             if (source == IDamageable.DamageSource.PLAYER) {
@@ -21,6 +21,8 @@ public class BuildingController : MonoBehaviour, IBugTarget {
             }
             GameManager.instance.statBuildingsDestroyed++;
 			Destroy(gameObject);
-		}     
+		} else {
+			print("Not destroyed " + amount);
+		}
 	}
 }

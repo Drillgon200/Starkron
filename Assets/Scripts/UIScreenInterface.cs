@@ -62,7 +62,7 @@ public class UIScreenInterface : MonoBehaviour {
 		messageWindowDemo1.SetActive(false);
 		messageWindowTwoDemo1.SetActive(false);
 		shopOverlay.SetActive(false);
-		//temporary pop up messages for the DEMO1
+		// temporary pop up messages for the DEMO1
 		EnqueueAlert(messageWindowDemo1, 4.0F);
 		EnqueueAlert(messageWindowTwoDemo1, 4.0F);
 		for (int i = 0; i < shopPrices.Length; i++) {
@@ -99,7 +99,7 @@ public class UIScreenInterface : MonoBehaviour {
 				activeAlert = msg.toDisplay;
 				queueTime = msg.time;
 				activeAlert.SetActive(true);
-				alert.Play();
+				//alert.Play();
 			}
 		}
 	}

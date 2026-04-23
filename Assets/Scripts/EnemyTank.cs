@@ -1,9 +1,9 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
+public class EnemyTank : MonoBehaviour, IDamageable, IEnemy {
 	public Rigidbody rigidBody;
-	public Material bugMaterial;
+	public Animator animator;
 	public float maxHealth = 20.0F;
 	public float turnSpeed = 400.0F;
 	public float walkSpeed = 2.0F;
@@ -11,37 +11,18 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 	public float attackCooldown = 1.0F;
 	public float attackCooldownTimer;
 	public float damageAmount = 20.0F;
-	public float buildingDamageAmount = 1.0F;
+	public float buildingDamageAmount = 5.0F;
 	float health;
 	public int attackTriggerFrames;
 	public GameObject target;
-	public int gameManagerRegisteredIdx;
 
 	public GameObject deathParts;
 	public GameObject bloodVFX;
 
-	enum AnimationState {
-		WALKING,
-		ATTACKING,
-		ATTACK_TRIGGERED
-	};
-	AnimationState animState = AnimationState.WALKING;
-	public float lastAnimOffset;
-	public float lastAnimLength;
-	public float lastAnimTime;
-	public float animOffset;
-	public float animLength;
-	public float animTime;
-	public float animBlendFactor;
-	public const float animWalkOffset = 0.0F;
-	public const float animWalkLength = 26.0F / 24.0F;
-	public const float animAttackOffset = 27.0F;
-	public const float animAttackTriggerTime = 4.0F / 24.0F;
-	public const float animAttackLength = 17.0F / 24.0F;
-	public const float blendTime = 0.15F;
-
 	public AudioSource hurtSFX;
 	public AudioSource walkSFX;
+
+	bool isAttacking;
 
 	void Start() {
 		if (GameManager.instance.bugCount >= GameManager.instance.bugCap) {
@@ -51,54 +32,24 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 		}
 		health = maxHealth;
 		GameManager.instance.bugCount++;
-		gameManagerRegisteredIdx = GameManager.instance.RegisterGroundBug(this);
 
-		SwitchAnimStateTo(AnimationState.WALKING, animWalkOffset, animWalkLength);
 		walkSFX.Play();
-		animBlendFactor = 1.0F;
 	}
 	void OnDestroy() {
 		GameManager.instance.bugCount--;
-		GameManager.instance.RemoveGroundBug(gameManagerRegisteredIdx);
 	}
 
-	void SwitchAnimStateTo(AnimationState state, float newOffset, float newLength) {
-		lastAnimOffset = animOffset;
-		lastAnimLength = animLength;
-		lastAnimTime = animTime;
-		animOffset = newOffset;
-		animLength = newLength;
-		animTime = 0.0F;
-		animBlendFactor = 0.0F;
-		animState = state;
+	public void TriggerAttack() {
+		attackTriggerFrames = 2;
 	}
 
-	void Update() {
-		float dt = Time.deltaTime;
-		animBlendFactor = Mathf.Min(1.0F, animBlendFactor + dt / blendTime);
-		lastAnimTime += dt;
-		animTime += dt;
-		switch (animState) {
-		case AnimationState.WALKING: {
-		} break;
-		case AnimationState.ATTACKING: {
-			if (animTime >= animAttackTriggerTime) {
-				attackTriggerFrames = 2;
-				animState = AnimationState.ATTACK_TRIGGERED;
-				goto case AnimationState.ATTACK_TRIGGERED;
-			}
-		} break;
-		case AnimationState.ATTACK_TRIGGERED: {
-			if (animTime >= animAttackLength - blendTime) {
-				SwitchAnimStateTo(AnimationState.WALKING, animWalkOffset, animWalkLength);
-			}
-		} break;
-		}
+	public void FinishAttack() {
+		isAttacking = false;
 	}
 
 	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
-		if (animState == AnimationState.WALKING) {
+		if (!isAttacking) {
 			Vector2 direction =
 				target ? Vector2.Normalize(new Vector2(target.transform.position.x - transform.position.x, target.transform.position.z - transform.position.z)) :
 				GameManager.instance.GetDirectionToCity(new Vector2(transform.position.x, transform.position.z));
@@ -110,25 +61,27 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 			if (Vector3.Dot(rigidBody.linearVelocity, transform.forward) < walkSpeed) {
 				rigidBody.AddForce(transform.forward * 100.0F, ForceMode.Acceleration);
 			}
+			target = GameManager.instance.FindBugTarget(transform.position, target);
 		}
 		if (target != null) {
-			bool closeEnoughTarget = (target.transform.position - transform.position).sqrMagnitude < 2.0F * 2.0F;
+			bool closeEnoughTarget = (target.transform.position - (transform.position + transform.forward * 3.5F)).sqrMagnitude < 3.0F * 3.0F;
 			if (attackTriggerFrames > 0 && closeEnoughTarget) {
-				foreach (Collider collider in Physics.OverlapBox(transform.position + new Vector3(0.0F, 0.532F, 0.0F) + transform.forward * 1.5F, new Vector3(0.5F, 0.5F, 1.0F), transform.rotation)) {
+				foreach (Collider collider in Physics.OverlapBox(transform.position + new Vector3(0.0F, 1.753F, 0.0F) + transform.forward * 3.5F, new Vector3(3.0F, 2.0F, 4.0F), transform.rotation)) {
 					PlayerCollisionController player = collider.GetComponent<PlayerCollisionController>();
 					IBugTarget bugTarget = collider.GetComponent<IBugTarget>();
 					if (bugTarget != null || player != null) {
 						bugTarget?.TakeDamage(buildingDamageAmount, collider.transform.position, IDamageable.DamageSource.BUG);
 						if (player) {
+							print(collider);
 							PlayerController.instance.TakeDamage(damageAmount);
 						}
 						attackTriggerFrames = 0;
-						break;
 					}
 				}
 			}
 			if (attackCooldownTimer <= 0.0F && closeEnoughTarget) {
-				SwitchAnimStateTo(AnimationState.ATTACKING, animAttackOffset, animAttackLength);
+				animator.SetTrigger("Attack");
+				isAttacking = true;
 				attackCooldownTimer = attackCooldown;
 			}
 		}
