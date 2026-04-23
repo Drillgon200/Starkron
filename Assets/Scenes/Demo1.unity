@@ -45528,6 +45528,7 @@ MonoBehaviour:
   wormBossPrefab: {fileID: 1972823087281596362, guid: c118a457fb75f4f408ebefbe02bc20ba, type: 3}
   wormBossPath: {fileID: 1086911328}
   wormKilledCity: 0
+  wormAlive: 0
   CITY_CENTER: {x: -0.1755, y: 0, z: -0.58833}
   waves:
   - hives:
@@ -45541,6 +45542,7 @@ MonoBehaviour:
     hiveHealth: 200
     jellyProbability: 0.01
     crystalCount: 60
+    hasWorm: 0
   - hives:
     - {fileID: 1720686885}
     - {fileID: 1581042669}
@@ -45554,6 +45556,7 @@ MonoBehaviour:
     hiveHealth: 400
     jellyProbability: 0
     crystalCount: 3
+    hasWorm: 0
   - hives:
     - {fileID: 2136214760}
     - {fileID: 1720686885}
@@ -45571,6 +45574,7 @@ MonoBehaviour:
     hiveHealth: 400
     jellyProbability: 0.01
     crystalCount: 3
+    hasWorm: 0
   - hives:
     - {fileID: 1846200016}
     - {fileID: 195090682}
@@ -45591,6 +45595,7 @@ MonoBehaviour:
     hiveHealth: 500
     jellyProbability: 0
     crystalCount: 50
+    hasWorm: 1
   allCrystals: []
   currentWave: 0
   randomGlobal: 1337
