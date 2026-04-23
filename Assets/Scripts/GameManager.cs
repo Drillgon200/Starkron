@@ -393,6 +393,45 @@ public class GameManager : MonoBehaviour {
 			cmdBuf.DrawProcedural(Matrix4x4.identity, groundBugOutlineMaterial, 0, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
 		}
 	}
+
+	public GameObject FindBugTarget(Vector3 pos, GameObject oldTarget) {
+		GameObject bestTarget = PlayerController.instance.gameObject;
+		float bestDistance = (bestTarget.transform.position - pos).sqrMagnitude;
+		int bestBuildingIdx = -1;
+		for (int j = 0; j < buildingPositions.Count; j++) {
+			float newDist = (buildingPositions[j] - pos).sqrMagnitude;
+			if (newDist < bestDistance) {
+				bestBuildingIdx = j;
+				bestDistance = newDist;
+			}
+		}
+		if (bestBuildingIdx != -1) {
+			bestTarget = allBuildings[bestBuildingIdx].gameObject;
+		}
+		foreach (TurretRailgunController turret in turrets) {
+			float newDist = (turret.transform.position - pos).sqrMagnitude;
+			if (newDist < bestDistance) {
+				bestTarget = turret.gameObject;
+				bestDistance = newDist;
+			}
+		}
+		foreach (TurretAAController turret in aaTurrets) {
+			float newDist = (turret.transform.position - pos).sqrMagnitude;
+			if (newDist < bestDistance) {
+				bestTarget = turret.gameObject;
+				bestDistance = newDist;
+			}
+		}
+		GameObject newTarget = oldTarget;
+		if (bestDistance < 20.0F * 20.0F) {
+			newTarget = bestTarget;
+		}
+		if (newTarget && ((newTarget.transform.position - pos).sqrMagnitude > 20.0F * 20.0F || newTarget.transform.position.y > pos.y + 5.0F)) {
+			newTarget = null;
+		}
+		return newTarget;
+	}
+
 	void GroundBugsTarget() {
 		if (allGroundBugs.Count == 0) {
 			return;
@@ -404,40 +443,7 @@ public class GameManager : MonoBehaviour {
 			}
 			EnemyGround bug = allGroundBugs[currentGroundBugTargetIdx];
 			if (bug.attackCooldownTimer <= 0.0F) {
-				// Target
-				GameObject bestTarget = PlayerController.instance.gameObject;
-				float bestDistance = (bestTarget.transform.position - bug.transform.position).sqrMagnitude;
-				int bestBuildingIdx = -1;
-				for (int j = 0; j < buildingPositions.Count; j++) {
-					float newDist = (buildingPositions[j] - bug.transform.position).sqrMagnitude;
-					if (newDist < bestDistance) {
-						bestBuildingIdx = j;
-						bestDistance = newDist;
-					}
-				}
-				if (bestBuildingIdx != -1) {
-					bestTarget = allBuildings[bestBuildingIdx].gameObject;
-				}
-				foreach (TurretRailgunController turret in turrets) {
-					float newDist = (turret.transform.position - bug.transform.position).sqrMagnitude;
-					if (newDist < bestDistance) {
-						bestTarget = turret.gameObject;
-						bestDistance = newDist;
-					}
-				}
-				foreach (TurretAAController turret in aaTurrets) {
-					float newDist = (turret.transform.position - bug.transform.position).sqrMagnitude;
-					if (newDist < bestDistance) {
-						bestTarget = turret.gameObject;
-						bestDistance = newDist;
-					}
-				}
-				if (bestDistance < 20.0F * 20.0F) {
-					bug.target = bestTarget;
-				}
-				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > bug.transform.position.y + 5.0F)) {
-					bug.target = null;
-				}
+				bug.target = FindBugTarget(bug.transform.position, bug.target);
 			}
 		}
 	}
