@@ -922,6 +922,63 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5475aefe0550e144b97deb1566c35ff7, type: 3}
   m_PrefabInstance: {fileID: 2011404555}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &132240850
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 752413071820834730, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_Name
+      value: Bug Heavy v1 RIG (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.568359
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000023191933
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.545853
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
 --- !u!1 &156073355 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 802d7427b7144e64491d8995a18396eb, type: 3}
@@ -4055,8 +4112,17 @@ MonoBehaviour:
   loseScreen: {fileID: 2114956594}
   messageWindowDemo1: {fileID: 42882113}
   messageWindowTwoDemo1: {fileID: 750300246}
+  messageShop: {fileID: 0}
+  messagePressE: {fileID: 0}
   shopOverlay: {fileID: 1458175049}
+  waveInfo: {fileID: 0}
   alert: {fileID: 1559550001}
+  denySound: {fileID: 0}
+  turretPrefab: {fileID: 0}
+  turretHologramPrefab: {fileID: 0}
+  turretAntiAirPrefab: {fileID: 0}
+  turretAntiAirHologramPrefab: {fileID: 0}
+  timeBetweenAlerts: 1
 --- !u!1001 &629623250
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4781,6 +4847,8 @@ MonoBehaviour:
   statBugsKilledByTurrets: 0
   statHivesKilledByPlayer: 0
   statHivesKilledByTurrets: 0
+  statBuildingsDestroyed: 0
+  statBuildingsTotal: 0
   statBuildingsDestroyedByPlayer: 0
   bugCount: 0
   hiveCount: 0
@@ -4790,6 +4858,14 @@ MonoBehaviour:
   bugCap: 1000
   groundBugMaterial: {fileID: 2100000, guid: 79c0eaa37b76df94eb20539a4c573100, type: 2}
   groundBugOutlineMaterial: {fileID: 2100000, guid: 6f54984eb745ceb4297fdc60fbdf3025, type: 2}
+  wormBossPrefab: {fileID: 0}
+  wormBossPath: {fileID: 0}
+  wormKilledCity: 0
+  wormAlive: 0
+  CITY_CENTER: {x: 2.014788, y: 0, z: 2.673001}
+  waves: []
+  allCrystals: []
+  currentWave: 0
   randomGlobal: 1337
 --- !u!4 &782220631
 Transform:
@@ -5492,10 +5568,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 1
-  spawnDelayMax: 2
+  flyingJellyPrefab: {fileID: 0}
   spawnRange: 5
-  health: 200
+  hiveDamageB: {fileID: 0}
 --- !u!1001 &941300014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5784,10 +5859,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 1
-  spawnDelayMax: 2
+  flyingJellyPrefab: {fileID: 0}
   spawnRange: 5
-  health: 200
+  hiveDamageB: {fileID: 0}
 --- !u!1001 &971794221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6477,13 +6551,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35404d81cca90b84e8a0828d389f8905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinimapUI
-  uiSquare: {fileID: 2800000, guid: bfa27649e2f599946aa430b3b09134f6, type: 3}
+  xIcon: {fileID: 0}
+  oIcon: {fileID: 0}
   lockOnIndicator: {fileID: 2800000, guid: 204758b59d494b74ba5f0f08309bfcbf, type: 3}
   minimapTexture: {fileID: 2800000, guid: 2e0680f16b0e6904baa3f31f164d2316, type: 3}
   shieldBarTexture: {fileID: 2800000, guid: 3e88225d0ada716409b794606d4c6f07, type: 3}
   shieldBarMat: {fileID: 2100000, guid: 1b15b231e33d8db4da452d0be19cbd8d, type: 2}
   player: {fileID: 466277773}
   minimapWorldRadius: 100
+  minimapVirtualSize: 300
 --- !u!4 &1034119630
 Transform:
   m_ObjectHideFlags: 0
@@ -8147,10 +8223,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 1
-  spawnDelayMax: 2
+  flyingJellyPrefab: {fileID: 0}
   spawnRange: 5
-  health: 200
+  hiveDamageB: {fileID: 0}
 --- !u!1001 &1393513234
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8741,10 +8816,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 1
-  spawnDelayMax: 2
+  flyingJellyPrefab: {fileID: 0}
   spawnRange: 5
-  health: 200
+  hiveDamageB: {fileID: 0}
 --- !u!1 &1523815755 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5475aefe0550e144b97deb1566c35ff7, type: 3}
@@ -10877,10 +10951,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 1
-  spawnDelayMax: 2
+  flyingJellyPrefab: {fileID: 0}
   spawnRange: 5
-  health: 200
+  hiveDamageB: {fileID: 0}
 --- !u!114 &1813448844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11470,10 +11543,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 1
-  spawnDelayMax: 2
+  flyingJellyPrefab: {fileID: 0}
   spawnRange: 5
-  health: 200
+  hiveDamageB: {fileID: 0}
 --- !u!1 &1910911964
 GameObject:
   m_ObjectHideFlags: 0
@@ -12602,10 +12674,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HiveController
   groundBugPrefab: {fileID: 3218874130844937251, guid: 3293d18b82298ab44af58e0c3fd076eb, type: 3}
-  spawnDelayMin: 1
-  spawnDelayMax: 2
+  flyingJellyPrefab: {fileID: 0}
   spawnRange: 5
-  health: 200
+  hiveDamageB: {fileID: 0}
 --- !u!1 &2095108061
 GameObject:
   m_ObjectHideFlags: 0
@@ -13320,6 +13391,63 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &3342058328662138962
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 752413071820834730, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_Name
+      value: Bug Heavy v1 RIG
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0027511
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.307
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7780924806692507839, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 09cfe87be6c00cc4792c7ed21ec98aa8, type: 3}
 --- !u!1 &3659082330334747248
 GameObject:
   m_ObjectHideFlags: 0
@@ -13597,3 +13725,5 @@ SceneRoots:
   - {fileID: 1772194594}
   - {fileID: 54915277}
   - {fileID: 1541064279}
+  - {fileID: 3342058328662138962}
+  - {fileID: 132240850}
