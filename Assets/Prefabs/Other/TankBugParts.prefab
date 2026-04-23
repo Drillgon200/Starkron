@@ -2547,7 +2547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7342453542141958531}
-  - component: {fileID: 4699828083438989419}
+  - component: {fileID: 9004829479702757696}
   m_Layer: 0
   m_Name: TankBugParts
   m_TagString: Untagged
@@ -2588,7 +2588,7 @@ Transform:
   - {fileID: 1689899824587268271}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4699828083438989419
+--- !u!114 &9004829479702757696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2597,14 +2597,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8678948862853920630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b540602aa10e774eb097d2640e44b28, type: 3}
+  m_Script: {fileID: 11500000, guid: 64709e49dda524548b868caa1d27d54f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BugDeadScript
-  pieceHead: {fileID: 0}
-  pieceMan1: {fileID: 0}
-  pieceMan2: {fileID: 0}
-  pieceLeg1: {fileID: 0}
-  pieceLeg2: {fileID: 0}
-  pieceLeg3: {fileID: 0}
-  pieceLeg4: {fileID: 0}
-  pieceBody: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::TimedDestroy
+  time: 4
