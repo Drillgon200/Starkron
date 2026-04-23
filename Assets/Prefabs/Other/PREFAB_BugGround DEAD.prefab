@@ -52,14 +52,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b540602aa10e774eb097d2640e44b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BugDeadScript
-  pieceHead: {fileID: 0}
-  pieceMan1: {fileID: 0}
-  pieceMan2: {fileID: 0}
-  pieceLeg1: {fileID: 0}
-  pieceLeg2: {fileID: 0}
-  pieceLeg3: {fileID: 0}
-  pieceLeg4: {fileID: 0}
-  pieceBody: {fileID: 0}
+  pieceHead: {fileID: 1795417291887142224}
+  pieceMan1: {fileID: 4408054485800065298}
+  pieceMan2: {fileID: 8307342988388836906}
+  pieceLeg1: {fileID: 8724467300626816563}
+  pieceLeg2: {fileID: 5015670676694457528}
+  pieceLeg3: {fileID: 8362676546109031331}
+  pieceLeg4: {fileID: 7792753829005692636}
+  pieceBody: {fileID: 344136230835222251}
 --- !u!1001 &578703505931062202
 PrefabInstance:
   m_ObjectHideFlags: 0
