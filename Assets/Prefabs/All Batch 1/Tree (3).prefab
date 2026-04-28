@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3059012701231127817}
+  - component: {fileID: -554057038800271533}
   m_Layer: 0
   m_Name: Tree (3)
   m_TagString: Untagged
@@ -26,12 +27,31 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7997721519161829338}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &-554057038800271533
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3556327755094819932}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.017602956
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 6858597572365910959}
+  m_Enabled: 1
 --- !u!1 &5305017561138901206
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +79,7 @@ Transform:
   m_GameObject: {fileID: 5305017561138901206}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.1298, z: 0.0288}
+  m_LocalPosition: {x: 0, y: 0.0371, z: -0}
   m_LocalScale: {x: 0.00020393365, y: 0.00020393367, z: 0.00020393367}
   m_ConstrainProportionsScale: 1
   m_Children: []
