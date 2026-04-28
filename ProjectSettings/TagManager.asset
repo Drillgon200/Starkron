@@ -17,6 +17,7 @@ TagManager:
   - SwordPickUpTag
   - eyeBallTag
   - bossMouthTag
+  - BugHeavyTag
   layers:
   - Default
   - TransparentFX

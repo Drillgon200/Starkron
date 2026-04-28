@@ -26,7 +26,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5455, y: 2.5455, z: 2.5455}
+  m_LocalScale: {x: 5.1081204, y: 5.10812, z: 5.1081204}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4346829185182461928}
@@ -85,6 +85,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6235936685440200435, guid: 98c820ab5d5ec9247b9a787035255894, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 405ddc82e66f7f14fb2a8e0d31001d65, type: 2}
     - target: {fileID: 8872199990827026619, guid: 98c820ab5d5ec9247b9a787035255894, type: 3}
       propertyPath: m_Name
       value: mushroomSmall (5)
@@ -151,6 +155,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: mushroomSmall (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5314460029154989416, guid: 145d4e06f48bc0b428f479c1620cf9b2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 405ddc82e66f7f14fb2a8e0d31001d65, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -169,6 +177,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2214931686574452554}
     m_Modifications:
+    - target: {fileID: 1639581237076878472, guid: 373b545c722e2304d96436ac6a5db7e3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 405ddc82e66f7f14fb2a8e0d31001d65, type: 2}
     - target: {fileID: 4681850006137162220, guid: 373b545c722e2304d96436ac6a5db7e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.103
@@ -231,6 +243,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2214931686574452554}
     m_Modifications:
+    - target: {fileID: 1639581237076878472, guid: 373b545c722e2304d96436ac6a5db7e3, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 405ddc82e66f7f14fb2a8e0d31001d65, type: 2}
     - target: {fileID: 4681850006137162220, guid: 373b545c722e2304d96436ac6a5db7e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.207
@@ -333,6 +349,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6235936685440200435, guid: 98c820ab5d5ec9247b9a787035255894, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 405ddc82e66f7f14fb2a8e0d31001d65, type: 2}
     - target: {fileID: 8872199990827026619, guid: 98c820ab5d5ec9247b9a787035255894, type: 3}
       propertyPath: m_Name
       value: mushroomSmall (2)
@@ -355,6 +375,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2214931686574452554}
     m_Modifications:
+    - target: {fileID: 2643499955813485318, guid: 26c429e66a66bef4bba2f57c1eef5d8f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 405ddc82e66f7f14fb2a8e0d31001d65, type: 2}
     - target: {fileID: 7253202527285814380, guid: 26c429e66a66bef4bba2f57c1eef5d8f, type: 3}
       propertyPath: m_Name
       value: mushroomSmall (3)

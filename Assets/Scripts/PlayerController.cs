@@ -58,7 +58,8 @@ public class PlayerController : MonoBehaviour {
 	public bool canPlaceObject;
 	public GameObject placementHologram;
 	public GameObject placementPrefab;
-	public int orbitalAbilityCount;
+	public int orbitalLaserCount;
+	public int orbitalWalkingBarrageCount;
 	public GameObject orbitalAbilityThrowable;
 	public GameObject oribitalStrikeOrigin;
 
@@ -267,12 +268,11 @@ public class PlayerController : MonoBehaviour {
 				rocketsLeftToFire = rocketSalvoCount;
 				nextMechMissilePosition = 0;
 				rocketTargetPos = cameraRayHitPos;
-				GameManager.instance.SpawnBoss();
 			}
 		});
 		machineGunAction = InputSystem.actions.FindAction("FireMachineGun");
 		machineGunAction.started += (objectPlaceStartedAction = (InputAction.CallbackContext ctx) => {
-			if (orbitalAbilityCount > 0) {
+			if (orbitalLaserCount > 0 || orbitalWalkingBarrageCount > 0) {
 				Vector3 target = cameraRayHitPos;
 				Vector3 startPos = transform.position + Vector3.up * 1.0F + forward * 0.25F;
 				if (!cameraRayHit) {
@@ -281,7 +281,13 @@ public class PlayerController : MonoBehaviour {
 				OrbitalAbilityThrowableController ability = Instantiate(orbitalAbilityThrowable, startPos, Quaternion.identity).GetComponent<OrbitalAbilityThrowableController>();
 				ability.abilityOriginPoint = oribitalStrikeOrigin.transform.position;
 				ability.LaunchTowardPoint(target, 50.0F);
-				orbitalAbilityCount--;
+				if (orbitalLaserCount > 0) {
+					ability.abilityType = OrbitalAbilityThrowableController.Ability.LASER;
+					orbitalLaserCount--;
+				} else if (orbitalWalkingBarrageCount > 0) {
+					ability.abilityType = OrbitalAbilityThrowableController.Ability.WALKING_BARRAGE;
+					orbitalWalkingBarrageCount--;
+				}
 			}
 			if (isPlacingObject && canPlaceObject) {
 				machineGunAction.Disable();

@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject wormBossPrefab;
 	public SplineContainer wormBossPath;
 	public bool wormKilledCity;
+	public bool wormAlive;
 
 	const float GRID_SIZE = 400.0F;
 	const int GRID_RESOLUTION = 400;
@@ -76,6 +77,8 @@ public class GameManager : MonoBehaviour {
 		public float jellyProbability;
 		[SerializeField]
 		public int crystalCount;
+		[SerializeField]
+		public bool hasWorm;
 	}
 	public List<Wave> waves = new();
 	public List<CrystalController> allCrystals = new();
@@ -117,6 +120,10 @@ public class GameManager : MonoBehaviour {
 	}
 	
 	public void SpawnBoss() {
+		if (wormAlive) {
+			return;
+		}
+		wormAlive = true;
 		WormBossController boss = Instantiate(wormBossPrefab, Vector3.zero, Quaternion.identity).GetComponent<WormBossController>();
 		boss.pathObject = wormBossPath;
 		boss.scale = 10.0F;
@@ -159,6 +166,9 @@ public class GameManager : MonoBehaviour {
 		int spawnCount = waves[currentWave].crystalCount;
 		for (int i = 0; i < spawnCount && i < crystals.Count; i++) {
 			crystals[i].gameObject.SetActive(true);
+		}
+		if (waves[currentWave].hasWorm) {
+			SpawnBoss();
 		}
 	}
 
@@ -383,6 +393,45 @@ public class GameManager : MonoBehaviour {
 			cmdBuf.DrawProcedural(Matrix4x4.identity, groundBugOutlineMaterial, 0, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
 		}
 	}
+
+	public GameObject FindBugTarget(Vector3 pos, GameObject oldTarget) {
+		GameObject bestTarget = PlayerController.instance.gameObject;
+		float bestDistance = (bestTarget.transform.position - pos).sqrMagnitude;
+		int bestBuildingIdx = -1;
+		for (int j = 0; j < buildingPositions.Count; j++) {
+			float newDist = (buildingPositions[j] - pos).sqrMagnitude;
+			if (newDist < bestDistance) {
+				bestBuildingIdx = j;
+				bestDistance = newDist;
+			}
+		}
+		if (bestBuildingIdx != -1) {
+			bestTarget = allBuildings[bestBuildingIdx].gameObject;
+		}
+		foreach (TurretRailgunController turret in turrets) {
+			float newDist = (turret.transform.position - pos).sqrMagnitude;
+			if (newDist < bestDistance) {
+				bestTarget = turret.gameObject;
+				bestDistance = newDist;
+			}
+		}
+		foreach (TurretAAController turret in aaTurrets) {
+			float newDist = (turret.transform.position - pos).sqrMagnitude;
+			if (newDist < bestDistance) {
+				bestTarget = turret.gameObject;
+				bestDistance = newDist;
+			}
+		}
+		GameObject newTarget = oldTarget;
+		if (bestDistance < 20.0F * 20.0F) {
+			newTarget = bestTarget;
+		}
+		if (newTarget && ((newTarget.transform.position - pos).sqrMagnitude > 20.0F * 20.0F || newTarget.transform.position.y > pos.y + 5.0F)) {
+			newTarget = null;
+		}
+		return newTarget;
+	}
+
 	void GroundBugsTarget() {
 		if (allGroundBugs.Count == 0) {
 			return;
@@ -394,40 +443,7 @@ public class GameManager : MonoBehaviour {
 			}
 			EnemyGround bug = allGroundBugs[currentGroundBugTargetIdx];
 			if (bug.attackCooldownTimer <= 0.0F) {
-				// Target
-				GameObject bestTarget = PlayerController.instance.gameObject;
-				float bestDistance = (bestTarget.transform.position - bug.transform.position).sqrMagnitude;
-				int bestBuildingIdx = -1;
-				for (int j = 0; j < buildingPositions.Count; j++) {
-					float newDist = (buildingPositions[j] - bug.transform.position).sqrMagnitude;
-					if (newDist < bestDistance) {
-						bestBuildingIdx = j;
-						bestDistance = newDist;
-					}
-				}
-				if (bestBuildingIdx != -1) {
-					bestTarget = allBuildings[bestBuildingIdx].gameObject;
-				}
-				foreach (TurretRailgunController turret in turrets) {
-					float newDist = (turret.transform.position - bug.transform.position).sqrMagnitude;
-					if (newDist < bestDistance) {
-						bestTarget = turret.gameObject;
-						bestDistance = newDist;
-					}
-				}
-				foreach (TurretAAController turret in aaTurrets) {
-					float newDist = (turret.transform.position - bug.transform.position).sqrMagnitude;
-					if (newDist < bestDistance) {
-						bestTarget = turret.gameObject;
-						bestDistance = newDist;
-					}
-				}
-				if (bestDistance < 20.0F * 20.0F) {
-					bug.target = bestTarget;
-				}
-				if (bug.target && ((bug.target.transform.position - bug.transform.position).sqrMagnitude > 20.0F * 20.0F || bug.target.transform.position.y > bug.transform.position.y + 5.0F)) {
-					bug.target = null;
-				}
+				bug.target = FindBugTarget(bug.transform.position, bug.target);
 			}
 		}
 	}
@@ -467,16 +483,16 @@ public class GameManager : MonoBehaviour {
 		}
 		nextWaveCountdownTimer -= Time.fixedDeltaTime;
 		gameTime += Time.fixedDeltaTime;
-		if (allBuildings.Count <= 0 || PlayerController.instance.IsDead()) {
+		if (allBuildings.Count <= 0 || wormKilledCity || PlayerController.instance.IsDead()) {
 			gameOver = true;
 			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowLoseOverlay();
-		} else if (hiveCount <= 0 && currentWave < waves.Count - 1 && !needsNextWave) {
+		} else if (hiveCount <= 0 && !wormAlive && currentWave < waves.Count - 1 && !needsNextWave) {
 			if (currentWave == 0) {
 				uiScreen.EnqueueAlert(uiScreen.messageShop, 6.0F);
 			}
 			IncrementWave();
-		} else if (bugCount <= 0 && hiveCount <= 0 && currentWave >= waves.Count - 1 && !needsNextWave) {
+		} else if (bugCount <= 0 && hiveCount <= 0 && !wormAlive && currentWave >= waves.Count - 1 && !needsNextWave) {
 			gameOver = true;
 			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowWinOverlay();

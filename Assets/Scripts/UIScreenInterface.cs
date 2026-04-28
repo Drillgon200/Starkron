@@ -27,7 +27,8 @@ public class UIScreenInterface : MonoBehaviour {
 		AntiAirTurret,
 		HealthBoost,
 		GunDamage,
-		RocketCount
+		RocketCount,
+		WalkingBarrage
 	}
 
 	int[] shopPrices = new int[System.Enum.GetNames(typeof(ShopItem)).Length];
@@ -62,7 +63,7 @@ public class UIScreenInterface : MonoBehaviour {
 		messageWindowDemo1.SetActive(false);
 		messageWindowTwoDemo1.SetActive(false);
 		shopOverlay.SetActive(false);
-		//temporary pop up messages for the DEMO1
+		// temporary pop up messages for the DEMO1
 		EnqueueAlert(messageWindowDemo1, 4.0F);
 		EnqueueAlert(messageWindowTwoDemo1, 4.0F);
 		for (int i = 0; i < shopPrices.Length; i++) {
@@ -76,6 +77,7 @@ public class UIScreenInterface : MonoBehaviour {
 		itemStock[(int)ShopItem.HealthBoost] = 3;
 		itemStock[(int)ShopItem.GunDamage] = 3;
 		itemStock[(int)ShopItem.RocketCount] = 3;
+		itemStock[(int)ShopItem.WalkingBarrage] = int.MaxValue;
 		itemNames[(int)ShopItem.None] = "None";
 		itemNames[(int)ShopItem.OrbitalLazer] = "Orbital Lazer";
 		itemNames[(int)ShopItem.RepairBuildings] = "Repair Buildings";
@@ -85,6 +87,7 @@ public class UIScreenInterface : MonoBehaviour {
 		itemNames[(int)ShopItem.HealthBoost] = "Health Boost";
 		itemNames[(int)ShopItem.GunDamage] = "Gun Damage ++";
 		itemNames[(int)ShopItem.RocketCount] = "Extra Rocket";
+		itemNames[(int)ShopItem.WalkingBarrage] = "Walking Barrage";
 	}
 
 	void FixedUpdate() {
@@ -99,7 +102,7 @@ public class UIScreenInterface : MonoBehaviour {
 				activeAlert = msg.toDisplay;
 				queueTime = msg.time;
 				activeAlert.SetActive(true);
-				alert.Play();
+				//alert.Play();
 			}
 		}
 	}
@@ -146,6 +149,7 @@ public class UIScreenInterface : MonoBehaviour {
 	public void HealthBoostHover() { ShopItemHover(ShopItem.HealthBoost); }
 	public void GunDamageHover() { ShopItemHover(ShopItem.GunDamage); }
 	public void RocketCountHover() { ShopItemHover(ShopItem.RocketCount); }
+	public void WalkingBarrageHover() { ShopItemHover(ShopItem.WalkingBarrage);  }
 	public void TryBuyTurret() {
 		PlayerController player = PlayerController.instance;
 		if (!player.isPlacingObject && TryPurchase(ShopItem.AutoTurret)) {
@@ -196,13 +200,19 @@ public class UIScreenInterface : MonoBehaviour {
 			CloseShop();
 		}
 	}
-
 	public void TryBuyOrbitalLaser() {
 		if (TryPurchase(ShopItem.OrbitalLazer)) {
-			PlayerController.instance.orbitalAbilityCount++;
+			PlayerController.instance.orbitalLaserCount++;
 			CloseShop();
 		}
 	}
+	public void TryBuyWalkingBarrage() {
+		if (TryPurchase(ShopItem.WalkingBarrage)) {
+			PlayerController.instance.orbitalWalkingBarrageCount++;
+			CloseShop();
+		}
+	}
+
 	public void ShowNextWaveIndicator() {
 		waveInfo.SetActive(true);
 		waveInfo.transform.Find("Wave").GetComponent<TMP_Text>().text = "Wave complete!";

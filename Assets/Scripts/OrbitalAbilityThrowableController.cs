@@ -3,15 +3,19 @@ using UnityEngine;
 public class OrbitalAbilityThrowableController : MonoBehaviour {
 
 	public GameObject orbitalLaserStrikePrefab;
+	public GameObject orbitalWalkingBarragePrefab;
 
 	public Vector3 abilityOriginPoint;
 
 	public Vector3 velocity;
 	float age;
 
-	void Start() {
-		
+	public enum Ability {
+		LASER,
+		WALKING_BARRAGE
 	}
+
+	public Ability abilityType = Ability.LASER;
 
 	public void LaunchTowardPoint(Vector3 target, float launchSpeed) {
 		Vector3 toTarget = target - transform.position;
@@ -35,10 +39,20 @@ public class OrbitalAbilityThrowableController : MonoBehaviour {
 		float dt = Time.deltaTime;
 		Vector3 step = (velocity + Physics.gravity * 0.5F * dt) * dt;
 		if (Physics.Raycast(transform.position, step, step.magnitude)) {
-			GameObject laser = Instantiate(orbitalLaserStrikePrefab, Vector3.zero, Quaternion.identity);
-			laser.GetComponent<OrbitalLaserStrikeController>().targetPos = transform.position;
-			LineRenderer line = laser.GetComponent<LineRenderer>();
-			line.SetPosition(0, abilityOriginPoint);
+			switch (abilityType) {
+			case Ability.LASER: {
+				GameObject laser = Instantiate(orbitalLaserStrikePrefab, Vector3.zero, Quaternion.identity);
+				laser.GetComponent<OrbitalLaserStrikeController>().targetPos = transform.position;
+				LineRenderer line = laser.GetComponent<LineRenderer>();
+				line.SetPosition(0, abilityOriginPoint);
+			} break;
+			case Ability.WALKING_BARRAGE: {
+				OrbitalWalkingBarrageController barrage = Instantiate(orbitalWalkingBarragePrefab, Vector3.zero, Quaternion.identity).GetComponent<OrbitalWalkingBarrageController>();
+				barrage.gunOrigin = abilityOriginPoint;
+				barrage.targetOrigin = transform.position;
+				barrage.direction = Vector3.Normalize(new Vector3(velocity.x, 0.0F, velocity.z));
+			} break;
+			}
 			Destroy(gameObject);
 		} else if (age > 10.0F) {
 			Destroy(gameObject);

@@ -11,6 +11,7 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 	public float attackCooldown = 1.0F;
 	public float attackCooldownTimer;
 	public float damageAmount = 20.0F;
+	public float buildingDamageAmount = 1.0F;
 	float health;
 	public int attackTriggerFrames;
 	public GameObject target;
@@ -117,7 +118,7 @@ public class EnemyGround : MonoBehaviour, IDamageable, IEnemy {
 					PlayerCollisionController player = collider.GetComponent<PlayerCollisionController>();
 					IBugTarget bugTarget = collider.GetComponent<IBugTarget>();
 					if (bugTarget != null || player != null) {
-						bugTarget?.TakeDamage(damageAmount, collider.transform.position, IDamageable.DamageSource.BUG);
+						bugTarget?.TakeDamage(buildingDamageAmount, collider.transform.position, IDamageable.DamageSource.BUG);
 						if (player) {
 							PlayerController.instance.TakeDamage(damageAmount);
 						}

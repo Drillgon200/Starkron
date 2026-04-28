@@ -51,7 +51,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
   MinDistance: 3
   MaxDistance: 35
@@ -217,6 +217,7 @@ MonoBehaviour:
   attackCooldown: 1
   attackCooldownTimer: 0
   damageAmount: 35
+  buildingDamageAmount: 1
   attackTriggerFrames: 0
   target: {fileID: 0}
   gameManagerRegisteredIdx: 0

@@ -46,8 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrbitalAbilityThrowableController
   orbitalLaserStrikePrefab: {fileID: 368445516937785088, guid: 230d42c5c53caf449a32320cc446d12d, type: 3}
+  orbitalWalkingBarragePrefab: {fileID: 1593163440402009064, guid: 91ff94a686d6b6c419e344bf363315b7, type: 3}
   abilityOriginPoint: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  abilityType: 0
 --- !u!1 &6690610758997038643
 GameObject:
   m_ObjectHideFlags: 0
