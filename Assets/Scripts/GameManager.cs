@@ -52,8 +52,8 @@ public class GameManager : MonoBehaviour {
 	public bool wormKilledCity;
 	public bool wormAlive;
 
-	const float GRID_SIZE = 400.0F;
-	const int GRID_RESOLUTION = 400;
+	const float GRID_SIZE = 1000.0F;
+	const int GRID_RESOLUTION = 1000;
 
 	public Vector3 CITY_CENTER = new Vector3(2.014788F, 0.0F, 2.673001F);
 
