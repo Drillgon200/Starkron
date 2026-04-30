@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject oribitalStrikeOrigin;
 
 	bool onGround;
+	float timeInAir;
 	bool hasCollisionObjects;
 	float groundedTime;
 	float hoverFuelLeft;
@@ -401,6 +402,7 @@ public class PlayerController : MonoBehaviour {
 		foreach (ContactPoint contact in collision.contacts) {
 			if (contact.normal.y > 0.707F) {
 				onGround = true;
+				timeInAir = 0.0F;
 				break;
 			}
 		}
@@ -528,7 +530,7 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
-		if (onGround) {
+		if (timeInAir < 0.1F) {
 			groundedTime += dt;
 		} else {
 			groundedTime = 0.0F;
@@ -536,7 +538,7 @@ public class PlayerController : MonoBehaviour {
 		JetEnables jetEnables = 0;
 		if (actionsDisabled || isFallingDamaged) {
 			set_jet_vfx(jetEnables);
-			if (isFallingDamaged && onGround && groundedTime > 0.5F && moveAction.ReadValue<Vector2>().sqrMagnitude > 0.5F * 0.5F) {
+			if (isFallingDamaged && groundedTime > 0.5F && moveAction.ReadValue<Vector2>().sqrMagnitude > 0.5F * 0.5F) {
 				playerAnimController.FallRecover();
 				isFallingDamaged = false;
 			}
@@ -554,7 +556,7 @@ public class PlayerController : MonoBehaviour {
 				
 				float moveSpeed =
 					sprinting ? moveSpeedSprint :
-					onGround ? moveSpeedGround :
+					timeInAir < 0.1F ? moveSpeedGround :
 					moveSpeedAir;
 				velocity += right * moveAmount.x * moveSpeed * dt;
 				velocity += forward * moveAmount.y * moveSpeed * dt;
@@ -567,7 +569,7 @@ public class PlayerController : MonoBehaviour {
 					jetEnables |= JetEnables.BACK;
 
 				}
-				if (onGround && jumpAction.IsPressed()) {
+				if (timeInAir < 0.1F && jumpAction.IsPressed()) {
 					velocity.y += jumpSpeed;
 					hoverFuelLeft = hoverFuelMax;
 				}
@@ -577,7 +579,7 @@ public class PlayerController : MonoBehaviour {
 			}
 			float drag =
 				sprinting ? dragSprint :
-				onGround ? dragGround :
+				timeInAir < 0.1F ? dragGround :
 				dragAir;
 			Vector3 velocityXZ = new Vector3(rigidBody.linearVelocity.x, 0.0F, rigidBody.linearVelocity.z);
 			Vector3 dragAdjustment = velocityXZ * Mathf.Exp(dt * Mathf.Log(1.0F - drag)) - velocityXZ;
@@ -737,8 +739,9 @@ public class PlayerController : MonoBehaviour {
 		timeSinceLastTransform += dt;
 		planeMissileCooldownTimer -= dt;
 		planeBulletCooldownTimer -= dt;
+		timeInAir += dt;
 		set_jet_vfx(jetEnables);
-		playerAnimController.SetGrounded(onGround);
+		playerAnimController.SetGrounded(timeInAir < 0.5F);
 		playerAnimController.SetIsMachineGun(usingMachineGun);
 		playerAnimController.SetJetpackActive(usingJetpack);
 		if (!hasCollisionObjects) {
@@ -748,13 +751,15 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void TakeDamage(float damage) {
-		int playerMask = 1 << 9;
+		// Falling in a damaged state actually kind of sucks from a gameplay perspective, we're just removing it
+		/*int playerMask = 1 << 9;
 		if (!onGround && transformState == TransformState.MECH && Physics.OverlapSphere(transform.position - Vector3.up, 0.5F, ~playerMask, QueryTriggerInteraction.Ignore).Length == 0) {
 			playerAnimController.SetFallingDamaged();
 			isFallingDamaged = true;
 		} else {
 			playerAnimController.TakeDamage();
-		}
+		}*/
+		playerAnimController.TakeDamage();
 		health -= damage;
 		healthRechargeCooldownTimer = healthRechargeCooldown;
 	}

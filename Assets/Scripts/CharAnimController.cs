@@ -61,6 +61,7 @@ public class CharAnimController : MonoBehaviour{
 
 	public void SetGrounded(bool grounded) {
 		animator.SetBool("isGrounded", grounded);
+		animator.SetBool("isFallingOkay", !grounded);
 	}
 
 	public void SetFallingDamaged() {
