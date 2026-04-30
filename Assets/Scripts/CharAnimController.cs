@@ -15,6 +15,9 @@ public class CharAnimController : MonoBehaviour{
 	}
 
 	void Update() {
+		if (!PlayerController.instance) {
+			return;
+		}
 		// MECH mode animations =======================================
 		if (!isPlaneMode) {
 			bool playerRun = PlayerController.instance.IsSprinting();
