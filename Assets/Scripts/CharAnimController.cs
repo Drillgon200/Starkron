@@ -15,6 +15,9 @@ public class CharAnimController : MonoBehaviour{
 	}
 
 	void Update() {
+		if (!PlayerController.instance) {
+			return;
+		}
 		// MECH mode animations =======================================
 		if (!isPlaneMode) {
 			bool playerRun = PlayerController.instance.IsSprinting();
@@ -61,6 +64,7 @@ public class CharAnimController : MonoBehaviour{
 
 	public void SetGrounded(bool grounded) {
 		animator.SetBool("isGrounded", grounded);
+		animator.SetBool("isFallingOkay", !grounded);
 	}
 
 	public void SetFallingDamaged() {

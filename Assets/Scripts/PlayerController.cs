@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject orbitalAbilityThrowable;
 	public GameObject oribitalStrikeOrigin;
 
-	bool onGround;
+	float timeInAir;
 	bool hasCollisionObjects;
 	float groundedTime;
 	float hoverFuelLeft;
@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject rocketPrefab;
 	public float rocketFireRate = 4.0F;
 	public float rocketCooldown = 4.0F;
+	public GameObject[] rocketVisuals;
 	public int rocketSalvoCount;
 	public float rocketRandomTargetRadius = 3.0F;
 	public float rocketDamage = 20.0F;
@@ -262,8 +263,8 @@ public class PlayerController : MonoBehaviour {
 
 		});
 		rocketAction = InputSystem.actions.FindAction("FireRockets");
-		rocketAction.performed += (rocketPerformedAction = (InputAction.CallbackContext ctx) => {
-			if (transformState == TransformState.MECH && cameraRayHit && rocketCooldownTimer <= 0.0F) {
+		rocketAction.canceled += (rocketPerformedAction = (InputAction.CallbackContext ctx) => {
+			if (transformState == TransformState.MECH && cameraRayHit && rocketCooldownTimer <= 0.0F && planeMissileLockOnTarget == null) {
 				rocketSpawnTimer = 0.0F;
 				rocketsLeftToFire = rocketSalvoCount;
 				nextMechMissilePosition = 0;
@@ -315,10 +316,12 @@ public class PlayerController : MonoBehaviour {
 
 		planeMissileAction = InputSystem.actions.FindAction("ActivatePlaneMissile");
 		planeMissileAction.canceled += (planeMissileCanceledAction = (InputAction.CallbackContext ctx) => {
-			if (transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F && !actionsDisabled && !isFallingDamaged) {
-				Vector3 fireFrom = planeMissilePositions[nextPlaneMissileFirePosition].transform.position;
+			bool shouldFirePlane = transformState == TransformState.PLANE && planeMissileCooldownTimer <= 0.0F;
+			bool shouldFireMech = transformState == TransformState.MECH && planeMissileLockOnTarget != null && rocketCooldownTimer <= 0.0F;
+			if ((shouldFirePlane || shouldFireMech) && !actionsDisabled && !isFallingDamaged) {
+				Vector3 fireFrom = shouldFirePlane ? planeMissilePositions[nextPlaneMissileFirePosition].transform.position : mechMissilePositions[0].transform.position;
 				nextPlaneMissileFirePosition = (nextPlaneMissileFirePosition + 1) % planeMissilePositions.Length;
-				Vector3 startVelocity = lookForward * 100.0F;
+				Vector3 startVelocity = (shouldFirePlane ? lookForward : Vector3.up) * 100.0F;
 				GameObject missile = Instantiate(lockOnMissilePrefab, fireFrom, Quaternion.LookRotation(startVelocity));
 				MissileControllerPlane missileController = missile.GetComponent<MissileControllerPlane>();
 				missileController.velocity = startVelocity;
@@ -327,6 +330,7 @@ public class PlayerController : MonoBehaviour {
 				missileController.damageAmount = rocketDamage;
 
 				planeMissileCooldownTimer = planeMissileFireCooldown;
+				rocketCooldownTimer = rocketCooldown;
 			}
 		});
 		boostAction = InputSystem.actions.FindAction("Boost");
@@ -397,10 +401,9 @@ public class PlayerController : MonoBehaviour {
 	private void OnEnable() { }
 
 	void OnCollisionStay(Collision collision) {
-		onGround = false;
 		foreach (ContactPoint contact in collision.contacts) {
 			if (contact.normal.y > 0.707F) {
-				onGround = true;
+				timeInAir = 0.0F;
 				break;
 			}
 		}
@@ -426,6 +429,7 @@ public class PlayerController : MonoBehaviour {
 		float dt = Time.deltaTime;
 		{ // Look update
 			float sensitivity = 10.0F / 100.0F;
+			Vector2 sensitivityScale = GameSettings.instance.sensitivityScale;
 			Vector2 lookAmount = lookAction.ReadValue<Vector2>();
 			if (!mouseCaptured) {
 				lookAmount = Vector2.zero;
@@ -442,8 +446,8 @@ public class PlayerController : MonoBehaviour {
 			case TransformState.MECH:
 			case TransformState.MECH_TO_PLANE:
 			case TransformState.PLANE_TO_MECH: {
-				lookYaw += lookAmount.x * sensitivity;
-				lookPitch = Mathf.Clamp(lookPitch - lookAmount.y * sensitivity, -60.0F, 60.0F);
+				lookYaw += lookAmount.x * sensitivity * sensitivityScale.x;
+				lookPitch = Mathf.Clamp(lookPitch - lookAmount.y * sensitivity * sensitivityScale.y, -60.0F, 60.0F);
 				transform.eulerAngles = new Vector3(0.0F, lookYaw, 0.0F);
 				playerModelObject.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 				playerModelObject.transform.localRotation *= Quaternion.AngleAxis(planeTiltRotation.magnitude * Mathf.Rad2Deg, planeTiltRotation);
@@ -453,8 +457,8 @@ public class PlayerController : MonoBehaviour {
 				bool boost = boostAction.IsPressed();
 
 				float maxPlaneTurnSpeed = boost ? 100.0F * dt : 400.0F * dt;
-				float yawLookChange = SmoothCutoff(lookAmount.x * sensitivity, maxPlaneTurnSpeed);
-				float pitchLookChange = -SmoothCutoff(lookAmount.y * sensitivity, maxPlaneTurnSpeed);
+				float yawLookChange = SmoothCutoff(lookAmount.x * sensitivity * sensitivityScale.x, maxPlaneTurnSpeed);
+				float pitchLookChange = -SmoothCutoff(lookAmount.y * sensitivity * sensitivityScale.y, maxPlaneTurnSpeed);
 				lookYaw += yawLookChange;
 				lookPitch = Mathf.Clamp(lookPitch + pitchLookChange, -60.0F, 60.0F);
 				transform.eulerAngles = new Vector3(lookPitch, lookYaw, 0.0F);
@@ -526,9 +530,32 @@ public class PlayerController : MonoBehaviour {
 		return new Vector3(Mathf.Cos(randYaw) * Mathf.Sin(randPitch), Mathf.Cos(randPitch), Mathf.Sin(randYaw) * Mathf.Sin(randPitch));
 	}
 
+	void TryLockPlaneMissileTarget(float dt) {
+		if (planeMissileAction.IsPressed()) {
+			planeMissileHoldTime += dt;
+			if (planeMissileHoldTime > planeMissileTrackingHoldTimeCutoff && planeMissileLockOnTarget == null) {
+				float cosLockOnAngle = Mathf.Cos(planeMissileLockOnAngle * Mathf.Deg2Rad);
+				float bestDistance = float.PositiveInfinity;
+				int flyingEnemyMask = 1 << 8;
+				foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(planeMissileLockOnRadius, planeMissileLockOnRadius, planeMissileLockOnRadius), Quaternion.identity, flyingEnemyMask)) {
+					if (Vector3.Dot(Vector3.Normalize(collider.transform.position - lookCam.transform.position), lookForward) > cosLockOnAngle) {
+						float distanceToTarget = (transform.position - collider.transform.position).sqrMagnitude;
+						if (distanceToTarget < bestDistance) {
+							planeMissileLockOnTarget = collider.gameObject;
+							bestDistance = distanceToTarget;
+						}
+					}
+				}
+			}
+		} else {
+			planeMissileLockOnTarget = null;
+			planeMissileHoldTime = 0.0F;
+		}
+	}
+
 	void FixedUpdate() {
 		float dt = Time.fixedDeltaTime;
-		if (onGround) {
+		if (timeInAir < 0.1F) {
 			groundedTime += dt;
 		} else {
 			groundedTime = 0.0F;
@@ -536,12 +563,14 @@ public class PlayerController : MonoBehaviour {
 		JetEnables jetEnables = 0;
 		if (actionsDisabled || isFallingDamaged) {
 			set_jet_vfx(jetEnables);
-			if (isFallingDamaged && onGround && groundedTime > 0.5F && moveAction.ReadValue<Vector2>().sqrMagnitude > 0.5F * 0.5F) {
+			if (isFallingDamaged && groundedTime > 0.5F && moveAction.ReadValue<Vector2>().sqrMagnitude > 0.5F * 0.5F) {
 				playerAnimController.FallRecover();
 				isFallingDamaged = false;
 			}
-			onGround = false;
 			return;
+		}
+		for (int i = 0; i < rocketSalvoCount; i++) {
+			rocketVisuals[i].SetActive(rocketsLeftToFire > i || rocketCooldownTimer <= 0.0F);
 		}
 		bool usingMachineGun = false;
 		bool usingJetpack = false;
@@ -554,7 +583,7 @@ public class PlayerController : MonoBehaviour {
 				
 				float moveSpeed =
 					sprinting ? moveSpeedSprint :
-					onGround ? moveSpeedGround :
+					timeInAir < 0.1F ? moveSpeedGround :
 					moveSpeedAir;
 				velocity += right * moveAmount.x * moveSpeed * dt;
 				velocity += forward * moveAmount.y * moveSpeed * dt;
@@ -567,7 +596,7 @@ public class PlayerController : MonoBehaviour {
 					jetEnables |= JetEnables.BACK;
 
 				}
-				if (onGround && jumpAction.IsPressed()) {
+				if (timeInAir < 0.1F && jumpAction.IsPressed()) {
 					velocity.y += jumpSpeed;
 					hoverFuelLeft = hoverFuelMax;
 				}
@@ -577,7 +606,7 @@ public class PlayerController : MonoBehaviour {
 			}
 			float drag =
 				sprinting ? dragSprint :
-				onGround ? dragGround :
+				timeInAir < 0.1F ? dragGround :
 				dragAir;
 			Vector3 velocityXZ = new Vector3(rigidBody.linearVelocity.x, 0.0F, rigidBody.linearVelocity.z);
 			Vector3 dragAdjustment = velocityXZ * Mathf.Exp(dt * Mathf.Log(1.0F - drag)) - velocityXZ;
@@ -598,6 +627,8 @@ public class PlayerController : MonoBehaviour {
 				rocketController.damageAmount = rocketDamage;
 				rocketSpawnTimer = 1.0F / rocketFireRate;
 			}
+
+			TryLockPlaneMissileTarget(dt);
 
 			if (machineGunAction.IsPressed()) {
 				usingMachineGun = true;
@@ -632,7 +663,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		break;
 		case TransformState.PLANE: {
-			jetEnables |= JetEnables.FEET;
+			jetEnables |= JetEnables.FEET | JetEnables.HEELS;
 			Vector3 velocity = new Vector3();
 			{ // Movement input
 				bool boost = IsBoosting();
@@ -642,9 +673,11 @@ public class PlayerController : MonoBehaviour {
 				}
 				if (!boost) {
 					Vector2 moveAmount = moveAction.ReadValue<Vector2>();
-					velocity += lookForward * moveAmount.y * planeManeuverSpeed * dt;
+					if (brake) {
+						velocity += lookForward * moveAmount.y * planeManeuverSpeed * dt;
+						planeTiltRotationVelocity.x += moveAmount.y * 0.25F;
+					}
 					velocity += right * moveAmount.x * planeManeuverSpeed * dt;
-					planeTiltRotationVelocity.x += moveAmount.y * 0.25F;
 					planeTiltRotationVelocity.z -= moveAmount.x * 0.25F;
 				}
 				float vfxSize = 1.0F;
@@ -678,28 +711,9 @@ public class PlayerController : MonoBehaviour {
 					planeBulletCooldownTimer = 1.0F / planeGunFireRate;
 				}
 			}
-			
 
-			if (planeMissileAction.IsPressed()) {
-				planeMissileHoldTime += dt;
-				if (planeMissileHoldTime > planeMissileTrackingHoldTimeCutoff && planeMissileLockOnTarget == null) {
-					float cosLockOnAngle = Mathf.Cos(planeMissileLockOnAngle * Mathf.Deg2Rad);
-					float bestDistance = float.PositiveInfinity;
-					int flyingEnemyMask = 1 << 8;
-					foreach (Collider collider in Physics.OverlapBox(transform.position, new Vector3(planeMissileLockOnRadius, planeMissileLockOnRadius, planeMissileLockOnRadius), Quaternion.identity, flyingEnemyMask)) {
-						if (Vector3.Dot(Vector3.Normalize(collider.transform.position - lookCam.transform.position), lookForward) > cosLockOnAngle) {
-							float distanceToTarget = (transform.position - collider.transform.position).sqrMagnitude;
-							if (distanceToTarget < bestDistance) {
-								planeMissileLockOnTarget = collider.gameObject;
-								bestDistance = distanceToTarget;
-							}
-						}
-					}
-				}
-			} else {
-				planeMissileLockOnTarget = null;
-				planeMissileHoldTime = 0.0F;
-			}
+
+			TryLockPlaneMissileTarget(dt);
 
 			Vector3 dragAdjustment = rigidBody.linearVelocity * Mathf.Exp(dt * Mathf.Log(1.0F - flyDrag)) - rigidBody.linearVelocity;
 			rigidBody.AddForce(velocity + dragAdjustment, ForceMode.VelocityChange);
@@ -737,24 +751,15 @@ public class PlayerController : MonoBehaviour {
 		timeSinceLastTransform += dt;
 		planeMissileCooldownTimer -= dt;
 		planeBulletCooldownTimer -= dt;
+		timeInAir += dt;
 		set_jet_vfx(jetEnables);
-		playerAnimController.SetGrounded(onGround);
+		playerAnimController.SetGrounded(timeInAir < 0.5F);
 		playerAnimController.SetIsMachineGun(usingMachineGun);
 		playerAnimController.SetJetpackActive(usingJetpack);
-		if (!hasCollisionObjects) {
-			onGround = false;
-		}
-		hasCollisionObjects = false;
 	}
 
 	public void TakeDamage(float damage) {
-		int playerMask = 1 << 9;
-		if (!onGround && transformState == TransformState.MECH && Physics.OverlapSphere(transform.position - Vector3.up, 0.5F, ~playerMask, QueryTriggerInteraction.Ignore).Length == 0) {
-			playerAnimController.SetFallingDamaged();
-			isFallingDamaged = true;
-		} else {
-			playerAnimController.TakeDamage();
-		}
+		playerAnimController.TakeDamage();
 		health -= damage;
 		healthRechargeCooldownTimer = healthRechargeCooldown;
 	}

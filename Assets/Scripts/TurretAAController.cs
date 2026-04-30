@@ -10,6 +10,8 @@ public class TurretAAController : MonoBehaviour, IBugTarget {
 	public float maxHealth;
 	public float rotationRateDeg = 20.0F;
 	float health;
+	public float iFrames;
+	float iFrameCooldown;
 	float fireCooldown;
 	public int gameManagerRegisteredIdx;
 
@@ -49,9 +51,18 @@ public class TurretAAController : MonoBehaviour, IBugTarget {
 			}
 		}
 		fireCooldown -= dt;
+		iFrameCooldown -= dt;
 	}
 	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
-		health -= amount;
+		if (iFrameCooldown > 0.0F || source == IDamageable.DamageSource.TURRET) {
+			return;
+		}
+		iFrameCooldown = iFrames;
+		if (amount > 100.0F) {
+			health = 0.0F;
+		} else {
+			health -= 1.0F;
+		}
 		if (health <= 0.0F) {
 			Destroy(gameObject);
 		}

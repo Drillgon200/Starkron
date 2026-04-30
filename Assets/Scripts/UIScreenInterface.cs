@@ -231,6 +231,8 @@ public class UIScreenInterface : MonoBehaviour {
 			Time.timeScale = pauseOverlay.activeSelf ? 1.0F : 0.0F;
 			PlayerController.instance.SetMouseCapture(pauseOverlay.activeSelf);
 			pauseOverlay.SetActive(!pauseOverlay.activeSelf);
+		} else {
+			CloseShop();
 		}
 	}
 
