@@ -217,8 +217,9 @@ MonoBehaviour:
   range: 500
   fireRate: 0.1
   damage: 100
-  maxHealth: 10
+  maxHealth: 5
   rotationRateDeg: 20
+  iFrames: 1
   gameManagerRegisteredIdx: 0
 --- !u!1 &8219269448420733746
 GameObject:
