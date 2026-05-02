@@ -783,6 +783,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4188063952129788583, guid: cc83adf1cfca08345a0bafddc8d1f218, type: 3}
   m_PrefabInstance: {fileID: 33801811}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &34692937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 34692939}
+  - component: {fileID: 34692938}
+  m_Layer: 0
+  m_Name: GameSettings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &34692938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34692937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a90765ccda42b468c50575482ce9a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameSettings
+  sensitivityScale: {x: 1, y: 1}
+  musicVolume: 1
+--- !u!4 &34692939
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34692937}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10.68051, y: 8.99739, z: 26.27407}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &40686084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14705,17 +14751,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6696876835881152730, guid: 6510185ff7f824341b95a8412415ffbf, type: 3}
   m_PrefabInstance: {fileID: 752181529}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &861875597 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3613162113000908446, guid: 093a51fb4eadc8f40acd6245e8dc5627, type: 3}
-  m_PrefabInstance: {fileID: 8899974866775325735}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72a015e0f4b50d241831f088802ae15f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &867731928 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7713546268798155234, guid: c8b766ca975b40d47924af889d56014e, type: 3}
@@ -54634,6 +54669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   uiScreen: {fileID: 1728555888736124775}
+  levelTheme: {fileID: 0}
   statBugsKilledByPlayer: 0
   statBugsKilledByTurrets: 0
   statHivesKilledByPlayer: 0
@@ -56523,7 +56559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad4638280fbc9d5488b5dab307c98663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::speedLinesScript
-  charController: {fileID: 861875597}
   playerController: {fileID: 1311469867}
   delayTime: 1
 --- !u!222 &7445458822873667287
@@ -61378,6 +61413,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1171981768760496418}
+  - {fileID: 34692939}
   - {fileID: 2372393000453279288}
   - {fileID: 1069905358}
   - {fileID: 1017474308}
