@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
 
 	public UIScreenInterface uiScreen;
 
+	public AudioSource levelTheme;
+
 	public int statBugsKilledByPlayer;
 	public int statBugsKilledByTurrets;
 	public int statHivesKilledByPlayer;
@@ -378,6 +380,8 @@ public class GameManager : MonoBehaviour {
 			int groundBugVertexCount = 1968;
 			Graphics.RenderPrimitives(renderParams, MeshTopology.Triangles, groundBugVertexCount, bugsToDraw);
 		}
+
+		levelTheme.volume = GameSettings.instance.musicVolume * 0.04F;
 	}
 
 	public void DrawOutlines(CommandBuffer cmdBuf) {
