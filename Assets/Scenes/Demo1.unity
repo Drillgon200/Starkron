@@ -54669,7 +54669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   uiScreen: {fileID: 1728555888736124775}
-  levelTheme: {fileID: 0}
+  levelTheme: {fileID: 2002627313}
   statBugsKilledByPlayer: 0
   statBugsKilledByTurrets: 0
   statHivesKilledByPlayer: 0
