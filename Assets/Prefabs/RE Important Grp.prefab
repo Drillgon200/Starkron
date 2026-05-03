@@ -1687,7 +1687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3764983529483589212}
   m_Layer: 0
-  m_Name: Important Grp
+  m_Name: RE Important Grp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

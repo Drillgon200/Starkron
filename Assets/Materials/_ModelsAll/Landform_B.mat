@@ -50,7 +50,7 @@ Material:
     - _QueueOffset: 0
     - _ShadowAngle: -0.2
     m_Colors:
-    - _BaseColor: {r: 0.7567996, g: 0.7735849, b: 0.6896582, a: 1}
+    - _BaseColor: {r: 0.45882356, g: 0.30588236, b: 0.18431373, a: 1}
     - _ShadowColor: {r: 0.4056604, g: 0.3946387, b: 0.38843897, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

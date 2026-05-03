@@ -301,22 +301,22 @@ MonoBehaviour:
   placementPrefab: {fileID: 0}
   orbitalLaserCount: 0
   orbitalWalkingBarrageCount: 0
-  orbitalAbilityThrowable: {fileID: 0}
+  orbitalAbilityThrowable: {fileID: 996068404135728034, guid: 40cd6a69cde16244f93686ead54b60f9, type: 3}
   oribitalStrikeOrigin: {fileID: 0}
   maxHealth: 100
   healthRechargeRate: 20
   healthRechargeCooldown: 3
   hoverSpeed: 15
   moveSpeedGround: 50
-  moveSpeedAir: 10
-  moveSpeedSprint: 50
+  moveSpeedAir: 5
+  moveSpeedSprint: 40
   dragGround: 0.99
   dragSprint: 0.5
   dragAir: 0.1
   jumpSpeed: 3
   hoverFuelMax: 3
   flySpeed: 15
-  boostSpeed: 40
+  boostSpeed: 70
   planeManeuverSpeed: 10
   flyDrag: 0.5
   rocketPrefab: {fileID: 9129368257085401133, guid: d1dc2b681d319e843aa33b4b1b6c31dc, type: 3}
@@ -654,7 +654,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
@@ -886,7 +886,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7894380885098851119, guid: 08e54ddedd0fd1e4ca1e31681fce5499, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08e54ddedd0fd1e4ca1e31681fce5499, type: 3}
@@ -1115,7 +1116,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7894380885098851119, guid: 08e54ddedd0fd1e4ca1e31681fce5499, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08e54ddedd0fd1e4ca1e31681fce5499, type: 3}
@@ -1501,6 +1503,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3551139387587064737, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a7716a98b69c5da449f640dbe8ed4fbe, type: 2}
     - target: {fileID: 3565051732201673071, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1545,6 +1551,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3966672833485607260, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3978593177523688461, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1581,6 +1591,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 45f0409ae334deb4598817832b69b712, type: 2}
+    - target: {fileID: 4242912965423475377, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0b0f2cc0159db1a4887656a386c44ef4, type: 2}
     - target: {fileID: 4250244446401197207, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1737,6 +1751,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5953119959564234363, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a7716a98b69c5da449f640dbe8ed4fbe, type: 2}
     - target: {fileID: 6135001783012027752, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1891,7 +1909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7706442923364440899, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7740623889367736752, guid: 61b2b79d430efc74fbebb472346540e7, type: 3}
       propertyPath: m_Layer
