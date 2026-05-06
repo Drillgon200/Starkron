@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Landform_c
+  m_Name: sand
   m_Shader: {fileID: -6465566751694194690, guid: 4bd16e35e6efd014596aa73636cb0127, type: 3}
-  m_Parent: {fileID: 2100000, guid: eb17e4389a4d6cb4787f5aec28c6909f, type: 2}
+  m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -25,13 +25,33 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 9d994c6435fc2ed4793b9b6f3fde3a57, type: 3}
+        m_Texture: {fileID: 2800000, guid: 56052adf79cc35c448e88714df33e91e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadowMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ShadowAngle: -0.2
     m_Colors:
-    - _BaseColor: {r: 0.5902965, g: 0.36772925, b: 0.20286463, a: 1}
+    - _BaseColor: {r: 0.7567996, g: 0.7735849, b: 0.6896582, a: 1}
+    - _ShadowColor: {r: 0.4056604, g: 0.3946387, b: 0.38843897, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5243329810480275594
