@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3235b1f2edbd1e04e9c0ce683913c689, type: 2}
+  - {fileID: 2100000, guid: 6774a4b539405d74eba9ec956563bb29, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,6 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7449517478358830648}
+  - component: {fileID: 9015047714877203734}
   m_Layer: 0
   m_Name: coral grp
   m_TagString: Untagged
@@ -123,6 +124,26 @@ Transform:
   - {fileID: 6134944598548378648}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &9015047714877203734
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688425236983784366}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.016895423
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 5881785774315863832}
+    - renderer: {fileID: 4977287505383379347}
+  m_Enabled: 1
 --- !u!1 &6658596691546460182
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +210,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3235b1f2edbd1e04e9c0ce683913c689, type: 2}
+  - {fileID: 2100000, guid: 6774a4b539405d74eba9ec956563bb29, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

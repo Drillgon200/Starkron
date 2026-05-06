@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7032341779471383924}
   - component: {fileID: 3775592906814090427}
   - component: {fileID: 8486636694886414541}
+  - component: {fileID: 7561751044325494993}
   m_Layer: 6
   m_Name: Coral_1_Base
   m_TagString: Untagged
@@ -66,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3235b1f2edbd1e04e9c0ce683913c689, type: 2}
+  - {fileID: 2100000, guid: 6774a4b539405d74eba9ec956563bb29, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,3 +91,22 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!205 &7561751044325494993
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6575519192694141603}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.023888469
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8486636694886414541}
+  m_Enabled: 1
