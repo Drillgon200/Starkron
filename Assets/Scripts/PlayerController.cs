@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour {
 	public GameObject oribitalStrikeOrigin;
 
 	float timeInAir;
-	bool hasCollisionObjects;
 	float groundedTime;
 	float hoverFuelLeft;
 	public float maxHealth = 100.0F;
@@ -283,6 +282,7 @@ public class PlayerController : MonoBehaviour {
 				ability.abilityOriginPoint = oribitalStrikeOrigin.transform.position;
 				ability.LaunchTowardPoint(target, 50.0F);
 				if (orbitalLaserCount > 0) {
+					uiScreen.EnqueueAlert(uiScreen.messageLaserFire, 4.0F);
 					ability.abilityType = OrbitalAbilityThrowableController.Ability.LASER;
 					orbitalLaserCount--;
 				} else if (orbitalWalkingBarrageCount > 0) {
@@ -407,7 +407,6 @@ public class PlayerController : MonoBehaviour {
 				break;
 			}
 		}
-		hasCollisionObjects = true;
 	}
 
 	float SmoothCutoff(float x, float max) {

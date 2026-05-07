@@ -20,10 +20,7 @@ public class CAGDscript : MonoBehaviour {
 			StartCoroutine(StartDelay());
 		}
 		StartCoroutine(EndDelay());
-
-		if (DateTime.Now.Year == 2026 && DateTime.Now.Month == 5|| DateTime.Now.Year == 2026 && DateTime.Now.Month == 6) {
-           StartCoroutine(LoadMainMenu());
-		}       
+		StartCoroutine(LoadMainMenu());
 	}
 
 	void OnTriggerEnter(Collider other)	{

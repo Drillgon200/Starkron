@@ -58,7 +58,7 @@ public class TurretAAController : MonoBehaviour, IBugTarget {
 			return;
 		}
 		iFrameCooldown = iFrames;
-		if (amount > 100.0F) {
+		if (amount > 70.0F) {
 			health = 0.0F;
 		} else {
 			health -= 1.0F;
