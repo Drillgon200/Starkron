@@ -12,10 +12,31 @@ public class UIScreenInterface : MonoBehaviour {
 	public GameObject messageWindowTwoDemo1;
 	public GameObject messageShop;
 	public GameObject messagePressE;
+	public GameObject messageCityAttackAlert;
+	public GameObject messageOnlyGoodBugIsADeadBug;
+	public GameObject messageLaserFire;
+	public GameObject messageLaserEnd;
+	public GameObject[] messageWave;
 	public GameObject shopOverlay;
 	public GameObject waveInfo;
+
 	public AudioSource alert;
 	public AudioClip denySound;
+	public AudioClip voOpenShop;
+	public AudioClip voTakeCareOfTheMech;
+	public AudioClip voWormAppear;
+	public AudioClip voSwordDetected;
+	public AudioClip voPlayerFailed;
+	public AudioClip voBadFlying;
+	public AudioClip voNeedToGetBack;
+	public AudioClip voOnlyGoodBugIsADeadBug;
+	public AudioClip voOribitalLaserInitiated;
+	public AudioClip voOribitalLaserReady;
+	public AudioClip voClearTheArea;
+	public AudioClip voPressQ;
+	public AudioClip voOrgans;
+
+
 	bool guiActive;
 
 	enum ShopItem {
@@ -64,7 +85,6 @@ public class UIScreenInterface : MonoBehaviour {
 		messageWindowTwoDemo1.SetActive(false);
 		shopOverlay.SetActive(false);
 		// temporary pop up messages for the DEMO1
-		EnqueueAlert(messageWindowDemo1, 4.0F);
 		EnqueueAlert(messageWindowTwoDemo1, 4.0F);
 		for (int i = 0; i < shopPrices.Length; i++) {
 			shopPrices[i] = 1;

@@ -82,6 +82,6 @@ public class MenuV1 : MonoBehaviour {
 	}
 
 	public void LoadLevelOne() {
-		SceneManager.LoadScene("Scenes/Demo1");
+		SceneManager.LoadScene("Scenes/Justin_Test");
 	}
 }

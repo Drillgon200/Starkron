@@ -3,6 +3,7 @@ using UnityEngine;
 public class HiveController : MonoBehaviour, IDamageable {
 	public GameObject groundBugPrefab;
 	public GameObject flyingJellyPrefab;
+	public GameObject tankBugPrefab;
 	public float spawnRange = 5.0F;
 	public AudioClip hiveDamageB;
 	float health;
@@ -28,7 +29,11 @@ public class HiveController : MonoBehaviour, IDamageable {
 					RaycastHit hit;
 					if (Physics.Raycast(spawnPos + Vector3.up * 10.0F, Vector3.down, out hit, 20.0F)) {
 						spawnPos = hit.point + Vector3.up * 0.25F;
-						GameObject groundBug = Instantiate(groundBugPrefab, spawnPos, Quaternion.identity);
+						if (Random.value < wave.tankProbability) {
+							GameObject tankBug = Instantiate(tankBugPrefab, spawnPos, Quaternion.identity);
+						} else {
+							GameObject groundBug = Instantiate(groundBugPrefab, spawnPos, Quaternion.identity);
+						}
 						spawnDelay += spawnIncreaseTime;
 					}
 				}
