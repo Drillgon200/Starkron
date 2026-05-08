@@ -1385,8 +1385,27 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "CONGLATURATION ! ! !\r\n\r\nYOU HAVE COMPLETED\r\nA GREAT GAME. \r\n\r\nAND
-    PROOVED THE JUSTICE\r\nOF OUR CULTURE.\r\n\r\nNOW GO AND REST OUR\r\nHEROES !\r\n"
+  m_text: 'CONGRATULATIONS ! ! !
+
+    
+
+    YOU HAVE COMPLETED
+
+    THE GAME
+
+    AND
+    PROVED THE JUSTICE
+
+    OF OUR CULTURE .
+
+    
+
+    NOW GO AND REST OUR
+
+    HEROES
+    !
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4a116b0ecfad85341b134440ddafa988, type: 2}
   m_sharedMaterial: {fileID: 2604725946399722168, guid: 4a116b0ecfad85341b134440ddafa988, type: 2}

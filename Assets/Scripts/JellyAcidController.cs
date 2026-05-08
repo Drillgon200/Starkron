@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class JellyAcidController : MonoBehaviour {
 	public float damage = 2.0F;
+	public float age = 0.0F;
 	void OnCollisionEnter(Collision collision) {
 		foreach (Collider c in Physics.OverlapSphere(transform.position, 1.5F)) {
 			c.GetComponent<IDamageable>()?.TakeDamage(damage, c.ClosestPoint(transform.position), IDamageable.DamageSource.BUG);
@@ -10,5 +11,11 @@ public class JellyAcidController : MonoBehaviour {
 			}
 		}
 		Destroy(gameObject);
+	}
+	void FixedUpdate() {
+		age += Time.fixedDeltaTime;
+		if (age > 10.0F) {
+			Destroy(gameObject);
+		}
 	}
 }
