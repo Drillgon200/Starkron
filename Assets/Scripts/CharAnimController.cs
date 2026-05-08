@@ -19,23 +19,19 @@ public class CharAnimController : MonoBehaviour{
 			return;
 		}
 		// MECH mode animations =======================================
-		if (!isPlaneMode) {
-			bool playerRun = PlayerController.instance.IsSprinting();
-			Vector2 moveVector = PlayerController.instance.GetMoveDirection();
-			animator.SetBool("isRun", moveVector.sqrMagnitude > 0.0F && playerRun);
-			animator.SetBool("isForwardMoving", moveVector.y > 0.0F && !playerRun);
-			animator.SetBool("isBackwards", moveVector.y < 0.0F);
-			animator.SetBool("isLeftMoving", moveVector.x < 0.0F);
-			animator.SetBool("isRightMoving", moveVector.x > 0.0F);
-		}
+		bool playerRun = PlayerController.instance.IsSprinting();
+		Vector2 moveVector = PlayerController.instance.GetMoveDirection();
+		animator.SetBool("isRun", moveVector.sqrMagnitude > 0.0F && playerRun);
+		animator.SetBool("isForwardMoving", moveVector.y > 0.0F && !playerRun);
+		animator.SetBool("isBackwards", moveVector.y < 0.0F);
+		animator.SetBool("isLeftMoving", moveVector.x < 0.0F);
+		animator.SetBool("isRightMoving", moveVector.x > 0.0F);
 
 		// FLIGHT mode animations ================================
-		if (isPlaneMode) {
-			animator.SetBool("isFlightBoost", PlayerController.instance.IsBoosting());
-			bool braking = PlayerController.instance.IsBraking();
-			animator.SetBool("isBrakeBoth", braking);
-			animator.SetBool("isFlightStop", braking && PlayerController.instance.rigidBody.linearVelocity.sqrMagnitude < 4.0F);
-		}
+		animator.SetBool("isFlightBoost", PlayerController.instance.IsBoosting());
+		bool braking = PlayerController.instance.IsBraking();
+		animator.SetBool("isBrakeBoth", braking);
+		animator.SetBool("isFlightStop", braking && PlayerController.instance.rigidBody.linearVelocity.sqrMagnitude < 4.0F);
 	}
 
 
@@ -65,11 +61,6 @@ public class CharAnimController : MonoBehaviour{
 	public void SetGrounded(bool grounded) {
 		animator.SetBool("isGrounded", grounded);
 		animator.SetBool("isFallingOkay", !grounded);
-	}
-
-	public void SetFallingDamaged() {
-		animator.SetBool("isRecover", false);
-		animator.SetBool("isFallingOkay", false);
 	}
 
 	public void TakeDamage() {

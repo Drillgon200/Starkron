@@ -15,6 +15,10 @@ public class BuildingController : MonoBehaviour, IBugTarget {
 	public void TakeDamage(float amount, Vector3 pos, IDamageable.DamageSource source) {
 		buildingHealth -= (int)Mathf.Ceil(amount);
 		
+		if (source == IDamageable.DamageSource.BUG) {
+			GameManager.instance.OnBugAttackCity();
+		}
+
 		if (buildingHealth <= 0) {
             if (source == IDamageable.DamageSource.PLAYER) {
                 GameManager.instance.statBuildingsDestroyedByPlayer++;

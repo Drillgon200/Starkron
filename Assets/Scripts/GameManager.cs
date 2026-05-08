@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour {
 	public bool wormKilledCity;
 	public bool wormAlive;
 
+	public Collider terrainCollider;
+
 	const float GRID_SIZE = 1000.0F;
 	const int GRID_RESOLUTION = 1000;
 
@@ -78,6 +80,8 @@ public class GameManager : MonoBehaviour {
 		[SerializeField]
 		public float jellyProbability;
 		[SerializeField]
+		public float tankProbability;
+		[SerializeField]
 		public int crystalCount;
 		[SerializeField]
 		public bool hasWorm;
@@ -85,8 +89,12 @@ public class GameManager : MonoBehaviour {
 	public List<Wave> waves = new();
 	public List<CrystalController> allCrystals = new();
 	public int currentWave = 0;
+	public float timeBetweenWaves = 15.0F;
 	float nextWaveCountdownTimer = 0;
 	bool needsNextWave;
+
+	float timeWithoutAttack;
+	float timeSinceLastBugKilled;
 
 	byte[] directions = new byte[GRID_RESOLUTION * GRID_RESOLUTION];
 
@@ -125,6 +133,9 @@ public class GameManager : MonoBehaviour {
 		if (wormAlive) {
 			return;
 		}
+		if (timeWithoutAttack > 15.0F) {
+			uiScreen.EnqueueAlert(uiScreen.messageCityAttackAlert, 4.0F);
+		}
 		wormAlive = true;
 		WormBossController boss = Instantiate(wormBossPrefab, Vector3.zero, Quaternion.identity).GetComponent<WormBossController>();
 		boss.pathObject = wormBossPath;
@@ -138,10 +149,13 @@ public class GameManager : MonoBehaviour {
 		currentWave++;
 		uiScreen.ShowNextWaveIndicator();
 		needsNextWave = true;
-		nextWaveCountdownTimer = 4.0F;
+		nextWaveCountdownTimer = timeBetweenWaves;
 	}
 
 	void StartWave() {
+		if (currentWave < uiScreen.messageWave.Count()) {
+			uiScreen.EnqueueAlert(uiScreen.messageWave[currentWave], 4.0F);
+		}
 		// Shuffle the hives so they're random
 		List<HiveController> hives = new List<HiveController>(waves[currentWave].hives);
 		for (int i = 0; i < hives.Count - 1; i++) {
@@ -194,8 +208,13 @@ public class GameManager : MonoBehaviour {
 			float cellY = ((float)y / GRID_RESOLUTION - 0.5F) * GRID_SIZE;
 			for (int x = 0; x < GRID_RESOLUTION; x++) {
 				float cellX = ((float)x / GRID_RESOLUTION - 0.5F) * GRID_SIZE;
+				float yPos = 0.0F;
+				RaycastHit rayInfo;
+				if (terrainCollider.Raycast(new Ray(new Vector3(cellX + gridCellHalfSize, 500.0F, cellY + gridCellHalfSize), Vector3.down), out rayInfo, 1000.0F)) {
+					yPos = rayInfo.point.y;
+				}
 				bool hasCollider = false;
-				foreach (Collider collider in Physics.OverlapBox(new Vector3(cellX + gridCellHalfSize, 0.0F, cellY + gridCellHalfSize), new Vector3(gridCellHalfSize, 2.0F, gridCellHalfSize))) {
+				foreach (Collider collider in Physics.OverlapBox(new Vector3(cellX + gridCellHalfSize, yPos - 1.0F, cellY + gridCellHalfSize), new Vector3(gridCellHalfSize, yPos + 1.0F, gridCellHalfSize))) {
 					if (collider.GetComponent<BugCollision>()) {
 						hasCollider = true;
 						break;
@@ -288,6 +307,7 @@ public class GameManager : MonoBehaviour {
 			allGroundBugs[id] = allGroundBugs.Last();
 			allGroundBugs[id].gameManagerRegisteredIdx = id;
 			allGroundBugs.RemoveAt(allGroundBugs.Count - 1);
+			timeSinceLastBugKilled = 0.0F;
 		}
 	}
 	public int RegisterTurret(TurretRailgunController turret) {
@@ -300,6 +320,7 @@ public class GameManager : MonoBehaviour {
 			turrets[id] = turrets.Last();
 			turrets[id].gameManagerRegisteredIdx = id;
 			turrets.RemoveAt(turrets.Count - 1);
+			timeSinceLastBugKilled = 0.0F;
 		}
 	}
 	public int RegisterAATurret(TurretAAController turret) {
@@ -312,6 +333,7 @@ public class GameManager : MonoBehaviour {
 			aaTurrets[id] = aaTurrets.Last();
 			aaTurrets[id].gameManagerRegisteredIdx = id;
 			aaTurrets.RemoveAt(aaTurrets.Count - 1);
+			timeSinceLastBugKilled = 0.0F;
 		}
 	}
 	public int RegisterBuilding(BuildingController building) {
@@ -328,7 +350,15 @@ public class GameManager : MonoBehaviour {
 			allBuildings.RemoveAt(allBuildings.Count - 1);
 			buildingPositions[id] = buildingPositions.Last();
 			buildingPositions.RemoveAt(buildingPositions.Count - 1);
+			timeSinceLastBugKilled = 0.0F;
 		}
+	}
+
+	public void OnBugAttackCity() {
+		if (timeWithoutAttack > 15.0F) {
+			uiScreen.EnqueueAlert(uiScreen.messageCityAttackAlert, 4.0F);
+		}
+		timeWithoutAttack = 0.0F;
 	}
 
 	public GameObject RandomBuilding() {
@@ -468,7 +498,7 @@ public class GameManager : MonoBehaviour {
 			for (int j = 0; j < overlapCount; j++) {
 				Collider collider = overlapTestArray[j];
 				float sqrDist = (collider.transform.position - turretPos).sqrMagnitude;
-				if (sqrDist < bestDist && collider.GetComponent<EnemyGround>()) {
+				if (sqrDist < bestDist && (collider.GetComponent<EnemyGround>() || collider.GetComponent<EnemyTank>())) {
 					bestTarget = collider;
 					bestDist = sqrDist;
 				}
@@ -481,11 +511,13 @@ public class GameManager : MonoBehaviour {
 	void FixedUpdate() {
 		GroundBugsTarget();
 		TurretsTarget();
+		timeWithoutAttack += Time.fixedDeltaTime;
 		if (needsNextWave && nextWaveCountdownTimer <= 0.0F) {
 			StartWave();
 			needsNextWave = false;
 		}
 		nextWaveCountdownTimer -= Time.fixedDeltaTime;
+		timeSinceLastBugKilled += Time.fixedDeltaTime;
 		gameTime += Time.fixedDeltaTime;
 		if (allBuildings.Count <= 0 || wormKilledCity || PlayerController.instance.IsDead()) {
 			gameOver = true;
@@ -496,7 +528,7 @@ public class GameManager : MonoBehaviour {
 				uiScreen.EnqueueAlert(uiScreen.messageShop, 6.0F);
 			}
 			IncrementWave();
-		} else if (bugCount <= 0 && hiveCount <= 0 && !wormAlive && currentWave >= waves.Count - 1 && !needsNextWave) {
+		} else if ((bugCount <= 0 || timeSinceLastBugKilled > 20.0F) && hiveCount <= 0 && !wormAlive && currentWave >= waves.Count - 1 && !needsNextWave) {
 			gameOver = true;
 			PlayerController.instance.actionsDisabled = true;
 			uiScreen.ShowWinOverlay();

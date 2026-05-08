@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 2dfdab45ed1523b4baedb389b8e7f87d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Demo1.unity
     guid: c18cd1ed5b6c81947bece0ba8ec899a9
   - enabled: 0
@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndingCredits.unity
     guid: feb53b84fda85bd479144e853746af44
+  - enabled: 1
+    path: Assets/Scenes/Justin_Test.unity
+    guid: 7366d98350b9f5944b9573aa56d80e2b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

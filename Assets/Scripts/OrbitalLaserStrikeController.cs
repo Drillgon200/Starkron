@@ -27,7 +27,7 @@ public class OrbitalLaserStrikeController : MonoBehaviour {
 		foreach (Collider c in potentialTargets) {
 			float distSq = (c.transform.position - currentPos).sqrMagnitude;
 			if (distSq < damageRadius * damageRadius) {
-				c.GetComponent<IDamageable>().TakeDamage(1.0F, c.bounds.center, IDamageable.DamageSource.TURRET);
+				c.GetComponent<IDamageable>().TakeDamage(10.0F, c.bounds.center, IDamageable.DamageSource.TURRET);
 			}
 			if (!bestPotentialTarget || distSq < (bestPotentialTarget.transform.position - currentPos).sqrMagnitude) {
 				bestPotentialTarget = c;
