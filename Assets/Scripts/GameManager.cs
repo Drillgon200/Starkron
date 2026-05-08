@@ -166,9 +166,11 @@ public class GameManager : MonoBehaviour {
 		}
 		for (int i = 0; i < waves[currentWave].hiveCount; i++) {
 			HiveController controller = hives[i];
-			controller.gameObject.SetActive(true);
-			hiveCount++;
-			controller.WaveInit(waves[currentWave]);
+			if (!controller.gameObject.activeSelf) {
+				controller.gameObject.SetActive(true);
+				hiveCount++;
+				controller.WaveInit(waves[currentWave]);
+			}
 		}
 
 		// Shuffle the crystals so they're random

@@ -24,7 +24,7 @@ public class MissileControllerMechToGround : MonoBehaviour {
 					damageable.TakeDamage(damageAmount, toDamage.ClosestPoint(transform.position), IDamageable.DamageSource.PLAYER);
 				}
 			}
-			transform.Find("SmokeTrail").SetParent(null);
+			transform.Find("SmokeTrail")?.SetParent(null);
 			GameObject vfx = Instantiate(explosionVFXPrefab, transform.position, Quaternion.identity);
 			Destroy(vfx, 3.0F);
 			Destroy(gameObject);
