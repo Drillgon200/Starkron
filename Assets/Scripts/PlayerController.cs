@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 	InputAction sprintAction;
 	InputAction swordAction;
 	InputAction pauseAction;
+	InputAction throwOrbitalAction;
 
 	// Plane actions
 	InputAction planeMissileAction;
@@ -149,6 +150,7 @@ public class PlayerController : MonoBehaviour {
 	System.Action<InputAction.CallbackContext> pausePerformedAction;
 	System.Action<InputAction.CallbackContext> openShopPerformedAction;
 	System.Action<InputAction.CallbackContext> objectPlaceStartedAction;
+	System.Action<InputAction.CallbackContext> throwOrbitalStartedAction;
 
 	int bankTotal = 0;
 	public TMP_Text bankUICounterText;
@@ -272,7 +274,18 @@ public class PlayerController : MonoBehaviour {
 		});
 		machineGunAction = InputSystem.actions.FindAction("FireMachineGun");
 		machineGunAction.started += (objectPlaceStartedAction = (InputAction.CallbackContext ctx) => {
-			if (orbitalLaserCount > 0 || orbitalWalkingBarrageCount > 0) {
+			if (isPlacingObject && canPlaceObject) {
+				machineGunAction.Disable();
+				machineGunAction.Enable();
+				isPlacingObject = false;
+				Instantiate(placementPrefab, placementHologram.transform.position, placementHologram.transform.rotation);
+				Destroy(placementHologram);
+				placementPrefab = null;
+			}
+		});
+		throwOrbitalAction = InputSystem.actions.FindAction("ThrowOrbitalAbility");
+		throwOrbitalAction.started += (throwOrbitalStartedAction = (InputAction.CallbackContext ctx) => {
+			if (!actionsDisabled && (orbitalLaserCount > 0 || orbitalWalkingBarrageCount > 0)) {
 				Vector3 target = cameraRayHitPos;
 				Vector3 startPos = transform.position + Vector3.up * 1.0F + forward * 0.25F;
 				if (!cameraRayHit) {
@@ -289,14 +302,6 @@ public class PlayerController : MonoBehaviour {
 					ability.abilityType = OrbitalAbilityThrowableController.Ability.WALKING_BARRAGE;
 					orbitalWalkingBarrageCount--;
 				}
-			}
-			if (isPlacingObject && canPlaceObject) {
-				machineGunAction.Disable();
-				machineGunAction.Enable();
-				isPlacingObject = false;
-				Instantiate(placementPrefab, placementHologram.transform.position, placementHologram.transform.rotation);
-				Destroy(placementHologram);
-				placementPrefab = null;
 			}
 		});
 		sprintAction = InputSystem.actions.FindAction("Sprint");
@@ -396,6 +401,7 @@ public class PlayerController : MonoBehaviour {
 		switchModeAction.performed -= switchModePerformedAction;
 		openShopAction.performed -= openShopPerformedAction;
 		machineGunAction.started -= objectPlaceStartedAction;
+		throwOrbitalAction.started -= throwOrbitalStartedAction;
 	}
 
 	private void OnEnable() { }

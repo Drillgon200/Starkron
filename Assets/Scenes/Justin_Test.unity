@@ -46245,6 +46245,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5445316562923113602, guid: 01bf1686f35b6e14c9f8f110742340b0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5561870898652606259, guid: 01bf1686f35b6e14c9f8f110742340b0, type: 3}
+      propertyPath: m_text
+      value: 'WALKING BARRAGE [G]'
+      objectReference: {fileID: 0}
     - target: {fileID: 5935987026819244224, guid: 01bf1686f35b6e14c9f8f110742340b0, type: 3}
       propertyPath: alert
       value: 
@@ -46432,6 +46440,10 @@ PrefabInstance:
     - target: {fileID: 8065727467597209005, guid: 01bf1686f35b6e14c9f8f110742340b0, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8391861950167149229, guid: 01bf1686f35b6e14c9f8f110742340b0, type: 3}
+      propertyPath: m_text
+      value: 'ORBITAL LAZER [G]'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
