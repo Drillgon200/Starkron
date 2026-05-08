@@ -25,8 +25,6 @@ public class BuildingController : MonoBehaviour, IBugTarget {
             }
             GameManager.instance.statBuildingsDestroyed++;
 			Destroy(gameObject);
-		} else {
-			print("Not destroyed " + amount);
 		}
 	}
 }
