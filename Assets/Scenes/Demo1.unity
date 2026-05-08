@@ -41711,10 +41711,28 @@ MonoBehaviour:
   messageWindowTwoDemo1: {fileID: 3875126276095221873}
   messageShop: {fileID: 7600610236286724171}
   messagePressE: {fileID: 1891672740634526065}
+  messageCityAttackAlert: {fileID: 0}
+  messageOnlyGoodBugIsADeadBug: {fileID: 0}
+  messageLaserFire: {fileID: 0}
+  messageLaserEnd: {fileID: 0}
+  messageWave: []
   shopOverlay: {fileID: 1012300823137391397}
   waveInfo: {fileID: 8764114811652259070}
   alert: {fileID: 0}
   denySound: {fileID: 8300000, guid: 9866757783eeb1f45b2e0d6c05e50a97, type: 3}
+  voOpenShop: {fileID: 0}
+  voTakeCareOfTheMech: {fileID: 0}
+  voWormAppear: {fileID: 0}
+  voSwordDetected: {fileID: 0}
+  voPlayerFailed: {fileID: 0}
+  voBadFlying: {fileID: 0}
+  voNeedToGetBack: {fileID: 0}
+  voOnlyGoodBugIsADeadBug: {fileID: 0}
+  voOribitalLaserInitiated: {fileID: 0}
+  voOribitalLaserReady: {fileID: 0}
+  voClearTheArea: {fileID: 0}
+  voPressQ: {fileID: 0}
+  voOrgans: {fileID: 0}
   turretPrefab: {fileID: 6133831574818507395, guid: fd0f82a5272fae940a2d7fad43006f22, type: 3}
   turretHologramPrefab: {fileID: 6133831574818507395, guid: faab20e47b6b58a4aa4459beee1214c9, type: 3}
   turretAntiAirPrefab: {fileID: 6133831574818507395, guid: 13c154229ef3699408bf09e6cbe80521, type: 3}
@@ -55230,6 +55248,7 @@ MonoBehaviour:
   wormBossPath: {fileID: 850539489561661295}
   wormKilledCity: 0
   wormAlive: 0
+  terrainCollider: {fileID: 0}
   CITY_CENTER: {x: -0.1755, y: 0, z: -0.58833}
   waves:
   - hives:
@@ -55242,6 +55261,7 @@ MonoBehaviour:
     groupDelay: 10
     hiveHealth: 200
     jellyProbability: 0
+    tankProbability: 0
     crystalCount: 60
     hasWorm: 0
   - hives:
@@ -55256,6 +55276,7 @@ MonoBehaviour:
     groupDelay: 2
     hiveHealth: 400
     jellyProbability: 0
+    tankProbability: 0
     crystalCount: 3
     hasWorm: 0
   - hives:
@@ -55274,6 +55295,7 @@ MonoBehaviour:
     groupDelay: 4
     hiveHealth: 400
     jellyProbability: 0.01
+    tankProbability: 0
     crystalCount: 3
     hasWorm: 0
   - hives:
@@ -55295,10 +55317,12 @@ MonoBehaviour:
     groupDelay: 50
     hiveHealth: 500
     jellyProbability: 0
+    tankProbability: 0
     crystalCount: 50
     hasWorm: 1
   allCrystals: []
   currentWave: 0
+  timeBetweenWaves: 15
   randomGlobal: 1337
 --- !u!4 &6833335598462264668
 Transform:
